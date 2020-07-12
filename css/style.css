@@ -1,0 +1,151 @@
+@font-face {
+  font-family: 'AmatracaGrotesqueNormal';
+  src: url('../font/amatraca-grotesque-normal.ttf');
+}
+
+body {
+  font-family: 'AmatracaGrotesqueNormal', Fallback, sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+.with-margin-bottom {
+  margin-bottom: 4vh;
+  text-align: center;
+}
+
+.bootstrap-select {
+  margin: 2vh 0;
+  width: inherit !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .cover img {
+    width: 75%;
+    margin: 2% 0 0 0;
+  }
+
+  .col-left {
+    float: left;
+    width: 50%;
+    text-align: right;
+  }
+
+  .col-right {
+    float: left;
+    width: 50%;
+    text-align: left;
+  }
+
+  .col-left h3,
+  .col-left p,
+  .col-left img,
+  .col-right h3,
+  .col-right p,
+  .col-right img {
+    width: 50%;
+    height: auto;
+  }
+
+  .col-left h3,
+  .col-left p,
+  .col-right h3,
+  .col-right p {
+    margin: 2%;
+  }
+
+  .col-center img {
+    width: 50%;
+    height: auto;
+    margin: auto;
+    display: block;
+  }
+
+  .col-left h3, .col-left p { float: right; text-align: right; }
+
+  .col-center h3, .col-center h6, .col-center p { text-align: center; }
+
+  .col-right h3, .col-right p { float: left; text-align: left; }
+
+  .img-right-bottom {
+    position: absolute;
+    bottom: 0;
+  }
+
+  .img-left-bottom {
+    margin-top: 10vh;
+  }
+
+  .img-small {
+    width: 40% !important;
+  }
+
+  .vertical-align {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .hide-me {
+    opacity: 0;
+  }
+
+  .line-40 {
+    border-left: 2px solid #000;
+    height: 40vh;
+    margin-left: 50%;
+  }
+
+  .line-50 {
+    border-left: 2px solid #000;
+    height: 50vh;
+    margin-left: 50%;
+  }
+
+  .with-margin-top {
+    margin-top: 18vh;
+  }
+
+  .cta {
+    font-size: 24px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .cover img {
+    width: 100%;
+    margin: 5% 0 0 0;
+  }
+
+  .col-left h3,
+  .col-left p,
+  .col-left img,
+  .col-right h3,
+  .col-right p,
+  .col-right img,
+  .col-center img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .cta {
+    font-size: 16px;
+  }
+
+  .footer {
+    font-size: 6px;
+  }
+}
