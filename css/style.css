@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'AmatracaGrotesqueNormal';
   src: url('../font/amatraca-grotesque-normal.ttf');
+  font-display: swap;
 }
 
 body {
