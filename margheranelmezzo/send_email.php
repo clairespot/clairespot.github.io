@@ -46,6 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 // Redirect after sending email
-header("Location: index.html");
+header("Location: /");
 
 ?>
