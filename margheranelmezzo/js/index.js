@@ -98,7 +98,7 @@ function displayRandomContent() {
 }
 
 function goToForm() {
-    window.location.href = window.location.href.replace('index', 'form');
+    window.location.href = 'https://clairespot.com/margheranelmezzo/form.html';
 }
 
 // Initial content display
