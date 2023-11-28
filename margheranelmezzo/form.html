@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+
+        <link rel="stylesheet" href="style.css">
+        <script defer src="form.js"></script>
+
+        <title>Marghera nel mezzo</title>
+    </head>
+    <body>
+        <button class="mb" onclick="goToIndex();">SALTA IN UN ALTRO MONDO</button>
+
+        <form action="send_email.php" method="POST" enctype="multipart/form-data" onsubmit="onSubmitForm()">
+            <input type="email" id="email" name="email" placeholder="indirizzo email" required onkeyup="enableSubmit()">
+            <input type="text" id="name" name="name" placeholder="autrice/autore" required onkeyup="enableSubmit()">
+            <input type="number" id="year" name="year" placeholder="anno di produzione" required onkeyup="enableSubmit()">
+            <div class="custom-file-input">
+                <input type="file" id="attachment" name="attachment" onchange="onUploadChange(this)" required>
+                <label for="attachment">carica il contenuto</label>
+                <span id="file-name">&nbsp</span>
+            </div>
+            <input id="submit-button" type="submit" value="invia per l'approvazione" disabled>
+        </form>
+    </body>
+</html>
