@@ -34,5 +34,5 @@ function onSubmitForm() {
 }
 
 function goToIndex() {
-    window.location.href = 'https://clairespot.com/margheranelmezzo';
+    window.location.href = window.location.origin + '/margheranelmezzo';
 }
