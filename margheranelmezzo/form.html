@@ -12,7 +12,7 @@
     <body>
         <button class="mb" onclick="goToIndex();">SALTA IN UN ALTRO MONDO</button>
 
-        <form action="send_email.php" method="POST" enctype="multipart/form-data" onsubmit="onSubmitForm()">
+        <form action="https://formspree.io/f/mgejjnjl" method="POST" enctype="multipart/form-data" onsubmit="onSubmitForm()">
             <input type="email" id="email" name="email" placeholder="indirizzo email" required onkeyup="enableSubmit()">
             <input type="text" id="name" name="name" placeholder="autrice/autore" required onkeyup="enableSubmit()">
             <input type="number" id="year" name="year" placeholder="anno di produzione" required onkeyup="enableSubmit()">
@@ -21,6 +21,7 @@
                 <label for="attachment">carica il contenuto</label>
                 <span id="file-name">&nbsp</span>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LcqACEpAAAAAPMZMZUi9GFaiFmcD1EZ4cqQA1GW"></div>
             <input id="submit-button" type="submit" value="invia per l'approvazione" disabled>
         </form>
     </body>
