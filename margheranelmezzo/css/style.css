@@ -29,6 +29,10 @@ button, input, label {
 
 * { box-sizing: border-box; }
 
+.single-image img {
+    width: 100%;
+}
+
 .grid {
   background: #3E1A78;
 }
