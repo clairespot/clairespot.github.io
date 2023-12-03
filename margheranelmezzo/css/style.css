@@ -4,6 +4,10 @@ body {
     text-align: center;
 }
 
+#visited-ids {
+    display: none;
+}
+
 p {
     color: #FFFFFF;
 }

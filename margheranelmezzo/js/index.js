@@ -150,26 +150,32 @@ const contentData = [
     }
 ];
 
-// Initialize the current content id to null
-let currentContentId = null;
-
 // Function to display random content excluding the current id
 function displayRandomContent() {
-    // Generate a random index excluding the current content id
-    let randomIndex;
-    do {
-        randomIndex = Math.floor(Math.random() * contentData.length);
-    } while (contentData[randomIndex].id === currentContentId);
+    const visitedIds = document.getElementById('visited-ids');
+    const visitedContentIds = visitedIds.innerHTML.split(',');
+    const allContentIds = contentData.map(item => item.id);
+    const notVisitedIds = allContentIds.filter(x => !visitedContentIds.includes(x));
 
-    // Update the current content id
-    currentContentId = contentData[randomIndex].id;
+    let randomContent;
+    if (notVisitedIds.length > 0) {
+        // Select a not visited content
+        const randomId = notVisitedIds[Math.floor(Math.random()*notVisitedIds.length)];
+        randomContent = contentData.filter(item => {
+          return item.id === randomId;
+        })[0];
+    } else {
+        // Get a random content
+        visitedIds.innerHTML = '';
+        const randomIndex = Math.floor(Math.random() * contentData.length);
+        randomContent = contentData[randomIndex];
+    }
 
-    // Display the random content
-    const randomContent = contentData[randomIndex];
+    // Set the content
     document.getElementById('content').innerHTML = randomContent.content;
 
     // If they're images, apply Masonry
-    if (currentContentId == 'vicky' || currentContentId == 'elisabetta') {
+    if (randomContent.id == 'vicky' || randomContent.id == 'elisabetta') {
         var grid = document.querySelector('.grid');
         var msnry;
         imagesLoaded(grid, function() {
@@ -192,6 +198,13 @@ function displayRandomContent() {
                 msnry.layout();
             });
         };
+    }
+
+    // Update the visited IDs
+    if (visitedIds.innerHTML == '') {
+        visitedIds.innerHTML = randomContent.id;
+    } else {
+        visitedIds.innerHTML += ',' + randomContent.id;
     }
 }
 
