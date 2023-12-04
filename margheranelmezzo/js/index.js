@@ -3,8 +3,8 @@ const contentData = [
         id: 'the-bridge',
         content: `
             <video width="320" height="240" controls>
-                <source src="files/the-bridge-30.mp4" type="video/mp4">
-                <source src="files/the-bridge-30.ogg" type="video/ogg">
+                <source src="files/the-bridge/1.mp4" type="video/mp4">
+                <source src="files/the-bridge/1.ogg" type="video/ogg">
                 Video non supportato.
             </video>
             <p align="left">Author: The Bridge (Lorenzo Lazzari, Luca Boscolo, Marta Grasp, Giova Rossi, Giulio Rossato, Riccardo Vendramin)</p>
@@ -70,8 +70,8 @@ const contentData = [
         id: 'bro',
         content: `
             <video width="320" height="240" controls>
-                <source src="files/bro.mp4" type="video/mp4">
-                <source src="files/bro.ogg" type="video/ogg">
+                <source src="files/bro/1.mp4" type="video/mp4">
+                <source src="files/bro/1.ogg" type="video/ogg">
                 Video non supportato.
             </video>
             <p align="left">Author: Bruno Mameli</p>
@@ -150,8 +150,34 @@ const contentData = [
     }
 ];
 
+function showLoading() {
+  const loadingContainer = document.getElementById('loading-container');
+  loadingContainer.style.display = 'block';
+
+  // Attach an event listener to the loading GIF
+  const loadingGif = document.getElementById('loading-gif');
+  loadingGif.addEventListener('load', hideLoading);
+}
+
+function hideLoading() {
+  const loadingContainer = document.getElementById('loading-container');
+  loadingContainer.style.display = 'none';
+
+  computeAndShowRandomContent();
+}
+
 // Function to display random content excluding the current id
 function displayRandomContent() {
+    showLoading();
+
+    setTimeout(function () {
+        // Trigger the load event to simulate the end of the GIF animation
+        const loadingGif = document.getElementById('loading-gif');
+        loadingGif.src = loadingGif.src;
+    }, 6000);
+}
+
+function computeAndShowRandomContent() {
     const visitedIds = document.getElementById('visited-ids');
     const visitedContentIds = visitedIds.innerHTML.split(',');
     const allContentIds = contentData.map(item => item.id);
@@ -179,7 +205,7 @@ function displayRandomContent() {
         var grid = document.querySelector('.grid');
         var msnry;
         imagesLoaded(grid, function() {
-            // init Isotope after all images have loaded
+            // Init Isotope after all images have loaded
             msnry = new Masonry(grid, {
                 itemSelector: '.grid-item',
                 columnWidth: '.grid-sizer',
