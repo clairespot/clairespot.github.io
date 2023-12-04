@@ -150,31 +150,33 @@ const contentData = [
     }
 ];
 
-function showLoading() {
-  const loadingContainer = document.getElementById('loading-container');
-  loadingContainer.style.display = 'block';
+function reloadImage() {
+    const loadingGif = document.getElementById('loading-gif');
+    const src = loadingGif.src
+    loadingGif.src = '';
+    loadingGif.src = src;
+}
 
-  // Attach an event listener to the loading GIF
-  const loadingGif = document.getElementById('loading-gif');
-  loadingGif.addEventListener('load', hideLoading);
+function showLoading() {
+    reloadImage();
+    const loadingContainer = document.getElementById('loading-container');
+    loadingContainer.style.display = 'block';
 }
 
 function hideLoading() {
-  const loadingContainer = document.getElementById('loading-container');
-  loadingContainer.style.display = 'none';
-
-  computeAndShowRandomContent();
+    const loadingContainer = document.getElementById('loading-container');
+    loadingContainer.style.display = 'none';
 }
 
 // Function to display random content excluding the current id
 function displayRandomContent() {
     showLoading();
+    computeAndShowRandomContent();
 
     setTimeout(function () {
         // Trigger the load event to simulate the end of the GIF animation
-        const loadingGif = document.getElementById('loading-gif');
-        loadingGif.src = loadingGif.src;
-    }, 6000);
+        hideLoading();
+    }, 6200);
 }
 
 function computeAndShowRandomContent() {
@@ -239,9 +241,6 @@ function goToForm() {
 }
 
 window.onload = function(event) {
-    // Initial content display
     displayRandomContent();
-
-    // Refresh button click event
-    document.getElementById('refresh-button').addEventListener('click', displayRandomContent);  
+    document.getElementById('refresh-button').addEventListener('click', displayRandomContent);
 };
