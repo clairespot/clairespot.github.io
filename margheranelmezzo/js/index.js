@@ -238,8 +238,10 @@ function goToForm() {
     window.location.href = window.location.origin + '/margheranelmezzo/form.html';
 }
 
-// Initial content display
-displayRandomContent();
+window.onload = function(event) {
+    // Initial content display
+    displayRandomContent();
 
-// Refresh button click event
-document.getElementById('refresh-button').addEventListener('click', displayRandomContent);
+    // Refresh button click event
+    document.getElementById('refresh-button').addEventListener('click', displayRandomContent);  
+};
