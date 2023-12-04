@@ -10,19 +10,19 @@
         <title>Marghera nel mezzo</title>
     </head>
     <body>
-        <button class="mb" onclick="goToIndex();">SALTA IN UN ALTRO MONDO</button>
+        <button class="mb" onclick="goToIndex();">JUMP INTO ANOTHER WORLD</button>
 
         <form action="https://formspree.io/f/mgejjnjl" method="POST" enctype="multipart/form-data" onsubmit="onSubmitForm()">
-            <input type="email" id="email" name="email" placeholder="indirizzo email" required onkeyup="enableSubmit()">
-            <input type="text" id="name" name="name" placeholder="autrice/autore" required onkeyup="enableSubmit()">
-            <input type="number" id="year" name="year" placeholder="anno di produzione" required onkeyup="enableSubmit()">
+            <input type="email" id="email" name="email" placeholder="email" required onkeyup="enableSubmit()">
+            <input type="text" id="name" name="name" placeholder="author" required onkeyup="enableSubmit()">
+            <input type="number" id="year" name="year" placeholder="year" required onkeyup="enableSubmit()">
             <div class="custom-file-input">
                 <input type="file" id="attachment" name="attachment" onchange="onUploadChange(this)" required>
-                <label for="attachment">carica il contenuto</label>
+                <label for="attachment">upload your content</label>
                 <span id="file-name">&nbsp</span>
             </div>
             <div class="g-recaptcha" data-sitekey="6LcqACEpAAAAAPMZMZUi9GFaiFmcD1EZ4cqQA1GW"></div>
-            <input id="submit-button" type="submit" value="invia per l'approvazione" disabled>
+            <input id="submit-button" type="submit" value="send for approval" disabled>
         </form>
     </body>
 </html>
