@@ -178,7 +178,7 @@ function displayRandomContent() {
 
     setTimeout(function () {
         hideLoading();
-    }, 6200);
+    }, 7500);
 }
 
 function computeAndShowRandomContent() {
