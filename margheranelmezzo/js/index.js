@@ -171,10 +171,12 @@ function hideLoading() {
 // Function to display random content excluding the current id
 function displayRandomContent() {
     showLoading();
-    computeAndShowRandomContent();
 
     setTimeout(function () {
-        // Trigger the load event to simulate the end of the GIF animation
+        computeAndShowRandomContent();
+    }, 1000);
+
+    setTimeout(function () {
         hideLoading();
     }, 6200);
 }
