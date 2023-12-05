@@ -8,7 +8,7 @@ const contentData = [
                 Video non supportato.
             </video>
             <p align="left">Author: The Bridge (Lorenzo Lazzari, Luca Boscolo, Marta Grasp, Giova Rossi, Giulio Rossato, Riccardo Vendramin)</p>
-            <p align="left">Yeat: 2022</p>
+            <p align="left">Year: 2022</p>
             <p align="left">Description: The Bridge performing at "Concerto contro la guerra" (Concert against the war). WAR IS NEVER THE SOLUTION.</p>
         `
     },
@@ -75,7 +75,7 @@ const contentData = [
                 Video non supportato.
             </video>
             <p align="left">Author: Bruno Mameli</p>
-            <p align="left">Yeat: 2022</p>
+            <p align="left">Year: 2022</p>
             <p align="left">Description: Aerial view of Marghera.</p>
         `
     },
