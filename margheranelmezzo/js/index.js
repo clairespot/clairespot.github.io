@@ -168,6 +168,11 @@ function hideLoading() {
     loadingContainer.style.display = 'none';
 }
 
+function showContent() {
+    const contentContainer = document.getElementById('content-container');
+    contentContainer.style.display = 'block';
+}
+
 // Function to display random content excluding the current id
 function displayRandomContent() {
     showLoading();
@@ -177,6 +182,7 @@ function displayRandomContent() {
     }, 1000);
 
     setTimeout(function () {
+        showContent();
         hideLoading();
     }, 7500);
 }
