@@ -1,25 +1,102 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex, nofollow">
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
 
-        <link rel="stylesheet" href="css/style.css">
-        <script src="js/masonry.pkgd.min.js"></script>
-        <script src="js/imagesloaded.pkgd.min.js"></script>
-        <script defer src="js/index.js"></script>
+  <!-- Load Koulen -->
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
 
-        <title>Marghera nel mezzo</title>
-    </head>
-    <body>
-        <div id='visited-ids'></div>
-        <div id="content-container" style="display: none;">
-            <div id="content"></div>
-            <button id="refresh-button">JUMP INTO ANOTHER WORLD</button>
-            <button onclick="goToForm();">ADD YOUR WORLD</button>
-        </div>
-        <div id="loading-container" style="display: none;">
-          <img id="loading-gif" src="files/loading.gif" alt="Loading">
-        </div>
-    </body>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('IMAGES/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+    }
+    .top-title {
+      font-family: 'Koulen', sans-serif;
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(to bottom, white 0%, transparent 100%);
+      line-height: 1.2;
+      font-size: 2rem;
+      font-weight: regular;
+      letter-spacing: 1px;
+    }
+    .illustration {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .illustration img {
+      width: 100%;
+      max-width: 500px;
+      cursor: pointer;
+    }
+    /* Button group styling */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .button-group button {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-family: 'Koulen', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .button-group button:hover {
+      background-color: rgba(0, 0, 0, 0.85);
+      transform: scale(1.03);
+    }
+
+  /* MEDIA QUERY for desktop layout */
+  @media (min-width: 768px) {
+    .illustration {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button-group {
+      flex-direction: column;
+    }
+
+    .illustration > .button-group:first-child {
+      margin-right: 20px;
+    }
+
+    .illustration > .button-group:last-child {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-title">UNA GALLERIA D'ARTE<br><i>COMUNITARIA</i></div>
+  <div class="illustration">
+      <div class="button-group">
+        <button onclick="location.href='search.html'">L'Archivio Classico</button>
+      </div>
+      <img src="IMAGES/illustration.png" alt="Vai alla galleria">
+      <div class="button-group">
+        <button onclick="location.href='random.html'">Contenuti a Sorpresa</button>
+      </div>
+  </div>
+
+  <script src="archive.js"></script>
+</body>
 </html>

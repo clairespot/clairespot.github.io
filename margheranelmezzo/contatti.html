@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contatti</title>
+  <!-- Core styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Koulen font for header -->
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+  
+  <!-- Add FontAwesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    .content {
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      margin: 40px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      color: black;
+      text-align: left;
+    }
+    .content p {
+      margin: 0 0 10px;
+    }
+    .content a {
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .social-links {
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: #E1306C; /* Instagram's pink color */
+      font-size: 1.2rem;
+      margin-right: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #bc2a8d; /* Darker pink on hover */
+    }
+
+    .social-links .facebook {
+      color: #3b5998; /* Facebook's blue color */
+    }
+
+    .social-links .facebook:hover {
+      color: #2d4373; /* Darker blue on hover */
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        margin: 20px;
+        padding: 15px; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header include -->
+  <div id="header"></div>
+
+  <div class="content">
+    <h2>Contattaci</h2>
+    <p>Se hai una curiosità su <i>Marghera nel Mezzo</i>, <br>puoi scrivere a:</p>
+    <a href="mailto:margheranelmezzo@gmail.com">margheranelmezzo@gmail.com</a>
+
+    <!-- Add the Instagram and Facebook links -->
+    <div class="social-links">
+      <p><br> <br>Seguici su:<br> <br></p>
+      <!-- Instagram Link -->
+      <a href="https://instagram.com/margheranelmezzo" target="_blank" class="instagram-link">
+        <i class="fab fa-instagram"></i> @margheranelmezzo
+      </a><br> <br>
+      <!-- Facebook Link -->
+      <a href="https://facebook.com/margheranelmezzo" target="_blank" class="facebook">
+        <i class="fab fa-facebook-f"></i> @margheranelmezzo
+      </a>
+    </div>
+  </div>
+
+  <script src="archive.js"></script>
+  <script>
+    // Load the shared header
+    fetch('header.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('header').innerHTML = html;
+      });
+
+    // Menu toggle logic
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+    window.addEventListener('click', function(e) {
+      const menu = document.getElementById('menu');
+      if (menu && !e.target.closest('.menu-icon')) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

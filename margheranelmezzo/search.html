@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archivio</title>
+  <!-- Global styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Koulen font for header text -->
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+  <style>
+    /* Page-specific table styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('IMAGES/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+    }
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
+      vertical-align: top;
+    }
+    td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
+    }
+    th {
+      background-color: #f5f5f5;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+    th::after {
+      content: " ⇅";
+      font-size: 0.8rem;
+      color: gray;
+    }
+    th.sorted-asc::after {
+      content: " ↑";
+      color: black;
+    }
+    th.sorted-desc::after {
+      content: " ↓";
+      color: black;
+    }
+    tbody tr {
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    tbody tr:hover {
+      background-color: #e0e0e0;
+    }
+    .icon {
+      font-size: 1.3rem;
+      margin-right: 8px;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <!-- Shared header include -->
+  <div id="header"></div>
+
+  <!-- Archive table -->
+  <table id="archiveTable">
+    <thead>
+      <tr>
+        <th id="th-author" onclick="sortTable('author')">Artista</th>
+        <th id="th-year" onclick="sortTable('year')">Anno</th>
+        <th id="th-title" onclick="sortTable('title')">Titolo</th>
+        <th id="th-type" onclick="sortTable('type')">Tipo</th>
+      </tr>
+    </thead>
+    <tbody id="archiveBody">
+      <!-- Content dynamically generated -->
+    </tbody>
+  </table>
+
+  <script src="archive.js"></script>
+  <script>
+    // Load shared header
+    fetch('header.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('header').innerHTML = html);
+
+    // Dropdown toggle
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+    window.addEventListener('click', e => {
+      const menu = document.getElementById('menu');
+      if (menu && !e.target.closest('.menu-icon')) {
+        menu.style.display = 'none';
+      }
+    });
+
+    // Archive rendering and sorting
+    const typeIcons = { 'Photo': '📸', 'Audio': '🎵', 'Video': '🎥', 'Text': '📄', 'Illustration': '✏️' };
+    let currentSort = { key: 'author', asc: true };
+
+    function renderTable() {
+      const tbody = document.getElementById('archiveBody');
+      tbody.innerHTML = '';
+      archive.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.author}</td>
+          <td>${item.year}</td>
+          <td>${item.title}</td>
+          <td style="text-align:center;" title="${capitalize(item.type)}">${typeIcons[item.type]}</td>
+        `;
+        tr.onclick = () => {
+          localStorage.setItem('currentContent', JSON.stringify(item));
+          window.location.href = 'detail.html';
+        };
+        tbody.appendChild(tr);
+      });
+    }
+
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function sortTable(key) {
+      if (currentSort.key === key) currentSort.asc = !currentSort.asc;
+      else { currentSort.key = key; currentSort.asc = true; }
+      doSort();
+    }
+
+    function doSort() {
+      archive.sort((a, b) => a[currentSort.key] < b[currentSort.key] ? (currentSort.asc ? -1 : 1) : (a[currentSort.key] > b[currentSort.key] ? (currentSort.asc ? 1 : -1) : 0));
+      updateHeaders(); renderTable();
+    }
+
+    function updateHeaders() {
+      ['author','year','title','type'].forEach(h => {
+        const th = document.getElementById('th-' + h);
+        th.classList.remove('sorted-asc','sorted-desc');
+        if (h === currentSort.key) th.classList.add(currentSort.asc ? 'sorted-asc' : 'sorted-desc');
+      });
+    }
+
+    // Initialize
+    window.onload = async () => { await loadArchive(); doSort(); };
+
+  </script>
+</body>
+</html>

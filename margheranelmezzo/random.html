@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contenuti a Sorpresa</title>
+
+  <!-- Global styles -->
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('IMAGES/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+      padding-top: 160px;
+    }
+
+    .content {
+      width: 90%;
+      max-width: 500px;
+      margin: 30px auto 100px auto;
+      padding: 40px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .content-info {
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 550px) {
+      .content {
+        max-width: 300px;
+      }
+    }
+
+    .info-button {
+      display: inline;
+      margin-left: 4px;
+      vertical-align: middle;
+      background: none;
+      border: none;
+      color: #007BFF;
+      cursor: pointer;
+      font-size: 1em;
+      padding: 0;
+    }
+
+    .popup, .overlay {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+    }
+
+    .popup {
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      background-color: white;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      max-width: 80%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .overlay {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .popup-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      float: right;
+      cursor: pointer;
+      color: #333;
+    }
+
+    img, iframe, video {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      text-align: left;
+      margin-top: 15px;
+    }
+
+    .buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+
+    .buttons button {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .buttons button:hover {
+      background-color: rgba(0,0,0,0.85);
+    }
+
+    /* Lightbox Styles */
+    #lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #lightbox-overlay img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+    }
+
+    #lightbox-overlay .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div id="lightbox-overlay">
+  <span class="close-btn">&times;</span>
+  <img src="" alt="Zoomed image" />
+</div>
+
+<!-- Shared header -->
+<div id="header"></div>
+
+<!-- Author info popup -->
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+<div class="popup" id="popup">
+  <button class="popup-close" onclick="closePopup()">×</button>
+  <div id="popupContent"></div>
+</div>
+
+<!-- Content -->
+<div class="content" id="contentContainer">
+  Caricamento contenuto...
+</div>
+
+<!-- Button -->
+<div class="buttons">
+  <button onclick="showRandomContent()">SORPRENDIMI</button>
+</div>
+
+<script src="archive.js"></script>
+<script>
+  // Load shared header
+  fetch('header.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('header').innerHTML = html;
+      window.toggleMenu = () => {
+        const menu = document.getElementById('menu');
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      };
+    });
+
+  function showPopup(text) {
+    document.getElementById('popupContent').innerText = text;
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  let archiveList = [], currentIndex = -1;
+
+  async function init() {
+    await loadArchive();
+    archiveList = archive;
+    showRandomContent();
+  }
+
+  function showRandomContent() {
+    if (!archiveList.length) return;
+    let idx;
+    do { idx = Math.floor(Math.random() * archiveList.length); }
+    while (idx === currentIndex && archiveList.length > 1);
+    currentIndex = idx;
+    renderItem(archiveList[idx]);
+  }
+
+  function renderItem(item) {
+    let line = `di ${item.author}`;
+    const descBtn = item.description
+      ? `<button class="info-button" onclick="showPopup(\`${item.description.replace(/`/g,'\\`')}\`)">ⓘ</button>`
+      : ``;
+    line += item.year ? `${descBtn}, ${item.year}` : descBtn;
+
+    let html = `<div class="content-info">
+      <h2>${item.title}</h2>
+      <p>${line}</p>
+    </div>`;
+
+    const type = item.type.toLowerCase();
+    const media = (src, alt) => `<img src="${src}" alt="${alt}" class="zoomable">`;
+
+    if (type === 'photo' || type === 'illustration') {
+      if (Array.isArray(item.src)) {
+        html += item.src.map(s => media(s, type)).join('');
+      } else {
+        html += media(item.src, type);
+      }
+    } else if (type === 'video') {
+      html += item.src.includes('youtube')
+        ? `<iframe src="${item.src}" frameborder="0" allowfullscreen></iframe>`
+        : `<video controls src="${item.src}"></video>`;
+    } else if (type === 'audio') {
+      html += `<iframe src="${item.src}" width="100%" height="80" frameborder="0" allow="encrypted-media"></iframe>`;
+    } else if (type === 'text') {
+      html += `<pre id="textContent">Caricamento testo...</pre>`;
+    } else {
+      html += `<p>Tipo sconosciuto: ${item.type}</p>`;
+    }
+
+    document.getElementById('contentContainer').innerHTML = html;
+
+    if (type === 'text') {
+      fetchTextContent(item.src, document.getElementById('textContent'), item.author, item.year);
+    }
+
+    // Enable zoom
+    document.querySelectorAll('.zoomable').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        const overlay = document.getElementById('lightbox-overlay');
+        overlay.querySelector('img').src = img.src;
+        overlay.style.display = 'flex';
+      });
+    });
+  }
+
+  window.onload = init;
+
+  document.getElementById('lightbox-overlay').addEventListener('click', e => {
+    if (e.target.classList.contains('close-btn') || e.target === e.currentTarget) {
+      e.currentTarget.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
