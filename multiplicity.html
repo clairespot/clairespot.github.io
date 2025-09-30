@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chiara Portinari | Collective Curations</title>
+  <link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+html, body {
+  height: 100%;
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--neutral);
+  color: var(--text);
+}
+section {
+  height: 100vh; /* Full height for each section */
+  scroll-snap-align: start; /* Align to the start for snapping */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+</style>
+</head>
+
+
+<body class="multiplicity-page">
+
+  <div class="fullpage-container">
+    <!-- First Slide: Hero Section -->
+    <section class="combined-hero">
+      <div class="hero-part">
+        <div class="blur-overlay"></div>
+        <div class="hero-overlay"></div>
+        <nav class="section-nav hero-nav" aria-label="Page hero navigation">
+          <a class="nav-arrow left"  href="pedagogies.html"  aria-label="Previous: Innovative Pedagogies">◀</a>
+          <a class="nav-arrow right" href="events.html"      aria-label="Next: Communities & Events">▶</a>
+        </nav>        
+        <div class="hero-content">
+          <div class="hero-title-row">
+            <h1 class="title-font"  style="text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">Collective<br>Curations</h1>
+          </div>
+          <p style="font-size: 1.3rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">Imaginations<br> &amp; Liberation</p>
+        </div>
+      </div>
+    </section>
+    
+
+
+
+
+
+    <!-- My Work Section with full-card links -->
+<section id="mywork" class="slide mywork title-font">
+  <div class="projects-list">
+
+    <a class="project" href="PROJECTS/wall-project.html">
+      <div class="project-title">
+        <h3>Wall Project</h3><span class="desktop-only"><br><br></span>
+      </div>
+      <div class="project-description">
+        <p>Reclaiming university spaces for student expression<span class="mobile-hide">, advocating for belonging and ownership during a period of institutional change</span>.</p>
+      </div>
+    </a>
+
+    <a class="project" href="PROJECTS/marghera.html">
+      <div class="project-title">
+        <h3>
+          <span class="desktop-only">Marghera<br>nel Mezzo<br><br></span>
+          <span class="mobile-only">Marghera nel Mezzo</span>
+        </h3>
+      </div>
+      <div class="project-description">
+        <p>A grassroots art gallery for Marghera - Venice<span class="mobile-hide">, created by its community and </span> focused on building unity<span class="mobile-hide"> against capitalist divides</span>.</p>
+      </div>
+    </a>
+
+    <a class="project" href="PROJECTS/postcards.html">
+      <div class="project-title">
+        <h3>Postcards to the Community</h3><span class="desktop-only"><br><br></span>
+      </div>
+      <div class="project-description">
+        <p>A creative <span class="mobile-hide">postcard-making </span>workshop <span class="mobile-hide">by Liana collective </span>that gathers memories and future visions for <span class="mobile-hide">the Latin and migrant community in </span>Elephant and Castle - London.</p>
+      </div>
+    </a>
+
+    <a class="project" href="PROJECTS/changemaking.html">
+      <div class="project-title">
+        <span class="desktop-only"><h3>Changemaking<br>led by Students</h3></span>
+        <span class="mobile-only"><h3>Changemaking led by Students</h3></span>
+      </div>
+      <div class="project-description">
+        <p>An archive of student and alumni work in Elephant and Castle, London<span class="mobile-hide">, empowering students to engage in urban change</span>.</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+
+    <section id="podcast" class="slide podcast title-font">
+      <div class="content-wrapper">
+        <h2>Podcast</h2>
+        <p>[Coming soon.]</p>
+      </div>
+    </section>
+
+<script>
+  const credits = document.querySelector('.subtitle-credits');
+  const contact = document.querySelector('#contact');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          credits.style.display = 'none';
+        } else {
+          credits.style.display = 'block';
+        }
+      });
+    },
+    {
+      threshold: 0.1, // Adjust if needed
+    }
+  );
+
+  observer.observe(contact);
+</script>
+<!-- Place this just before the closing </body> tag -->
+<div id="footer-container"></div>
+<script src="script.js"></script>
+</body>
+</html>

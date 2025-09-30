@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Il Progetto</title>
+  <!-- Global styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Koulen font for header text -->
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+  <style>
+    /* Page-specific styles */
+    .content {
+      padding: 30px;
+      background-color: rgba(255,255,255,0.9);
+      margin: 40px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      color: black;
+      text-align: left;
+    }
+
+    .content p {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .content a {
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .content img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+
+    figure {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    figcaption {
+      font-size: 14px;
+      color: #555;
+      margin: 0 0 10px 0;
+    }
+
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .image-gallery a {
+      display: block;
+    }
+
+    .image-gallery img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    body {
+      padding-top: 145px; /* To accommodate the fixed header */
+    }
+    @media (max-width: 768px) {
+      .content {
+        margin: 20px; /* Adds space on the sides for mobile */
+        padding: 15px; /* Reduces padding on mobile */
+  </style>
+</head>
+<body>
+  <!-- Shared header include -->
+  <div id="header"></div>
+
+  <!-- Page content -->
+  <div class="content">
+    <h2>Il Progetto</h2>
+    <p><i>Marghera nel Mezzo</i> è un progetto di ricerca partecipativa e co-design che nasce con l’obiettivo di <b>esplorare, raccontare e valorizzare l’identità sociale, culturale e urbana del quartiere di Marghera</b>. <br><br>Attraverso un processo aperto e collettivo, il progetto coinvolge attivamente abitanti, artisti, ricercatori e realtà del territorio in un percorso di ascolto, raccolta di memorie e immaginazione condivisa.</p>
+    
+    <figure>
+      <img src="IMAGES/walk1.jpg" alt="Un gruppo di persone camminano per Marghera">
+      <figcaption>Un momento della camminata esplorativa lungo Via Fratelli Bandiera, Marghera</figcaption>
+    </figure>
+
+    <p>L'iniziativa si è strutturata in una serie di attività partecipative 
+      <a href="https://www.instagram.com/p/CvFuYPorfCj/" target="_blank">interviste</a>, 
+      <a href="https://www.instagram.com/p/CxqSlijKL11/" target="_blank">camminate esplorative</a>, 
+      <a href="https://www.instagram.com/p/C0JH1FQqrR5/" target="_blank">mappature collettive</a> – finalizzate a far emergere le <b>storie</b>, i <b>vissuti</b>, i <b>desideri</b> e le <b>criticità</b> che abitano Marghera oggi.
+    </p>
+
+    <figure>
+      <img src="IMAGES/map1.jpg" alt="Illustrazione del percorso delle camminate esplorative">
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <img src="IMAGES/leaflet1.jpg" alt="Volantino di una camminata esplorativa - fronte" style="width: 48%; max-width: 300px;">
+        <img src="IMAGES/leaflet2.jpg" alt="Volantino di una camminata esplorativa - retro" style="width: 48%; max-width: 300px;">
+      </div>
+    </figure>
+
+    <p>Il processo si è tradotto nella creazione di una <b>galleria d’arte comunitaria</b>, dove è possibile non solo prendere visione delle opere di chi vive il territorio, ma anche contribuire al patrimonio condiviso aggiungendovi le proprie. La galleria raccoglie fotografie, video, audio, testi e illustrazioni che rappresentano il quartiere dal punto di vista di chi lo vive, offrendo <b>uno spazio di espressione, riflessione e dialogo</b>.</p>
+
+    <div class="image-gallery">
+      <a href="IMAGES/imgweb1.jpeg" target="_blank"><img src="IMAGES/imgweb1.jpeg" alt="Screenshot 1"></a>
+      <a href="IMAGES/imgweb2.jpeg" target="_blank"><img src="IMAGES/imgweb2.jpeg" alt="Screenshot 2"></a>
+      <a href="IMAGES/imgweb3.jpeg" target="_blank"><img src="IMAGES/imgweb3.jpeg" alt="Screenshot 3"></a>
+      <a href="IMAGES/imgweb4.jpeg" target="_blank"><img src="IMAGES/imgweb4.jpeg" alt="Screenshot 4"></a>
+      <a href="IMAGES/imgweb5.jpeg" target="_blank"><img src="IMAGES/imgweb5.jpeg" alt="Screenshot 5"></a>
+      <a href="IMAGES/imgweb6.jpeg" target="_blank"><img src="IMAGES/imgweb6.jpeg" alt="Screenshot 6"></a>
+    </div>
+
+    <p><i>Marghera nel Mezzo</i> si pone quindi “nel mezzo", tra gli estremi, tra gli stereotipi, come luogo simbolico d’incontro: tra generazioni, culture, memorie e futuri possibili. È <b>un esperimento collettivo di narrazione urbana</b>, dove l’arte diventa strumento per abitare criticamente il presente e progettare insieme l’avvenire del territorio.</p>
+
+    <figure>
+      <img src="IMAGES/illustration.png" alt="Illustrazione logo di Marghera nel Mezzo">
+    </figure>
+  </div>
+
+  <script>
+    // The toggleMenu function directly here to ensure it works
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      console.log("toggleMenu called"); // Debugging line
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+
+          // Add console log to check if header.html is loaded
+          console.log('Header HTML loaded');
+        });
+
+      window.addEventListener('click', function(e) {
+        const menu = document.getElementById('menu');
+        if (menu && !e.target.closest('.menu-icon') && !e.target.closest('.dropdown-menu')) {
+          menu.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

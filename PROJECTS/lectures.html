@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guest Lectures</title>
+<link rel="stylesheet" href="../styles.css">
+
+  <style>
+    :root {
+      --primary: #4d8ef0;
+      --primary-light: #d9d9d9;
+      --secondary: #080F3A;
+      --accent: #88DADE;          /* lighter, more vibrant pink */
+      --accent-secondary: #f06292;
+      --neutral: #080F3A;
+      --text: #d9d9d9;
+    }
+
+    /* --- Core Fixed Footer Styles --- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Make html and body take full viewport height */
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--secondary);
+      color: var(--neutral);
+      overflow: hidden; /* Keep overflow hidden on body to prevent overall page scroll */
+    }
+
+    body {
+      display: flex; /* Make body a flex container */
+      flex-direction: column; /* Stack children vertically */
+    }
+
+    .main-layout-container {
+      display: flex;
+      flex: 1; /* Allows this container to grow and take all available space */
+      /* No overflow property here; the content inside it ('.content') will manage its own scroll */
+      min-height: 0; /* Important for flex items in a column to shrink if needed */
+      gap: 0.5rem;
+    }
+
+    /* --- Existing Layout & Content Styles --- */
+    .sidebar {
+      flex: 0 0 33vh;
+      background: none;
+      color: var(--neutral);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0rem 1rem 4rem;
+      box-sizing: border-box;
+      /* overflow-y: auto; <-- Removed from sidebar. No scrolling for sidebar itself. */
+      text-align: right;
+    }
+
+    .sidebar .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar .title p{
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .collaborators {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .collaborators .image-link {
+      margin: 0 0 0 auto;
+      text-align: right;
+    }
+
+    .collaborators a img {
+      width: 19vh;
+      display: block;
+    }
+
+    .collaborators a img:hover {
+      transform: scale(1.05);
+    }
+
+    .collaborators a {
+      text-decoration: none;
+    }
+
+    .collaborators a:hover {
+      transform: scale(1.05);
+    }
+
+    .content {
+      flex: 1 1 auto;
+      overflow-y: auto; /* This is where the main content scrolling happens */
+      overflow-x: hidden;
+      padding: 2rem 2rem; /* Keep padding for content spacing */
+      box-sizing: border-box;
+      color: var(--text);
+      background: var(--secondary);
+      max-width: 1000vh;
+      margin: 0;
+      margin-right: 4rem;
+    }
+
+    .initial-text {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 2rem;
+      text-align: left;
+      width: 95%;
+    }
+
+/* Desktop only: keep the intro line stuck at the top of the content pane */
+@media (min-width: 980px) {
+  .content {
+    position: relative;   /* anchor for the pseudo */
+    isolation: isolate;   /* keep its z-index stack above siblings */
+  }
+
+  .content .initial-text {
+    position: sticky;
+    top: 0;
+    z-index: 10;          /* above the scrolling content */
+    background: transparent; /* bg handled by pseudo */
+  }
+
+  /* Full-bleed grey that also covers the area ABOVE the intro */
+  .content .initial-text::before {
+    content: "";
+    position: absolute;
+    left: -100vw;         /* bleed to viewport edges */
+    right: -100vw;
+    top: -100vh;          /* extend one viewport height above */
+    bottom: -3vh;            /* and down through the intro’s own height */
+    background: var(--secondary);
+    z-index: -1;          /* behind the text, still above content */
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .initial-text {
+    width: 100%;
+  }
+  }
+
+    .image-link {
+      display: block;
+      max-width: 300px;
+      margin: 0rem auto;
+      text-align: center;
+    }
+
+    .image-link img {
+      width: 100%;
+      max-width: 33vh;
+      display: block;
+    }
+
+    .image-link img:hover {
+      transform: scale(1.05);
+    }
+
+    .full-width-image {
+      width: 100%;
+      height: auto;
+      max-height: 40vh;
+      object-fit: cover;
+      border-radius: 0.8vh;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .project-description {
+      margin: 3rem 0;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .project-description img {
+      display: block;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      border-radius: 0.8vh;
+    }
+    
+    .cm-VR-container {
+      display: flex;
+      justify-content: flex-start; /* optional, aligns items horizontally from left */
+      align-items: flex-start;
+      max-height: 40vh;
+      margin-top: 2rem; 
+      overflow: visible;
+      color: var(--text);
+    }
+
+    .cm-VR-container img{
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      margin-top: 0;
+    }
+
+    .cm-VR-container p{
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-left: 2rem;
+    }
+
+    iframe {
+      margin: 1.5rem auto 0;
+      display: block;
+      border-radius: 0.8vh;
+      border: 1px solid var(--primary-light);
+      width: 60%;
+      height: 16vh;
+    }
+
+    .section-content4 {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .section-content4 img {
+      width: 50%;
+      border-radius: 0.8vh;
+      align-self: center;
+    }
+
+    .section-content4 p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* The bottom-space is no longer needed with a fixed footer */
+    .bottom-space {
+      display: none;
+    }
+
+  </style>
+</head>
+<body class="lectures">
+  <div class="main-layout-container">
+    <div class="sidebar">
+      <div class="title"><span class="desktop-only">Guest Lectures</span><span class="mobile-only">Guest<br>Lectures</span></div>
+      <div class="collaborators">
+        <a href="https://www.arts.ac.uk/colleges/london-college-of-communication" target="_blank" rel="noopener noreferrer">
+          <img src="../IMAGES/UAL-LCC-logo-white.png" alt="UAL: London College of Communication" />
+        </a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="initial-text">
+        How can pedagogy foster shared ownership of learning by using lived experience as a starting point for collective inquiry and co-creation of knowledge?      </div>
+
+      <div>
+        <img src="../IMAGES/lecture.png" alt="Chiara is giving a lecture in front of a postgraduate class of around 50 people." class="full-width-image" style="margin-bottom: 0.5rem;"/>
+        <figcaption>Photo by Frieda Bischoff, 2025.<br>Chiara engaging with students from the MA Design for Social Innovation and Sustainable Futures course at the London College of Communication.</figcaption>
+      </div>
+
+      <div class="project-description">
+        <p>Chiara Portinari is an Associate Lecturer on the MA Design for Social Innovation and Sustainable Futures at London College of Communication (LCC). A Fellow of the Higher Education Academy (FHEA) and former LCC Changemaker, they bring a deep commitment to relational, justice-oriented learning grounded in both academic and professional experience.<br><br>They support students through <strong>1-1 sessions</strong>, <strong>feedback panels</strong>, and <strong>collaborative conversations</strong>, with a focus on care, critical reflection, and creative agency. Their practice is shaped by a desire to help make the university a more organic, responsive space—one that grows through dialogue and shared responsibility.<br><br>Drawing from their background in social design, curation, and community work, Chiara shares their lived knowledge to support students as they navigate complex systems and design for meaningful change.
+        </p>
+      </div>
+      <div id="collaborators-anchor"></div>
+    </div>
+    <div id="footer-container"></div>
+<script src="../script.js"></script>
+</body>
+</html>

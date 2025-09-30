@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About</title>
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    :root {
+      --primary: #4d8ef0;
+      --primary-light: #D9D9D9;
+      --secondary: #080F3A;
+      --accent: #88DADE;
+      --accent-secondary: #f06292;
+      --neutral: #080F3A;
+      --text: #D9D9D9;
+    }
+
+    /* --- Base (desktop-first) --- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-image: url('IMAGES/impact-speaking-about.jpeg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      overflow: hidden; /* page itself doesn’t scroll on desktop */
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === Desktop (≥981px): sidebar on top, content below === */
+    @media (min-width: 981px) {
+      .main-layout-container {
+        display: flex;
+        flex-direction: column;   /* stack vertically */
+        min-height: 0;            /* allow the content pane to flex/scroll */
+        padding: 2rem 0 0 3rem;
+      }
+
+      .sidebar {
+        flex: 0 0 auto;           /* natural height */
+        width: 100%;
+        max-width: none;
+        padding: 2rem 2rem 1rem;
+        text-align: left;
+      }
+
+      .content {
+        flex: 1 1 auto;           /* fill remaining height */
+        overflow-y: auto;         /* scrolls inside content */
+        margin: 0 auto;           /* center the narrow column */
+        max-width: 30rem;
+        max-height: none;         /* remove 35rem cap on desktop */
+      }
+    }
+
+    .sidebar .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent-secondary);
+      margin-bottom: 2rem;
+      letter-spacing: 0.2rem;
+    }
+
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    .contact img {
+      width: 30vh;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+
+    .contact .image-link { margin: 0 0 0 auto; text-align: right; }
+    .contact a img { width: 140px; display: block; }
+    .contact a img:hover { transform: scale(1.05); }
+    .contact a { text-decoration: none; }
+    .contact a:hover { transform: scale(1.05); }
+
+    .content {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 3rem 2rem;
+      box-sizing: border-box;
+      color: var(--text);
+      max-width: 30rem;
+      margin: 0;
+      margin-bottom: 10rem;
+    }
+
+    .project-description {
+      margin: 3rem 0;
+      line-height: 1.6;
+      text-align: left;
+      letter-spacing: 0.05rem;
+      margin-top: 0;
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    .project-description img {
+      display: block;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .project-description a {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    ul { padding-top: 1rem; margin-bottom: 4rem; width: 100%; }
+    li { margin-top: 1rem; font-weight: 200; color: #d9d9d9; list-style: none; }
+    .project-description ul li p { margin-top: 0; padding-top: 0; }
+    .project-description ul li h2 {
+      font-size: 1.4rem;
+      letter-spacing: 0.4vh;
+      padding-bottom: 0.4rem;
+      padding-top: 1rem;
+    }
+
+    /* --- MOBILE (≤980px): full black page; content can go under fixed footer --- */
+    @media (max-width: 980px) {
+      html.about,
+      body.about {
+        overflow: auto;                 /* page scrolls normally */
+        height: auto;                   /* allow body to grow with content */
+        min-height: 100%;
+        background: #000 !important;    /* force solid black */
+        background-image: none !important;
+        background-attachment: scroll !important;
+      }
+
+      .main-layout-container {
+        display: block;
+        width: 100%;
+        min-height: 100vh;              /* ensure at least one viewport tall */
+        background: transparent;
+      }
+
+      .sidebar {
+        height: 5rem;
+        border-right: none;
+        padding: 1.3rem 0 0;         /* tidy padding */
+        text-align: left;
+        background-color: var(--neutral);
+        position: fixed;
+        align-items: flex-start;
+        top: 0;
+        z-index: 1000;
+        width: 100vw;
+        box-sizing: border-box;
+        text-align: left !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        overflow-wrap: anywhere; /* break very long tokens if needed */
+       }
+
+       .sidebar .title {
+        margin-left: 1rem;
+       }
+      .content {
+        max-width: 100%;
+        max-height: none !important;    /* no clipping on mobile */
+        overflow: visible;
+        background: transparent;        /* let black body show through */
+        margin: 0;
+        padding: 5rem 5rem;
+      }
+
+      .content .project-description {
+        margin: 0;
+        line-height: 1.6;
+        text-align: left;
+      }
+
+      .content .project-description img {
+        height: auto;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 0;
+      }
+    }
+
+    /* No bottom-space needed with fixed footer */
+    .bottom-space { display: none; }
+
+  </style>
+</head>
+<body class="about">
+  <div class="main-layout-container">
+    <div class="sidebar">
+      <div class="title">ABOUT</div>
+    </div>
+
+    <div class="content">
+      <div class="project-description">
+        <p><a href="https://www.linkedin.com/in/chiaraportinari/" target="_blank">Chiara Portinari</a> (she/they) is a social innovation designer, educator, and consultant based in London. <br><br></p>
+        <span class="mobile-only">
+          <img src="../IMAGES/impact-speaking-2.jpeg" alt="Portrait of Chiara">
+          <figcaption style="padding-top: 0rem; padding-bottom: 1rem;">Photo by Berenice Guizzo, 2025.</figcaption>
+        </span>
+        <p>With a Master's in Design for Social Innovation and Sustainable Futures from the London College of Communication (LCC) - UAL, Chiara’s practice explores the intersections of <strong>creative resistance, speculative repair, and collective imagination as tools for transformative change</strong>.</p>
+              <!-- === Testimonials / Quotes Slider === -->
+<section class="quotes-slider" aria-label="Testimonials">
+  <button class="qs-nav qs-prev" aria-label="Previous quote">‹</button>
+  <button class="qs-nav qs-next" aria-label="Next quote">›</button>
+
+  <ul class="qs-track">
+    <li class="qs-slide" data-active role="group" aria-roledescription="slide" aria-label="1 of 3">
+      <blockquote>
+        <p>“Chiara not only offered thoughtful insights but presented them in a way that was both generous and constructive.”</p>
+        <cite>— Cassia Clarke, <p style="font-size: 1rem">Independent Community Archivist</p></cite>
+      </blockquote>
+    </li>
+
+    <li class="qs-slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+      <blockquote>
+        <p>“Her work is a model of thoughtful, student-led innovation that enhances both learning and institutional practice.”</p>
+        <cite>— Kevin J. Brazant, <p style="font-size: 1rem">Senior Educational Developer</p></cite>
+      </blockquote>
+    </li>
+
+    <li class="qs-slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+      <blockquote>
+        <p>“We had such good feedback from colleagues and it was great to finish the series with a creative example of embedding compassionate assessment in practice.”</p>
+        <cite>— Vikki Hill, <p style="font-size: 1rem">Director of Learning Enhancement and Academic Development</p></Director></cite>
+      </blockquote>
+    </li>
+  </ul>
+</section>
+        <p><br>Rooted in collaboration, Chiara’s work spans three interconnected AREAS OF PRACTICE:</p>
+        <ul>
+          <li>
+            <h2>1. Innovative Pedagogies</h2>
+            <p>Both an educator and pedagogy evaluator, Chiara designs and facilitates participatory learning experiences that question dominant knowledge systems and cultivate liberatory, community-based approaches to education.</p>
+          </li>
+
+          <li>
+            <h2>2. Collective Curations</h2>
+            <p>Chiara co-designs collective curatorial processes, centering grassroots voices and artistic practices to activate spaces of shared authorship, reflection, and resistance.</p>
+          </li>
+
+          <li>
+            <h2>3. Communities & Events</h2>
+            <p>Through workshops, installations, talks, and facilitation, Chiara invites communities to feel, think, and build together, disrupting the status quo and envisioning alternative futures grounded in equity, care, and sustainability.</p>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- === Skills teaser (links to full toolkit) === -->
+      <section class="skills-teaser" aria-label="Creative Toolkit teaser">
+        <h3 class="skills-teaser__title">Creative Toolkit</h3>
+        <div class="skills-teaser__grid">
+          <a class="skills-teaser__card" href="index.html#skills" style="--bg:url('IMAGES/skills/skill-sculpture.png')">
+            <span>Sculpture</span>
+          </a>
+          <a class="skills-teaser__card" href="index.html#skills" style="--bg:url('IMAGES/skills/skill-illustration.jpg')">
+            <span>Illustration</span>
+          </a>
+          <a class="skills-teaser__card" href="index.html#skills" style="--bg:url('IMAGES/skills/skill-photography.jpg')">
+            <span>Photography</span>
+          </a>
+          <a class="skills-teaser__card" href="index.html#skills" style="--bg:url('IMAGES/skills/skill-design.jpg')">
+            <span>Design</span>
+          </a>
+        </div>
+        <p class="skills-teaser__cta"><a href="index.html#skills">Browse the full toolkit →</a></p>
+      </section>
+      <div class="project-description"><p><br><br><br>Chiara's work empowers people to co-create knowledge, challenge established narratives, and imagine more sustainable futures.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+  <script src="../script.js"></script>
+  <div class="photo-credit desktop-only">
+    Image credits <a href="https://berenice.guzzophotos.com/about/" target="_blank" rel="noopener">Berenice Guzzo</a>
+  </div>
+</body>
+</html>

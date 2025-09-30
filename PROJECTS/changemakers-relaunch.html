@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Changemakers Relaunch Event</title>
+<link rel="stylesheet" href="../styles.css">
+
+  <style>
+    :root {
+      --primary: #4d8ef0;
+      --primary-light: #d9d9d9;
+      --secondary: #080F3A;
+      --accent: #88DADE;          /* lighter, more vibrant pink */
+      --accent-secondary: #f06292;      
+      --neutral: #080F3A;
+      --text: #d9d9d9;
+    }
+
+    /* --- Core Fixed Footer Styles --- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Make html and body take full viewport height */
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--secondary);
+      color: var(--neutral);
+      overflow: hidden; /* Keep overflow hidden on body to prevent overall page scroll */
+    }
+
+    body {
+      display: flex; /* Make body a flex container */
+      flex-direction: column; /* Stack children vertically */
+    }
+
+    .main-layout-container {
+      display: flex;
+      flex: 1; /* Allows this container to grow and take all available space */
+      /* No overflow property here; the content inside it ('.content') will manage its own scroll */
+      min-height: 0; /* Important for flex items in a column to shrink if needed */
+      gap: 0.5rem;
+    }
+
+    /* --- Existing Layout & Content Styles --- */
+    .sidebar {
+      flex: 0 0 33vh;
+      background: none;
+      max-width: 100%;
+      color: var(--neutral);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0rem 1rem 4rem;
+      box-sizing: border-box;
+      /* overflow-y: auto; <-- Removed from sidebar. No scrolling for sidebar itself. */
+      text-align: right;
+    }
+
+    .sidebar .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar .title p{
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .collaborators {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .collaborators .image-link {
+      margin: 0 0 0 auto;
+      text-align: right;
+    }
+
+    .collaborators a img {
+      width: 10rem;
+      display: block;
+    }
+
+    .collaborators a img:hover {
+      transform: scale(1.05);
+    }
+
+    .content {
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto; /* This is where the main content scrolling happens */
+      padding: 2rem 2rem; /* Keep padding for content spacing */
+      box-sizing: border-box;
+      color: var(--text);
+      background: var(--secondary);
+      max-width: 1000vh;
+      margin: 0;
+      margin-right: 4rem;
+    }
+
+    .initial-text {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 2rem;
+      text-align: left;
+      width: 95%;
+    }
+
+/* Desktop only: keep the intro line stuck at the top of the content pane */
+@media (min-width: 980px) {
+  .content {
+    position: relative;   /* anchor for the pseudo */
+    isolation: isolate;   /* keep its z-index stack above siblings */
+  }
+
+  .content .initial-text {
+    position: sticky;
+    top: 0;
+    z-index: 10;          /* above the scrolling content */
+    background: transparent; /* bg handled by pseudo */
+  }
+
+  /* Full-bleed grey that also covers the area ABOVE the intro */
+  .content .initial-text::before {
+    content: "";
+    position: absolute;
+    left: -100vw;         /* bleed to viewport edges */
+    right: -100vw;
+    top: -100vh;          /* extend one viewport height above */
+    bottom: -3vh;            /* and down through the intro’s own height */
+    background: var(--secondary);
+    z-index: -1;          /* behind the text, still above content */
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .initial-text {
+    width: 100%;
+  }
+  }
+
+    .image-link {
+      display: block;
+      max-width: 33vh;
+      margin: 0rem auto;
+      text-align: center;
+    }
+
+    .image-link img {
+      width: 100%;
+      max-width: 33vh;
+      display: block;
+    }
+
+    .image-link img:hover {
+      transform: scale(1.05);
+    }
+
+    .full-width-image {
+      width: 100%;
+      height: auto;
+      max-height: 40vh;
+      object-fit: cover;
+      border-radius: 0.8vh;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .project-description {
+      margin: 3rem 0;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .project-description img {
+      display: block;
+      margin-top: 2rem;
+      max-width: 33vh;
+      width: 100%;
+      border-radius: 0.8vh;
+    }
+    
+    .cm-poster-container {
+      display: flex;
+      justify-content: flex-start; /* optional, aligns items horizontally from left */
+      align-items: flex-start;
+      max-height: 40vh;
+      margin-top: 2rem; 
+      overflow: visible;
+      color: var(--text);
+    }
+
+    .cm-poster-container img{
+      max-height: 40vh;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      margin-top: 0;
+    }
+
+    .cm-poster-container p{
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-left: 2rem;
+    }
+
+    iframe {
+      margin: 1.5rem auto 0;
+      display: block;
+      border-radius: 0.8vh;
+      border: 1px solid var(--primary-light);
+      width: 60%;
+      height: 16vh;
+    }
+
+    .gallery-section {
+      display: flex;
+      gap: 2rem;
+      margin: 4rem 0;
+      align-self: center;
+    }
+
+    .gallery-container {
+      flex: 1 1 33vh;
+      max-width: 48%;
+    }
+
+    .gallery-container img {
+      height: 175px;
+      border-radius: 0.8vh;
+    }
+
+    /* The bottom-space is no longer needed with a fixed footer */
+    .bottom-space {
+      display: none;
+    }
+    @media (max-width: 980px) {
+      .gallery-section {
+        display: flex;
+        flex-direction: column;  /* stack vertically */
+        gap: 2rem;
+        margin: 0 0;
+        align-self: center;
+        align-items: stretch;     /* children fill the width */
+      }
+      .gallery-section .gallery-container {
+        max-width: 100%;         /* override the 48% rule */
+        width: 100%;
+        flex: 0 0 auto;          /* don’t try to share space */
+      }
+      .gallery-section .gallery-container img {
+        width: 100%;
+        height: auto !important;   /* override the 175px */
+        max-width: none;
+        display: block;
+        border-radius: 0.8vh;
+      }
+    }
+  </style>
+</head>
+<body class="changemakers-relaunch">
+  <div class="main-layout-container">
+    <div class="sidebar">
+      <div class="title"><span class="desktop-only"><p style="font-size: 20px;">Changemakers</p>Relaunch Event</span><span class="mobile-only">Changemakers</p>Relaunch Event</span></div>
+      <div class="collaborators">
+        <a href="https://www.arts.ac.uk/colleges/london-college-of-communication" target="_blank" rel="noopener noreferrer">
+          <img src="../IMAGES/UAL-LCC-logo-white.png" alt="UAL: London College of Communication" />
+        </a>
+        <a href="https://lccchangemakers.myblog.arts.ac.uk/" target="_blank" rel="noopener noreferrer">
+          <img src="../IMAGES/CM-logo-cream.png" alt="Changemakers" />
+        </a>
+        <a href="https://lccchangemakers.myblog.arts.ac.uk/news/the-wall-project/" target="_blank" rel="noopener noreferrer" class="image-link">
+          <img src="../IMAGES/wp-tower.png" alt="Illustration of the Tower Block of the London College of Communication with a pencil indicating the 7th floor" style="height: 6rem; width: auto;"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="initial-text">
+      Who are the LCC Changemakers and how can they support LCC students and staff to succeed in their university experience?
+      </div>
+      <div>
+        <img src="../IMAGES/cm-relaunch.jpeg" alt="Chiara Portinari present in front of a slide saying Curriculum Projects, visible on a screen on the left. Chiara is standing on the right side with a microphone in her hand." class="full-width-image" style="margin-bottom: 0.5rem;"/>
+        <figcaption>Photo by Alejandra Nava, 2025.<br>Chiara presenting at the <i>Changemakers Relaunch</i> event at London College of Communication (LCC) - UAL.</figcaption>
+      </div>
+
+      <div class="project-description">
+        <p>At the <i>Changemakers Relaunch</i> event, Chiara co-presented and walked the audience through the key curriculum-level projects led by the Changemakers team of the London College of Communication (LCC). <br><br>The event helped raise the visibility of the Changemakers’ work, while also fostering new collaborative opportunities and connections across departments at the institution.</li></p>
+      </div>
+
+      <div class="gallery-section">
+        <div class="gallery-container">
+          <img src="../IMAGES/cm-relaunch1.jpeg" alt="Terry Finnigan and Cassia Clark presenting on a stage"
+           />
+           <figcaption>Photo by Hanna Cox, 2025.<br>Associate Dean Terry Finnigan presenting alongside Cassia Clarke at the <i>Changemakers Relaunch</i> event.</figcaption>
+          </div>
+        <div class="gallery-container">
+          <img src="../IMAGES/cm-relaunch2.jpeg" alt="Chiara presenting on a stage"/>
+          <figcaption>Photo by Hanna Cox, 2025.<br>Chiara Portinari presenting at the <i>Changemakers Relaunch</i> event.</figcaption>
+        </div>
+        <div class="gallery-container">
+            <img src="../IMAGES/cm-relaunch3.jpeg" alt="Saranya Satheesh and Slavi Kaloferov presenting on a stage" />
+          <figcaption>Photo by Chiara Portinari, 2025.<br>Saranya Satheesh and Slavi Kaloferov presenting at the <i>Changemakers Relaunch</i> event.</figcaption>
+        </div>
+      </div>
+      <div id="collaborators-anchor"></div>
+    </div>
+    <div id="footer-container"></div>
+    <script src="../script.js"></script>
+</body>
+</html>

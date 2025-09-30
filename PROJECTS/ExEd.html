@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ExEd25 - UAL Education Conference</title>
+<link rel="stylesheet" href="../styles.css">
+
+  <style>
+    :root {
+      --primary: #4d8ef0;
+      --primary-light: #d9d9d9;
+      --secondary: #080F3A;
+      --accent: #88DADE;
+      --accent-secondary: #f06292;
+      --neutral: #080F3A;
+      --text: #d9d9d9;
+    }
+
+    /* --- Core Fixed Footer Styles --- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Make html and body take full viewport height */
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--secondary);
+      color: var(--neutral);
+      overflow: hidden; /* Keep overflow hidden on body to prevent overall page scroll */
+    }
+
+    body {
+      display: flex; /* Make body a flex container */
+      flex-direction: column; /* Stack children vertically */
+    }
+
+    .main-layout-container {
+      display: flex;
+      flex: 1; /* Allows this container to grow and take all available space */
+      /* No overflow property here; the content inside it ('.content') will manage its own scroll */
+      min-height: 0; /* Important for flex items in a column to shrink if needed */
+      gap: 0.5rem;
+    }
+
+    /* --- Existing Layout & Content Styles --- */
+    .sidebar {
+      flex: 0 0 33vh;
+      background: none;
+      color: var(--neutral);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0rem 1rem 4rem;
+      box-sizing: border-box;
+      /* overflow-y: auto; <-- Removed from sidebar. No scrolling for sidebar itself. */
+      text-align: right;
+    }
+
+    .sidebar .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar .title p{
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .collaborators {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .collaborators .image-link {
+      margin: 0 0 0 auto;
+      text-align: right;
+    }
+
+    .collaborators a img {
+      width: 12vh;
+      display: block;
+    }
+
+    .collaborators a img:hover {
+      transform: scale(1.05);
+    }
+
+    .collaborators a {
+      text-decoration: none;
+    }
+
+    .collaborators a:hover {
+      transform: scale(1.05);
+    }
+
+    .content {
+      flex: 1 1 auto;      
+      overflow-x: hidden;
+      overflow-y: auto; /* This is where the main content scrolling happens */
+      padding: 2rem 2rem; /* Keep padding for content spacing */
+      box-sizing: border-box;
+      color: var(--text);
+      background: var(--secondary);
+      max-width: 1000vh;
+      margin: 0;
+      margin-right: 4rem;
+    }
+
+    .initial-text {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 2rem;
+      text-align: left;
+      width: 95%;
+    }
+
+/* Desktop only: keep the intro line stuck at the top of the content pane */
+@media (min-width: 980px) {
+  .content {
+    position: relative;   /* anchor for the pseudo */
+    isolation: isolate;   /* keep its z-index stack above siblings */
+  }
+
+  .content .initial-text {
+    position: sticky;
+    top: 0;
+    z-index: 10;          /* above the scrolling content */
+    background: transparent; /* bg handled by pseudo */
+  }
+
+  /* Full-bleed grey that also covers the area ABOVE the intro */
+  .content .initial-text::before {
+    content: "";
+    position: absolute;
+    left: -100vw;         /* bleed to viewport edges */
+    right: -100vw;
+    top: -100vh;          /* extend one viewport height above */
+    bottom: -3vh;            /* and down through the intro’s own height */
+    background: var(--secondary);
+    z-index: -1;          /* behind the text, still above content */
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .initial-text {
+    width: 100%;
+  }
+  }
+
+    .image-link {
+      display: block;
+      max-width: 33vh;
+      margin: 0rem auto;
+      text-align: center;
+    }
+
+    .image-link img {
+      width: 100%;
+      max-width: 33vh;
+      display: block;
+    }
+
+    .image-link img:hover {
+      transform: scale(1.05);
+    }
+
+    .full-width-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 0.8vh;
+      display: block;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-description {
+      margin: 3rem 0;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .project-description img {
+      display: block;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      width: 100%;
+      border-radius: 0.8vh;
+    }
+    
+    .project-description figcaption {
+      margin-bottom: 2rem;
+    }
+
+    .bm-gallery-section {
+      display: flex;
+      gap: 0.5rem;
+      margin: 4rem 0;
+      align-self: center;
+    }
+
+    .bm-gallery-container {
+      flex: 1 1 33vh;
+      max-width: 48%;
+    }
+
+    .bm-gallery-container img {
+      width: 100%;
+      max-width: none;
+      border-radius: 0.8vh;
+    }
+
+    iframe {
+      margin: 1.5rem auto 0;
+      display: block;
+      border-radius: 0.8vh;
+      border: 1px solid var(--primary-light);
+      width: 60%;
+      height: 16vh;
+    }
+
+    .gallery-section {
+      display: flex;
+      gap: 2rem;
+      margin: 4rem 0;
+      align-self: center;
+    }
+
+    .gallery-container {
+      flex: 1 1 33vh;
+      max-width: 48%;
+    }
+
+    .gallery-container img {
+      width: 100%;
+      max-width: none;
+      border-radius: 0.8vh;
+    }
+
+    /* The bottom-space is no longer needed with a fixed footer */
+    .bottom-space {
+      display: none;
+    }
+
+  </style>
+</head>
+<body class="ExEd">
+  <div class="main-layout-container">
+    <div class="sidebar">
+      <div class="title"><span class="desktop-only">UAL<br>EdEx25</span><span class="mobile-only">UAL<br>EdEx25</span></div>
+      <div class="collaborators">
+        <a href="https://educationconference.arts.ac.uk/2025/" target="_blank" rel="noopener noreferrer">
+          <img src="../IMAGES/UAL-logo-international-white.png" alt="UAL: University of the Arts London" />
+        </a>
+        <a href="https://saranyauxd.framer.website/" target="_blank" rel="noopener noreferrer">Saranya Satheesh</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="initial-text">
+        Are feelings, lived experiences, and identities connected to pedagogical practice? Can creativity help imagine more compassionate approaches to teaching?        
+      </div>
+      <div class="project-description">
+        <img src="../IMAGES/edex25-group.png" alt="Chiara and a group of people with crafts materials are sitting around a table. They are working on body mapping." class="full-width-image" style="margin-bottom: 0.5rem;"/>
+        <figcaption>Photo by Kevin J Brazant, 2025.<br>Chiara facilitating the <i>Embodying Care in Pedagogy</i> workshop at London College of Fashion (LCF) - UAL.</figcaption>
+        <p>Co-designed by Chiara Portinari and Saranya Satheesh, <i>Embodying Care in Pedagogy</i> invited educators to explore teaching as an embodied, emotional, and identity-informed practice. The workshop used body mapping as a creative method for reflecting on how care, knowledge, and power are carried within the body and expressed in the classroom.</p>
+        <img src="../IMAGES/edex-1.png" alt="Chiara engaging with one participant of the Embodying Care in Pedagogy workshop" ;/>
+        <figcaption>Photos by Kevin J Brazant, 2025.<br>Chiara facilitating and engaging with one participant of the <i>Embodying Care in Pedagogy</i> workshop.</figcaption>
+        <p>Grounded in <strong>anti-colonial and feminist pedagogies</strong>, the session encouraged participants to consider where care lives in their bodies, where they hold the knowledge they teach—and the knowledge they have been discouraged from sharing—and what it might feel like to teach from a place of healing, both for themselves and their students.</p>
+      </div>
+      <div class="project-description" style="margin-bottom: 0.5rem;">
+        <p>Some examples of body mapping:</p>
+      </div>
+      <div class="bm-gallery-section" style="margin-top: 0.5;">
+        <div class="bm-gallery-container" style="margin-top: 0.5;">
+          <img src="../IMAGES/edex-bm1.jpeg" alt="Drawing of an alien with wiggly texts all around and a big bubble coming out of their heart."  style="margin-top: 0.5;"/>
+        </div>
+        <div class="bm-gallery-container">
+          <img src="../IMAGES/edex-bm3.jpeg" alt="Colourful drawing of a person connected via hands with other people on their sides. A big round bubble goes around the central person and flames are in everyone's bodies. Some roots come out of the protagonist's feet."  style="margin-top: 0.5;"/>
+        </div>
+        <div class="bm-gallery-container">
+          <img src="../IMAGES/edex-bm7.jpeg" alt="Minimal drawing of a person with a blue heart in their chest with a yellow halo around it. The person is in the middle of a big blue circle. Few pink lines resemble an aura just outside the body."  style="margin-top: 0.5;"/>
+        </div>
+      </div>
+      <div class="project-description" style="margin-bottom: 0.5rem;">
+        <p>Through drawing, writing, and collective reflection, the workshop created space for deep personal insight and shared dialogue. It supported educators in imagining more inclusive, compassionate, and justice-oriented approaches to teaching and learning.</p>
+      </div>
+      <div class="bm-gallery-section">
+        <div class="bm-gallery-container">
+          <img src="../IMAGES/edex-bm4.jpeg" alt="Drawing of a person with 6 arms and 4 legs. The body is blue while the hands and eyes are red. From the eyes, yellow rays come out and spread around. Inside the body there is a red box with a lock." />
+        </div>
+        <div class="bm-gallery-container">
+          <img src="../IMAGES/edex-bm2.jpeg" alt="Colourful drawing of a person with colourful streams entering their feet and flowing inside the body. An entangled scribble hugs their head. All around colourful symbols." />
+        </div>
+        <div class="bm-gallery-container">
+          <img src="../IMAGES/edex-bm6.jpeg" alt="Drawing of a head of an animal, with a visible brain with connections to the rest of the body. Another brain is outside of the head of the animal and it has connections to its nose." />
+        </div>
+      </div>
+      <div class="project-description" style="margin-bottom: 0.5rem;">
+        <p>This session forms part of Chiara’s ongoing commitment to relational pedagogy, and to rethinking educational spaces as sites of transformation and care.</p>
+      </div>
+
+      <div class="project-description">
+        <div class="quote">
+          <div class="citation">
+            <p>“Thank you for such an imaginative, gently facilitated and deeply thought provoking session. A beautiful pause holding space through drawing.”</p>
+          </div>
+          <div class="author">
+            <p>— Workshop Participant</i></p>
+          </div>
+        </div>
+      </div>
+      <span class="desktop-only"><br><br><br><br><br><br></span>
+      <div id="collaborators-anchor"></div>
+    </div>
+    <div id="footer-container"></div>
+<script src="../script.js"></script>
+</body>
+</html>

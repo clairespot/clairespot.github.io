@@ -1,0 +1,129 @@
+[
+  {
+    "src": "GRAPHICS/illustration1.png",
+    "title": "Marghera nel Mezzo",
+    "author": "Chiara Portinari",
+    "year": 2025,
+    "type": "Illustration",
+    "description": "Curiosità: Chiara è la persona che ha coordinato la creazione di questa galleria."
+  },
+  {
+    "src": "https://open.spotify.com/embed/track/3gMAa6S4shjXFiApQKgKwG?utm_source=generator",
+    "title": "Mare nostro",
+    "author": "StorieStorte",
+    "year": 2019,
+    "type": "Audio",
+    "description": "StorieStorte raccontano di persone, destini e viaggi contromano. Due chitarre, due bicchieri e una voce del diversamente perfetto."
+  },
+  {
+    "src": "https://open.spotify.com/embed/track/7LYhHIbF4W3cAHoVQlDszU?utm_source=generator",
+    "title": "Venesia no mor",
+    "author": "StorieStorte",
+    "year": 2019,
+    "type": "Audio",
+    "description": "StorieStorte raccontano di persone, destini e viaggi contromano. Due chitarre, due bicchieri e una voce del diversamente perfetto."
+  },
+  {
+    "src": [
+      "IMAGES/multi_photo_artist1/img1.jpg",
+      "IMAGES/multi_photo_artist1/img2.jpg",
+      "IMAGES/multi_photo_artist1/img3.jpg",
+      "IMAGES/multi_photo_artist1/img4.jpg",
+      "IMAGES/multi_photo_artist1/img5.jpg",
+      "IMAGES/multi_photo_artist1/img6.jpg",
+      "IMAGES/multi_photo_artist1/img7.jpg",
+      "IMAGES/multi_photo_artist1/img8.jpg",
+      "IMAGES/multi_photo_artist1/img9.jpg",
+      "IMAGES/multi_photo_artist1/img10.jpg",
+      "IMAGES/multi_photo_artist1/img11.jpg"
+    ],
+    "title": "Marghera notturna",
+    "author": "La Vicky",
+    "year": "2023",
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": [
+      "IMAGES/multi_photo_artist2/submission1.jpeg",
+      "IMAGES/multi_photo_artist2/submission2.jpeg"
+    ],
+    "title": "Marghera",
+    "author": "Elisabetta Castellano",
+    "year": "",
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "IMAGES/photo1.jpg",
+    "title": "30175% DE MARGHERA",
+    "author": "Denis Ughelini",
+    "year": 2023,
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "IMAGES/photo2.jpg",
+    "title": "Via Fratelli Bandiera",
+    "author": "Lucia Portinari",
+    "year": 2023,
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "IMAGES/photo3.png",
+    "title": "Piazzale Radaelli",
+    "author": "Paola Corò",
+    "year": "1968",
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "IMAGES/photo5.png",
+    "title": "Scorcio sulla chiesa di San Michele Arcangelo",
+    "author": "Michele Corò",
+    "year": 1978,
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "IMAGES/photo6.JPG",
+    "title": "Particolare di abitazione",
+    "author": "Bruno Mameli",
+    "year": 2022,
+    "type": "Photo",
+    "description": ""
+  },
+  {
+    "src": "VIDEO/video1.mp4",
+    "title": "Vista aerea di Marghera",
+    "author": "Bruno Mameli",
+    "year": 2022,
+    "type": "Video",
+    "description": ""
+  },
+  {
+    "src": "VIDEO/video2.mp4",
+    "title": "The Bridge per il Concerto contro la Guerra.",
+    "author": "The Bridge",
+    "year": 2022,
+    "type": "Video",
+    "description": "Lorenzo Lazzari, Luca Boscolo, Marta Grasp, Giova Rossi, Giulio Rossato, Riccardo Vendramin"
+  },
+  {
+    "src": "https://www.youtube.com/embed/qmQ94i8sYSU",
+    "title": "Il Coraggio della Rivoluzione",
+    "author": "StorieStorte",
+    "year": 2019,
+    "type": "Video",
+    "description": "StorieStorte raccontano di persone, destini e viaggi contromano. Due chitarre, due bicchieri e una voce del diversamente perfetto."
+  },
+  {
+    "src": "texts/testo1.txt",
+    "title": "The Sea That Was",
+    "author": "Valentina Bolani",
+    "year": 2023,
+    "type": "Text",
+    "description": "Valentina vive ad Amsterdam, mai troppo lontana dall'acqua. Scrive perché può."
+  }
+]

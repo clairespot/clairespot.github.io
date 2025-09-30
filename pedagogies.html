@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chiara Portinari | Innovative Pedagogies</title>
+  <link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+html, body.pedagogies-page{
+  height: 100%;
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--neutral);
+}
+section {
+  height: 100vh; /* Full height for each section */
+  scroll-snap-align: start; /* Align to the start for snapping */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+
+</style>
+</head>
+
+
+<body class="pedagogies-page">
+  <div class="fullpage-container">
+
+    <!-- First Slide: Hero Section -->
+  <section class="combined-hero">
+    <div class="hero-part">
+    <div class="blur-overlay"></div>
+    <div class="hero-overlay"></div>
+      <nav class="section-nav hero-nav" aria-label="Page hero navigation">
+        <a class="nav-arrow left"  href="events.html"         aria-label="Previous: Communities & Events">◀</a>
+        <a class="nav-arrow right" href="multiplicity.html"   aria-label="Next: Collective Curations">▶</a>
+      </nav>      
+      <div class="hero-content">
+        <h1 class="title-font" style="text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">Innovative<br>Pedagogies</h1>
+        <p style="font-size: 1.3rem;  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);"">Shared Ownership <br>of Learning and Education for Liberation.</p>
+      </div>
+    </div>
+  </section>
+
+
+    <!-- My Work Section with clickable projects -->
+    <section id="mywork" class="slide mywork title-font">
+      <div class="projects-list">
+        <a class="project" href="PROJECTS/consultancy.html">
+          <div class="project-title">
+            <h3>Consultancy</h3>
+          </div>
+          <div class="project-description">
+            <p>Acting as a critical friend for educators and institutions. Supporting the design of innovative learning environments.</p>
+          </div>
+        </a>
+      
+        <a class="project" href="PROJECTS/evaluation.html">
+          <div class="project-title">
+            <h3>Evaluation</h3>
+          </div>
+          <div class="project-description">
+            <p>In collaboration with Saranya Satheesh and Jiayi Wu, developed a toolkit to assess the impact of social justice programmes in HE.</p>
+          </div>
+        </a>
+      
+        <a class="project" href="PROJECTS/lectures.html">
+          <div class="project-title">
+            <h3>Guest Lectures</h3>
+          </div>
+          <div class="project-description">
+            <p>Contributing to dialogues around radical pedagogy, co-creation, and community-centred design.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="podcast" class="slide podcast title-font">
+      <div class="content-wrapper">
+        <h2>Publications</h2>
+        <p>[Coming soon.]</p>
+      </div>
+    </section>
+  </div>
+<script>
+  const credits = document.querySelector('.subtitle-credits');
+  const contact = document.querySelector('#contact');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          credits.style.display = 'none';
+        } else {
+          credits.style.display = 'block';
+        }
+      });
+    },
+    {
+      threshold: 0.1, // Adjust if needed
+    }
+  );
+
+  observer.observe(contact);
+</script>
+<!-- Place this just before the closing </body> tag -->
+<div id="footer-container"></div>
+<script src="script.js"></script>
+
+</body>
+</html>

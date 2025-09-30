@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dettaglio Contenuto</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('IMAGES/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(to bottom, white 0%, transparent 100%);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header a img {
+      height: 50px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: black;
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-family: 'Playfair Display', serif;
+      color: black;
+      flex: 1;
+      text-align: center;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+    }
+    .content h1, .content h2, .content h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    .content {
+      padding: 40px;
+      padding-top: 12px;
+      margin: 30px auto 100px auto;
+      background-color: rgba(255,255,255,0.9);
+      max-width: 500px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .content-info {
+      margin-bottom: 20px;
+    }
+    .info-button {
+      display: inline-block;
+      margin-left: 0px;
+      background: none;
+      border: none;
+      color: #007BFF;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      background-color: white;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      z-index: 1000;
+      max-width: 80%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .popup-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      float: right;
+      cursor: pointer;
+      color: #333;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    iframe, video, img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    pre {
+      white-space: pre-wrap;
+      text-align: left;
+      margin-top: 20px;
+    }
+    .buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    .buttons button, .buttons a {
+      border: none;
+      padding: 12px 24px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      background-color: black;
+      color: white;
+    }
+    .buttons button:hover, .buttons a:hover {
+      background-color: black;
+    }
+    @media (max-width: 550px) {
+      .content {
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="content" id="contentContainer"></div>
+
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+<div class="popup" id="popup">
+  <button class="popup-close" onclick="closePopup()">×</button>
+  <div id="popupContent"></div>
+</div>
+
+<script src="archive.js"></script>
+<script>
+  window.onload = async () => {
+    await loadArchive();
+    const item = JSON.parse(localStorage.getItem('currentContent'));
+    if (!item) return;
+
+    const type = item.type.trim().toLowerCase();
+
+    // ✅ Fixed version that tightly joins author, info button, and year
+    let line = `di ${item.author}`;
+    const descBtn = item.description
+      ? `<button class="info-button" onclick="showPopup(\`${item.description.replace(/`/g,'\\`')}\`)">ⓘ</button>`
+      : ``;
+    line += item.year ? `${descBtn}, ${item.year}` : descBtn;
+
+    let contentHTML = `
+      <div class="content-info">
+        <h2>${item.title}</h2>
+        <p>${line}</p>
+      </div>
+    `;
+
+    if (type === 'text') {
+      contentHTML += `<pre id="textContent">Caricamento testo...</pre>`;
+    } else {
+      contentHTML += generateContentHTML(item);
+    }
+
+    contentHTML += `
+      <div class="buttons">
+        <a href="search.html">INDIETRO</a>
+      </div>
+    `;
+
+    document.getElementById('contentContainer').innerHTML = contentHTML;
+
+    if (type === 'text') {
+      fetchTextContent(item.src, document.getElementById('textContent'), item.author, item.year);
+    }
+  };
+
+  function showPopup(description) {
+    document.getElementById('popupContent').innerText = description;
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

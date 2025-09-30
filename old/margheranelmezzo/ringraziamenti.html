@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ringraziamenti</title>
+  <!-- Global styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Koulen font for header text -->
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+  <style>
+    /* Page‐specific content styling */
+    .content {
+      padding: 30px;
+      background-color: rgba(255,255,255,0.9);
+      margin: 40px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      color: black;
+      text-align: left;
+      line-height: 24px;
+    }
+    .link-blue {
+      color: blue;
+      text-decoration: none;
+    }
+    .link-blue:hover {
+      text-decoration: underline;
+    }
+    /* Styling for list items without bullets */
+    .content ul {
+      list-style-type: none; /* Removes the bullet points */
+      padding-left: 0; /* Removes left padding */
+      padding-top: 20px;
+    }
+    .content li {
+      margin-bottom: 15px; /* Adds spacing between each list item */
+    }
+    /* Mobile specific styling */
+    @media (max-width: 768px) {
+      .content {
+        margin: 20px; /* Adds space on the sides for mobile */
+        padding: 15px; /* Reduces padding on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Inject shared header -->
+  <div id="header"></div>
+
+  <div class="content">
+    <h2>Ringraziamenti</h2>
+    <ul>
+      <li><b><a href="https://www.instagram.com/ma_design_sustainable_futures/" target="_blank" class="link-blue">MADSISF Family</a></b> (staff e colleghə), per essere una fonte di ispirazione costante</li>
+      <li><b>Dr Ramia Maze</b>, per aver guidato il processo di questa ricerca con dedizione ed <i>expertise</i></li>
+      <li><b>Daniela e Maria - <a href="http://www.eliografiagardina.it/" target="_blank" class="link-blue">Eliografia Gardina</a></b>, per aver dimostrato supporto spontaneo, creativo e concreto</li>
+      <li><b>Filippo Ragazzo</b>, per aver dedicato tempo ed <i>expertise</i> con consistenza e cura</li>
+      <li><b>Davide ‘Simmia’ Vianello</b>, per aver ascoltato e mandato i più lunghi messaggi vocali della storia, per aver condiviso il suo network e offerto rassicurazione</li>
+      <li><b>Valentina Bolani</b>, per aver offerto tempo e poesia a questo progetto (non è ancora finita!)</li>
+      <li><b>Laura Boato, <a href="https://open.spotify.com/artist/4JzKia2vHw1W6hIJT6jQhI?si=yitudZuZTuy8Z9SwWxpLQw" target="_blank" class="link-blue">StorieStorte</a>, <a href="https://www.instagram.com/viviamo_marghera/" target="_blank" class="link-blue">Comitato ViviAmo Marghera</a></b>, per aver dedicato il loro tempo a questo progetto e per rendere Marghera un posto speciale</li>
+      <li><b>Stefano Antinori - <a href="https://www.instagram.com/libreriaheimat/" target="_blank" class="link-blue">Libreria Heimat</a></b>, per aver offerto suggerimenti e per aver dedicato tempo ed <i>expertise</i> a questo progetto</li>
+      <li><b>Silvia Maso</b>, per le lunghe chiacchierate e il supporto reciproco senza prezzo</li>
+      <li><b>Erika Maso</b>, per aver partecipato e promosso il mio progetto oltre ogni aspettativa</li>
+      <li><b><a href="https://chat.whatsapp.com/BdSVttFmRXN9LJCfkdnKEc" target="_blank" class="link-blue">Il gruppo WhatsApp di Marghera nel Mezzo</a></b>, per partecipare attivamente a tutte le attività digitali proposte</li>
+      <li><a href="https://www.brunomameli.net/" target="_blank" class="link-blue"><b>Bruno Mameli</b></a>, per aver scattato le bellissime foto delle camminate esplorative
+      <li><b>I partecipanti delle Passeggiate di Ricerca</b>, per aver partecipato con entusiasmo e per aver condiviso memorie e riflessioni</li>
+      <li><b>Nicola Fuochi e Andrea Lo Verso</b>, per aver mostrato sincero interesse e supporto verso il mio progetto e la mia pratica</li>
+      <li><b>Denis Ughelini</b>, per aver sostenuto il mio progetto fin dal primo giorno</li>
+      <li><b>Alberto Fedalto</b>, per aver condiviso con me il suo lavoro su Marghera</li>
+      <li><b>Fabrizio Antinori</b>, per le lunghe chiacchierate e lo scambio di opinioni su Marghera</li>
+      <li><b>Carlo Augenti - <a href="https://www.terraantica.org/?p=3343" target="_blank" class="link-blue">Cento Cippi di Conterminazione Lagunare</a></b>, per aver condiviso con me il suo lavoro
+      <li><a href="https://www.instagram.com/silviazacchello/" target="_blank" class="link-blue"><b>Silvia Zacchello</b></a>, per aver partecipato e condiviso il suo entusiasmo per questo progetto 
+      <li><b>Luigi Orlandi, Luisa Orlandi e Sandra De Piccoli Broilo</b>, per aver condiviso spontaneamente il loro material sulla storia di Marghera 
+      <li><b>Barbara Crozzoletto, Riccardo Callegaro, Lucia Portinari e Marco Zuin</b>, per aver permesso di utilizzare le loro fotografie nella documentazione riguardante questo progetto
+      <li>La pagina Instagram <b><a href="https://www.instagram.com/dove.ti.va/" target="_blank" class="link-blue">@dove.ti.va</b></a>, per aver pubblicizzato le camminate esplorative con il suo network 
+      <li>La pagina Facebook <b><a href="https://www.facebook.com/marghera.it/" target="_blank" class="link-blue">Marghera.it</a></b>, per aver mostrato supporto al progetto
+    </ul>
+  </div>
+
+  <script src="archive.js"></script>
+  <script>
+    // Load the shared header markup
+    fetch('header.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('header').innerHTML = html;
+      });
+
+    // Toggle dropdown menu
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Close menu when clicking outside
+    window.addEventListener('click', function(e) {
+      const menu = document.getElementById('menu');
+      if (menu && !e.target.closest('.menu-icon')) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
