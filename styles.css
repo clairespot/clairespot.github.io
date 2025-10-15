@@ -1265,3 +1265,42 @@ clip:rect(0 0 0 0) !important;
 white-space:nowrap !important;
 border:0 !important;
 }
+
+/* Layout for social icons */
+.social-links {
+  display: inline-flex;           /* or flex */
+  align-items: center;
+  gap: 0.75rem;                   /* space between icons */
+}
+
+/* Icon base */
+.social-link svg {
+  width: 28px;                    /* adjust size as needed */
+  height: 28px;
+  display: block;
+  fill: currentColor;             /* lets color come from the link color */
+}
+
+/* LinkedIn brand color + hover */
+.social-link.linkedin {
+  color: #0A66C2;
+  text-decoration: none;
+}
+.social-link.linkedin:hover,
+.social-link.linkedin:focus-visible {
+  color: #004182;                 /* darker on hover/focus */
+  outline: none;
+}
+
+.linkedin-icon img {
+  width: 50px;              /* adjust size as needed */
+  height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.linkedin-icon:hover img {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
