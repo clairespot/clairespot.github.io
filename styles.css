@@ -805,6 +805,7 @@ body.lb-open{ overflow:hidden; }
   body.about .content, body.contact .content{
     margin-top:2.5rem; padding-left:0; padding-right:0; max-width:100%; overflow-y:visible; margin-right:0;
   }
+  
 
   body.wall-project .main-layout-container .content .wp-poster{ flex-direction:column; }
   body.wall-project .main-layout-container .content .gif-section{ justify-content:center; flex-wrap:wrap; width:100%; }
@@ -1275,8 +1276,8 @@ border:0 !important;
 
 /* Icon base */
 .social-link svg {
-  width: 28px;                    /* adjust size as needed */
-  height: 28px;
+  width: 3rem;                    /* adjust size as needed */
+  height: 3rem;
   display: block;
   fill: currentColor;             /* lets color come from the link color */
 }
@@ -1293,8 +1294,9 @@ border:0 !important;
 }
 
 .linkedin-icon img {
-  width: 50px;              /* adjust size as needed */
-  height: 50px;
+  width: 4rem;              /* adjust size as needed */
+  height: 4rem;
+  margin-left: 2.7rem;
   display: inline-block;
   vertical-align: middle;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -1303,4 +1305,10 @@ border:0 !important;
 .linkedin-icon:hover img {
   transform: scale(1.1);
   opacity: 0.9;
+}
+
+html.service,
+body.service {
+  background-color: #000;   /* no !important needed due to higher specificity */
+  background: #000;
 }
