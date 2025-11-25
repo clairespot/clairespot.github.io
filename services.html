@@ -40,7 +40,7 @@
     .content{
       flex:1 1 auto; overflow-y:auto;
       padding:0 2rem 4rem; box-sizing:border-box; color:var(--text);
-      max-width:90%; margin:0; margin-bottom:4rem;
+      max-width:95%; margin:0; margin-bottom:4rem;
     }
 
     .project-description{
@@ -91,6 +91,24 @@
     .service-header h3{
       margin:0; font-size:1.3rem; letter-spacing:0.04em; color:var(--neutral);
     }
+
+    .service-header h3 {
+      margin: 0;
+      color: var(--neutral);
+      letter-spacing: 0.04em;
+      white-space: nowrap; /* prevents breaking onto multiple lines */
+
+      /* Fluid font size that adjusts with viewport width */
+      font-size: clamp(1rem, 1.2vw + 0.8rem, 1.4rem);
+    }
+
+    .service-header h3 {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis; /* trims gracefully if it's *really* too long */
+    }
+
 
     .service-icon{
       width:44px; height:44px; flex-shrink:0;
@@ -189,7 +207,7 @@
               <div class="service-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17.5A2.5 2.5 0 0 1 17.5 22H6.5A2.5 2.5 0 0 1 4 19.5v-15zM6.5 4A.5.5 0 0 0 6 4.5v15c0 .28.22.5.5.5H17.5c.28 0 .5-.22.5-.5V4H6.5zM8 6h8v2H8V6zm0 4h8v2H8v-2z"/></svg>
               </div>
-              <h3>1. Innovative Pedagogies</h3>
+              <h3>1. Innovative<br>Pedagogies</h3>
             </div>
             <p class="service-tagline">Rethinking curricula, assessment, and learning spaces through participatory and justice-focused pedagogy.</p>
             <details class="service-more">
@@ -209,7 +227,7 @@
               <div class="service-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14H3V5zm2 0v10.586l3.793-3.793a1 1 0 0 1 1.414 0L14 15.586l2.793-2.793a1 1 0 0 1 1.414 0L21 15.586V5H5zm0 14h16v-1.586l-2.293-2.293-2.793 2.793a1 1 0 0 1-1.414 0L10.207 14.5l-4.5 4.5zM8 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
               </div>
-              <h3>2. Collective Curations</h3>
+              <h3>2. Collective<br>Curations</h3>
             </div>
             <p class="service-tagline">Co-creating spatial experiences, exhibitions, archives, mapping and storytelling opportunities with communities.</p>
             <details class="service-more">
@@ -229,7 +247,7 @@
               <div class="service-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm14 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM2 12a4 4 0 0 1 4-4h1l5 4 5-4h1a4 4 0 0 1 4 4v7h-4v-3l-3 2-3-2-3 2-3-2v3H2v-7z"/></svg>
               </div>
-              <h3>3. Communities &amp; Events</h3>
+              <h3>3. Communities<br>&amp; Events</h3>
             </div>
             <p class="service-tagline">Designing spaces and occasions for dialogues, workshops and programmes aligned with shared social-impact goals.</p>
             <details class="service-more">
