@@ -1019,6 +1019,8 @@ body.lb-open{ overflow:hidden; }
 
 #testimonials .qs-slide blockquote{
   margin: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   color: var(--primary-light);
 }
 #testimonials .qs-slide blockquote p{
