@@ -982,6 +982,8 @@ body.lb-open{ overflow:hidden; }
   position: relative;
   width: 60%;
   margin: 1rem 0 0rem;  /* close to TESTIMONIALS heading */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   background: var(--primary-light);
   border: 1px solid rgba(255,255,255,.12);
   overflow: hidden;
