@@ -65,12 +65,12 @@
       height: 100%;
       position: relative;
       overflow-y: auto;
-      overflow-x: clip;              /* ✅ prevent right-leaning overflow on mobile */
+      overflow-x: clip;              /* prevent right-leaning overflow on mobile */
       min-height: 0;
 
       /* snapping */
       scroll-snap-type: y mandatory;
-      scroll-padding-top: 0;                 /* header is OUTSIDE the scroller */
+      scroll-padding-top: 0;
       scroll-padding-bottom: var(--footer-h);
       -webkit-overflow-scrolling: touch;
       scroll-behavior: smooth;
@@ -78,7 +78,7 @@
       touch-action: pan-y;
     }
 
-    /* Each snap panel = full scroller height minus the fixed footer */
+    /* Full-height snap panels (hero + work) */
     .home-hero,
     #work {
       width: 100%;
@@ -88,18 +88,32 @@
       scroll-snap-stop: always;
       margin: 0;
       place-items: center;
-      padding: 4rem var(--edge) 0;  /* ✅ symmetric left/right padding */
+      padding: 4rem var(--edge) 0;
     }
 
-    /* SKILLS — center the whole block like hero/work */
+    /* Testimonials: natural height, but still snap + clear footer */
+    #testimonials{
+      width: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      margin: 0;
+      padding: 0 var(--edge) calc(4rem + var(--footer-h)); /* no big top padding */
+      min-height: calc(100% - var(--footer-h));            /* fill the panel height */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;                             /* center title + quotes */
+    }
+
+
+    /* SKILLS — snap, but natural height (no full-screen) */
     #skills{
       height: 100%;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       margin-inline: auto;          /* center horizontally */
-      padding: 4rem var(--edge) 0;
       display: grid;
-      align-content: start;         /* keep content toward the top */
+      align-content: center;        
       justify-items: center;        /* center the title + grid inside */
     }
     #skills .skills-grid { width: 100%; }
@@ -110,7 +124,11 @@
       display: grid;
       padding: 4rem var(--edge) 3rem;
     }
-    .home-hero__inner{ text-align: center; max-width: 70%; }
+    .home-hero__inner{
+      text-align: center;
+      max-width: 70%;
+      margin: 0 auto;               /* keep it centred */
+    }
     .home-hero__title{
       font-weight: 800;
       font-size: clamp(4rem, 6vw, 8rem);
@@ -150,6 +168,7 @@
       display:grid;
       place-items:center;
     }
+
     #work .title_sections{
       display: grid;
       grid-template-columns: repeat(3, minmax(260px, 1fr));
@@ -171,6 +190,20 @@
       opacity: .95;
       margin: 0 0 1rem;
     }
+
+
+    /* Testimonials title same style */
+    #testimonials .sections__title{
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-weight: 800;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      color: var(--primary-light);
+      opacity: .95;
+      margin: 0 0 0.5rem;
+    }
+
 
     /* Cards */
     #work .section{
@@ -196,15 +229,21 @@
 
     /* Stack on mobile */
     @media (max-width: 980px){
-      #work .title_sections{ grid-template-columns: 1fr; width: min(95%, 900px); gap: 1rem;}
+      #work .title_sections{
+        grid-template-columns: 1fr;
+        width: min(95%, 900px);
+        gap: 1rem;
+      }
       #work .sections__title{ margin-bottom: .5rem; }
       #work .section{ padding: 1.1rem 1.25rem; }
       #work .section h2{ margin: 0 0 .3rem; }
       #work .section .cta{ margin-top: .5rem; }
+
+      #testimonials{
+        padding: 3rem var(--edge) calc(3rem + var(--footer-h));
+      }
     }
 
-    /* (kept) panel body alignment */
-    #skills{ display:grid; align-content:start; }
   </style>
 </head>
 
@@ -220,7 +259,8 @@
         <div class="home-hero__inner">
           <h1 class="home-hero__title">Chiara<br>Portinari</h1>
           <p class="home-hero__tag">
-            Chiara helps people and institutions to cultivate inclusive practices through collective curation, inclusive pedagogy, and community-centered events.<br>
+            helps organizations and cultural practitioners<br>
+            to cultivate inclusive practices.<br>
           </p>
           <img src="IMAGES/logo_cp.svg"
                alt="Chiara Portinari logo"
@@ -228,7 +268,7 @@
                width="140vh" height="140vh"
                loading="eager" decoding="async">
         </div>
-       <span class="desktop-only"><br></span>
+        <span class="desktop-only"><br></span>
       </section>
 
       <!-- CARDS -->
@@ -274,7 +314,8 @@
               <span class="mobile-only">Communities & Events</span>
             </h2>
             <p class="desktop-only" style="text-shadow:2px 2px 6px rgba(0,0,0,.6);">
-              Designing and hosting presentations, discussions, and participatory events. Connecting people through creative, social, co-designed experiences.
+              Designing and hosting presentations, discussions, and participatory events.
+              Connecting people through creative, social, co-designed experiences.
             </p>
             <p class="mobile-only" style="text-shadow:2px 2px 6px rgba(0,0,0,.6); text-align:center;">
               Creative events & social dialogue
@@ -283,6 +324,43 @@
           </a>
         </div>
         <br>
+      </section>
+
+      <!-- === Testimonials / Quotes Slider === -->
+      <section id="testimonials" class="sections" aria-label="Testimonials">
+        <h2 class="sections__title">TESTIMONIALS</h2>
+
+        <div class="quotes-slider">
+          <button class="qs-nav qs-prev" aria-label="Previous quote">‹</button>
+          <button class="qs-nav qs-next" aria-label="Next quote">›</button>
+
+          <ul class="qs-track">
+            <li class="qs-slide" data-active role="group" aria-roledescription="slide" aria-label="1 of 3">
+              <blockquote>
+                <p>“Chiara not only offered thoughtful insights but presented them in a way that was both generous and constructive.”</p>
+                <cite>— Cassia Clarke<br><span>Independent Community Archivist</span></cite>
+              </blockquote>
+            </li>
+
+            <li class="qs-slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+              <blockquote>
+                <p>“Her work is a model of thoughtful, student-led innovation that enhances both learning and institutional practice.”</p>
+                <cite>
+                  — Kevin J. Brazant<br>
+                  <span>Senior Educational Developer<br>at London College of Communication (UAL)
+                  </span>
+                </cite>
+              </blockquote>
+            </li>
+
+            <li class="qs-slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+              <blockquote>
+                <p>“We had such good feedback from colleagues and it was great to finish the series with a creative example of embedding compassionate assessment in practice.”</p>
+                <cite>— Vikki Hill<br><span>Director of Learning Enhancement and<br> Academic Development<br>at Queen Margaret University</span></cite>
+              </blockquote>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <!-- SKILLS -->
@@ -331,20 +409,20 @@
           </button>
 
           <button class="skill-card"
-          data-title="Software"
-          data-desc-tpl="#tpl-software"
-          data-img="IMAGES/skills/skill-software.jpeg"
-          style="--bg: url('IMAGES/skills/skill-software.jpeg');">
-          <span class="skill-card__label">Software</span>
-        </button>
+            data-title="Software"
+            data-desc-tpl="#tpl-software"
+            data-img="IMAGES/skills/skill-software.jpeg"
+            style="--bg: url('IMAGES/skills/skill-software.jpeg');">
+            <span class="skill-card__label">Software</span>
+          </button>
 
-        <button class="skill-card"
-        data-title="Design"
-        data-desc-tpl="#tpl-design"
-        data-img="IMAGES/skills/skill-design.jpg"
-        style="--bg: url('IMAGES/skills/skill-design.jpg');">
-        <span class="skill-card__label">Design</span>
-      </button>
+          <button class="skill-card"
+            data-title="Design"
+            data-desc-tpl="#tpl-design"
+            data-img="IMAGES/skills/skill-design.jpg"
+            style="--bg: url('IMAGES/skills/skill-design.jpg');">
+            <span class="skill-card__label">Design</span>
+          </button>
 
           <button class="skill-card"
             data-title="Music"
@@ -414,11 +492,11 @@
           <li>Design visuals for both print and online platforms</li>
         </ul>
         <span class="desktop-only">
-        <div class="skill-photo-gallery">
-          <img src="IMAGES/skills/skill-design-gallery2.png">
-          <img src="IMAGES/skills/skill-design-gallery1.png" style="margin-top: 1rem;">
-        </div>
-      </span>
+          <div class="skill-photo-gallery">
+            <img src="IMAGES/skills/skill-design-gallery2.png">
+            <img src="IMAGES/skills/skill-design-gallery1.png" style="margin-top: 1rem;">
+          </div>
+        </span>
       </template>
       
       <template id="tpl-software">
