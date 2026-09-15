@@ -3,32 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Chiara Portinari</title>
+<title>Collective Leadership Framework — Chiara Portinari</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
+  * { box-sizing:border-box; margin:0; padding:0; }
   :root {
     --ink-blue: #1E3A5C;
     --gradient-accent: linear-gradient(90deg, var(--ink-blue) 0%, #7388AE 50%, #A63A79 100%);
+    --accent: #3B5F86;
   }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:#EEF0F3; min-height:100vh; color:var(--ink-blue); font-family:'IBM Plex Sans',sans-serif; display:flex; flex-direction:column; }
+  html { background: #EEF0F3; }
+  body {
+    background: #EEF0F3;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink-blue);
+    padding: 80px 40px;
+    max-width: clamp(800px, 52vw, 1000px);
+    margin: 0 auto;
+    line-height: 1.75;
+  }
 
-  nav { display:flex; align-items:center; justify-content:space-between; padding:22px 60px; border-bottom:1px solid rgba(30,58,92,0.09); }
-  .mark { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink-blue); text-decoration:none; }
-  .nav-left { display:flex; align-items:center; gap:14px; }
-  .nav-right { display:flex; align-items:center; gap:18px; }
+  /* HEADER */
+  .doc-header { margin-bottom: 64px; }
+  .doc-kicker {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #767B85;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 52px;
+    text-transform: uppercase;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--ink-blue);
+    margin-bottom: 16px;
+  }
+  h1 .hl {
+    position: relative; display: inline-block;
+    background: var(--gradient-accent); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .doc-subtitle {
+    font-size: 15px;
+    color: #767B85;
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .doc-meta {
+    font-size: 13px;
+    color: #9a968e;
+    padding-top: 20px;
+    border-top: 1px solid rgba(30,58,92,0.08);
+  }
 
-  .nav-menu { position:relative; }
-  .nav-menu-btn { display:flex; flex-direction:column; justify-content:center; gap:5px; width:22px; height:18px; cursor:pointer; background:none; border:none; padding:0; }
-  .nav-menu-btn span { display:block; height:2px; width:100%; border-radius:1px; background-color:var(--ink-blue); }
-  .nav-menu-dropdown { position:absolute; top:100%; right:0; margin-top:16px; min-width:170px; border-radius:10px; padding:8px 0; display:none; flex-direction:column; z-index:20; box-shadow:0 14px 32px rgba(0,0,0,0.2); background:#fff; border:1px solid rgba(30,58,92,0.1); }
-  .nav-menu-dropdown.open { display:flex; }
-  .nav-menu-dropdown a { padding:10px 18px; font-family:'IBM Plex Sans',sans-serif; font-size:14px; text-decoration:none; color:var(--ink-blue); transition:background-color 0.2s ease; }
-  .nav-menu-dropdown a:hover { background:#EEF0F3; }
-  .nav-menu-dropdown a.active { font-weight:500; }
+  /* BODY */
+  section { margin-bottom: 56px; }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-blue);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink-blue);
+    margin-top: 28px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px;
+    color: #767B85;
+  }
+
+  p { font-size: 16px; margin-bottom: 16px; color: #33373E; }
+  p:last-child { margin-bottom: 0; }
+
+  ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+  li {
+    font-size: 15px;
+    margin-bottom: 8px;
+    padding-left: 6px;
+    color: #33373E;
+  }
+  li::marker { color: var(--accent); }
+  li strong { color: var(--ink-blue); }
+
+  /* CALLOUT BOX */
+  .callout {
+    background: white;
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    margin: 28px 0;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout .quote {
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-blue);
+    margin-bottom: 8px;
+  }
+  .callout .attribution {
+    font-size: 12px;
+    color: #9a968e;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* TENSION BOX */
+  .tension {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+  .tension-side {
+    background: white;
+    padding: 20px 22px;
+    border-radius: 4px;
+  }
+  .tension-side .t-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #767B85;
+    margin-bottom: 12px;
+  }
+  .tension-side ul { margin-bottom: 0; }
+
+  /* THREE COLUMNS */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .col-block {
+    background: white;
+    padding: 18px 20px;
+    border-radius: 4px;
+  }
+  .col-block .col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: var(--ink-blue);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(30,58,92,0.07);
+  }
+  .col-block ul { padding-left: 16px; }
+  .col-block li { font-size: 13px; margin-bottom: 6px; }
+
+  /* IMPACT STATEMENT */
+  .impact {
+    background: var(--ink-blue);
+    color: #EEF0F3;
+    padding: 36px 40px;
+    margin: 28px 0;
+    border-radius: 4px;
+  }
+  .impact p {
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.65;
+    margin: 0;
+    color: #EEF0F3;
+  }
+  .impact strong { font-style: normal; }
+
+  /* FOOTER */
+  .doc-footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(30,58,92,0.08);
+    font-size: 12px;
+    color: #9a968e;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .home-logo {
+    position: fixed; top: 28px; left: 36px; z-index: 10;
     width: 26px; aspect-ratio: 400/447;
     background-color: #FF9901;
     -webkit-mask-image: url("data:image/png;base64,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");
@@ -36,108 +213,120 @@
     -webkit-mask-size: contain; mask-size: contain;
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     -webkit-mask-position: center; mask-position: center;
-    opacity: 0.85; transition: opacity 0.2s;
+    opacity: 0.75; transition: opacity 0.2s;
   }
   .home-logo:hover { opacity: 1; }
-
-  .main { max-width: clamp(960px, 68vw, 1500px); margin: 0 auto; padding: 80px 60px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; flex: 1; align-content: center; }
-
-  .contact-left {}
-  .page-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:52px; text-transform:uppercase; line-height:0.9; letter-spacing:0.02em; margin-bottom:24px; }
-  .page-title .hl {
-    position:relative; display:inline-block;
-    background:var(--gradient-accent); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
-  }
-  .intro { font-size:16px; line-height:1.75; color:#33373E; margin-bottom:36px; }
-
-  .contact-methods { display:flex; flex-direction:column; gap:24px; }
-  .contact-method {}
-  .method-label { font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#767B85; margin-bottom:6px; }
-  .method-value { font-size:16px; font-weight:500; }
-  .method-value a { color:var(--ink-blue); text-decoration:underline; text-underline-offset:3px; text-decoration-color:rgba(30,58,92,0.3); transition:text-decoration-color 0.2s; }
-  .method-value a:hover { text-decoration-color:#3B5F86; }
-
-  .contact-right { padding-top: 8px; }
-  .lets-talk { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:36px; text-transform:uppercase; line-height:0.95; letter-spacing:0.025em; margin-bottom:20px; color:var(--ink-blue); }
-  .contexts { display:flex; flex-direction:column; gap:14px; margin-bottom:36px; }
-  .context-item { font-size:15px; line-height:1.6; color:#33373E; padding-left:14px; border-left:3px solid #3B5F86; }
-  .context-item strong { font-weight:500; color:var(--ink-blue); display:block; }
-
-  .email-btn { display:inline-block; font-family:'IBM Plex Sans',sans-serif; font-size:14px; font-weight:500; background:var(--ink-blue); color:#EEF0F3; padding:14px 28px; border-radius:999px; text-decoration:none; transition:background 0.2s; }
-  .email-btn:hover { background:#3B5F86; }
 </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-left">
-      <a class="home-logo" href="index.html" aria-label="Home"></a>
-      <span class="mark">Chiara Portinari</span>
-    </div>
-    <div class="nav-right">
-      <div class="nav-menu">
-        <button class="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-        <div class="nav-menu-dropdown" id="navMenuDropdown">
-          <a href="about.html">About</a>
-          <a href="portfolio-chiara.html">Portfolio</a>
-          <a href="resources.html">Resources</a>
-          <a href="contact.html" class="active">Contact</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+<a class="home-logo" href="index.html" aria-label="Home"></a>
 
-  <div class="main">
-    <div class="contact-left">
-      <div class="page-title">Get in<br><span class="hl">touch</span></div>
-      <p class="intro">Whether you have a project in mind, want to talk about evaluation, education, or participatory practice — or just want to say hello — I'd love to hear from you.</p>
-      <div class="contact-methods">
-        <div class="contact-method">
-          <div class="method-label">Email</div>
-          <div class="method-value"><a href="mailto:chiaraportinari@outlook.com">chiaraportinari@outlook.com</a></div>
-        </div>
-        <div class="contact-method">
-          <div class="method-label">LinkedIn</div>
-          <div class="method-value"><a href="https://www.linkedin.com/in/chiaraportinari/" target="_blank">Chiara Portinari</a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contact-right">
-      <div class="lets-talk">I'm interested in</div>
-      <div class="contexts">
-        <div class="context-item">
-          <strong>Consultancy &amp; evaluation</strong>
-          Participatory research, focus groups, EDI evaluation, community engagement projects
-        </div>
-        <div class="context-item">
-          <strong>Education &amp; pedagogy</strong>
-          Workshops, facilitation, curriculum co-design, student partnership work
-        </div>
-        <div class="context-item">
-          <strong>Creative collaboration</strong>
-          Community-based creative projects, social impact design, collective practice
-        </div>
-        <div class="context-item">
-          <strong>Speaking &amp; writing</strong>
-          Presentations, papers, and contributions on collective leadership, care, and inclusion
-        </div>
-      </div>
-      <a class="email-btn" href="mailto:chiaraportinari@outlook.com">Send me an email →</a>
-    </div>
+  <div class="doc-header">
+    <div class="doc-kicker">Chiara Portinari · LCC Changemakers</div>
+    <h1>Collective<br><span class="hl">Leadership</span><br>Framework</h1>
+    <p class="doc-subtitle">Designing care within systems of power: the invisible work of leading together</p>
+    <div class="doc-meta">Chiara Portinari · 2026 · Work in progress</div>
   </div>
-<script>
-function toggleNavMenu() {
-  document.getElementById('navMenuDropdown').classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  const menu = document.querySelector('.nav-menu');
-  const dropdown = document.getElementById('navMenuDropdown');
-  if (dropdown.classList.contains('open') && !menu.contains(e.target)) {
-    dropdown.classList.remove('open');
-  }
-});
-</script>
+
+  <section>
+    <h2>Starting point</h2>
+    <p>Collective leadership is often described as a democratic ideal — decisions made together, power distributed equally, everyone's voice heard. In practice, it is considerably more complex.</p>
+    <p>This framework draws on my experience leading the Situated Evaluation Framework (SEF) project at LCC Changemakers — a student-partnership programme at London College of Communication, UAL, in which students collaborate with staff on curriculum and community projects — across two cohorts (2024–2026). I held formal authority as Project Leader while actively trying to decentralise that authority within the team. That tension — between an assigned role and an intentional practice of stepping back — is the starting point for everything that follows.</p>
+  </section>
+
+  <section>
+    <h2>The core tension</h2>
+    <p>Collaborative work rarely begins from a blank slate. Institutional structures position people differently before any meeting has been called. A recurring member brings prior knowledge; someone new arrives without it. One person has formal authority; others don't. Roles are blurred, responsibilities overlap, and interests intersect.</p>
+
+    <div class="tension">
+      <div class="tension-side">
+        <div class="t-label">Assigned authority</div>
+        <ul>
+          <li>Visibility given early</li>
+          <li>Positioned differently by institutional structures</li>
+          <li>Expected to facilitate, coordinate, decide</li>
+          <li>Prior knowledge of the project</li>
+        </ul>
+      </div>
+      <div class="tension-side">
+        <div class="t-label">Intentional decentralisation</div>
+        <ul>
+          <li>Actively trying to step back</li>
+          <li>Supporting others' leadership</li>
+          <li>Not dominating space</li>
+          <li>Collective decision-making</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Navigating this tension honestly — without pretending it doesn't exist — is what collective leadership actually requires.</p>
+  </section>
+
+  <section>
+    <h2>Blurred roles</h2>
+    <p>In genuinely collaborative work, roles rarely stay clean. In student-partnership programmes specifically, this is compounded by the fact that formal roles are minimal by design: most members are simply "project leader" or "project member", with little else prescribed. The team self-organises from there — which means roles emerge through practice rather than assignment, and shift as the project develops.</p>
+    <p>The SEF project team operated with:</p>
+    <ul>
+      <li><strong>Roles that are fluid</strong> — what someone does shifts depending on the project phase, who is present, and what is needed. In a student partnership, there is no organisational chart to fall back on; the team constantly negotiates what leadership looks like in the moment</li>
+      <li><strong>Responsibilities that overlap</strong> — two people can both be "responsible" for something without confusion, if the overlap is acknowledged</li>
+      <li><strong>Interests and skills that intersect</strong> — people often join a student partnership because they share values, but also because they are drawn to similar fields: perhaps they come from the same course, or are moving towards similar professional directions. And beyond education and work, each person brings a whole life — identities, experiences, ways of seeing — that shapes how they collaborate, what they notice, and what they care about. Interests and skills intersect not just professionally but humanly, and that intersection often determines the character of the collaboration itself</li>
+    </ul>
+    <p>Blurred roles are not a problem to solve. They are a feature of complex, multi-disciplinary collaborative work. The task is to make them legible — to the team, and to each individual — rather than to iron them out.</p>
+  </section>
+
+  <section>
+    <h2>Team mapping</h2>
+    <p>The first activity I ran as Project Leader in both cohorts was team mapping: a structured exercise for the team to make their own strengths, experiences, and areas for growth visible to each other.</p>
+    <p>Team mapping does not assign roles. Instead it surfaces what each person brings, creates a shared vocabulary for the team's capabilities, and opens a conversation about how work might be distributed with care rather than assumption.</p>
+    <h3>What it involves</h3>
+    <ul>
+      <li>Each person maps their own strengths and areas of experience</li>
+      <li>Each person identifies their own areas for growth</li>
+      <li>The team reviews the maps collectively</li>
+      <li>Decisions about roles and tasks are made in light of what has been shared</li>
+    </ul>
+    <p>This is a collective decision-making practice, not a management exercise. The project leader is mapped alongside everyone else.</p>
+  </section>
+
+  <section>
+    <h2>Invisible labour as leadership</h2>
+    <p>A significant part of what makes collective work possible is work that is rarely named as leadership: coordinating logistics, writing summaries, sending reminders, holding the thread between sessions, noticing when someone has gone quiet.</p>
+    <p>This form of work is often invisible, frequently feminised, regularly undervalued, and difficult to quantify — yet it is essential for participation, trust, safety, and collective engagement.</p>
+
+    <div class="callout">
+      <div class="quote">"You brought care."</div>
+      <div class="attribution">A teammate describing my contribution to the SEF project, 2025</div>
+    </div>
+
+    <p>Recognising structural care as a form of leadership is not about sentimentalising it. It is about making it count — in how we evaluate contribution, in how we distribute it, and in how we talk about what leadership looks like.</p>
+  </section>
+
+  <section>
+    <h2>What collective leadership can look like</h2>
+    <p>Leadership does not require a title or a position. In collaborative settings, it can look like:</p>
+    <ul>
+      <li><strong>Stewardship</strong> — holding the project's purpose and wellbeing over time</li>
+      <li><strong>Coordination</strong> — taking charge of the logistics that allow others to focus on the work</li>
+      <li><strong>Ethical responsibility</strong> — naming tensions, protecting people, upholding values</li>
+      <li><strong>Systems awareness</strong> — understanding how power, hierarchy, and institutional structures shape the space</li>
+      <li><strong>Relational labour</strong> — building and maintaining the relationships that make collaboration possible</li>
+      <li><strong>Maintaining conditions for participation</strong> — ensuring the process stays accessible, clear, and safe for everyone</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>On impact</h2>
+    <div class="impact">
+      <p>Impact is not always visibility.<br>
+      Sometimes impact is <strong>the infrastructure that allows collective work to happen.</strong></p>
+    </div>
+    <p>Evaluation of collaborative projects often measures outputs: documents produced, events held, numbers reached. This framework argues that the conditions for collaboration — the trust, the coordination, the care — are themselves outcomes worth naming and evidencing.</p>
+  </section>
+
+  <div class="doc-footer">
+    <span>Chiara Portinari · clairespot.com</span>
+    <span>Collective Leadership Framework · 2026 · Work in progress</span>
+  </div>
+
 </body>
 </html>

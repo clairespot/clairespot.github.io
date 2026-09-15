@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Chiara Portinari</title>
+<title>Resources — Chiara Portinari</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -13,10 +13,11 @@
     --gradient-accent: linear-gradient(90deg, var(--ink-blue) 0%, #7388AE 50%, #A63A79 100%);
   }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:#EEF0F3; min-height:100vh; color:var(--ink-blue); font-family:'IBM Plex Sans',sans-serif; display:flex; flex-direction:column; }
+  body { background:#EEF0F3; min-height:100vh; }
+  .stage { width:100%; max-width:clamp(960px, 68vw, 1500px); margin:0 auto; background:#EEF0F3; }
 
-  nav { display:flex; align-items:center; justify-content:space-between; padding:22px 60px; border-bottom:1px solid rgba(30,58,92,0.09); }
-  .mark { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink-blue); text-decoration:none; }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:22px 36px; border-bottom:1px solid rgba(30,58,92,0.09); }
+  .mark { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; color:var(--ink-blue); }
   .nav-left { display:flex; align-items:center; gap:14px; }
   .nav-right { display:flex; align-items:center; gap:18px; }
 
@@ -40,93 +41,147 @@
   }
   .home-logo:hover { opacity: 1; }
 
-  .main { max-width: clamp(960px, 68vw, 1500px); margin: 0 auto; padding: 80px 60px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; flex: 1; align-content: center; }
-
-  .contact-left {}
-  .page-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:52px; text-transform:uppercase; line-height:0.9; letter-spacing:0.02em; margin-bottom:24px; }
+  .page-header { padding:52px 36px 36px; border-bottom:1px solid rgba(30,58,92,0.07); }
+  .page-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:48px; text-transform:uppercase; line-height:0.9; letter-spacing:0.02em; color:var(--ink-blue); }
   .page-title .hl {
     position:relative; display:inline-block;
     background:var(--gradient-accent); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
   }
-  .intro { font-size:16px; line-height:1.75; color:#33373E; margin-bottom:36px; }
+  .page-subtitle { font-family:'IBM Plex Sans',sans-serif; font-size:16px; color:#767B85; margin-top:12px; line-height:1.6; }
 
-  .contact-methods { display:flex; flex-direction:column; gap:24px; }
-  .contact-method {}
-  .method-label { font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#767B85; margin-bottom:6px; }
-  .method-value { font-size:16px; font-weight:500; }
-  .method-value a { color:var(--ink-blue); text-decoration:underline; text-underline-offset:3px; text-decoration-color:rgba(30,58,92,0.3); transition:text-decoration-color 0.2s; }
-  .method-value a:hover { text-decoration-color:#3B5F86; }
+  .content { padding:48px 36px; }
 
-  .contact-right { padding-top: 8px; }
-  .lets-talk { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:36px; text-transform:uppercase; line-height:0.95; letter-spacing:0.025em; margin-bottom:20px; color:var(--ink-blue); }
-  .contexts { display:flex; flex-direction:column; gap:14px; margin-bottom:36px; }
-  .context-item { font-size:15px; line-height:1.6; color:#33373E; padding-left:14px; border-left:3px solid #3B5F86; }
-  .context-item strong { font-weight:500; color:var(--ink-blue); display:block; }
+  .resource-list { display:flex; flex-direction:column; }
+  .resource-item {
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:start;
+    gap:20px;
+    padding:22px 0;
+    border-bottom:1px solid rgba(30,58,92,0.06);
+  }
+  .resource-item:last-child { border-bottom:none; }
 
-  .email-btn { display:inline-block; font-family:'IBM Plex Sans',sans-serif; font-size:14px; font-weight:500; background:var(--ink-blue); color:#EEF0F3; padding:14px 28px; border-radius:999px; text-decoration:none; transition:background 0.2s; }
-  .email-btn:hover { background:#3B5F86; }
+  .resource-left { display:flex; flex-direction:column; gap:4px; }
+  .resource-type { font-family:'IBM Plex Sans',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#767B85; }
+  .resource-name { font-family:'IBM Plex Sans',sans-serif; font-weight:500; font-size:16px; color:var(--ink-blue); line-height:1.4; }
+  .resource-meta { font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:#9a968e; margin-top:2px; }
+  .resource-desc { font-family:'IBM Plex Sans',sans-serif; font-size:15px; color:#33373E; line-height:1.6; margin-top:6px; max-width:520px; }
+
+  .resource-action { display:flex; flex-direction:column; align-items:flex-end; gap:6px; padding-top:4px; }
+  .btn-link { font-family:'IBM Plex Sans',sans-serif; font-size:13px; letter-spacing:0.03em; text-decoration:none; padding:8px 16px; border-radius:999px; border:1px solid rgba(30,58,92,0.15); color:var(--ink-blue); white-space:nowrap; transition:all 0.2s; display:inline-block; }
+  .btn-link:hover { border-color:#3B5F86; background:#3B5F86; color:#EEF0F3; }
+  .btn-link.placeholder { color:#bbb; border-color:#ddd; cursor:default; pointer-events:none; }
+  .resource-item.coming-soon { opacity: 0.5; }
+
+  .mark { text-decoration:none; }
 </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-left">
-      <a class="home-logo" href="index.html" aria-label="Home"></a>
-      <span class="mark">Chiara Portinari</span>
-    </div>
-    <div class="nav-right">
-      <div class="nav-menu">
-        <button class="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-        <div class="nav-menu-dropdown" id="navMenuDropdown">
-          <a href="about.html">About</a>
-          <a href="portfolio-chiara.html">Portfolio</a>
-          <a href="resources.html">Resources</a>
-          <a href="contact.html" class="active">Contact</a>
-        </div>
+<nav>
+  <div class="nav-left">
+    <a class="home-logo" href="index.html" aria-label="Home"></a>
+    <span class="mark">Chiara Portinari</span>
+  </div>
+  <div class="nav-right">
+    <div class="nav-menu">
+      <button class="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu-dropdown" id="navMenuDropdown">
+        <a href="about.html">About</a>
+        <a href="portfolio-chiara.html">Portfolio</a>
+        <a href="resources.html" class="active">Resources</a>
+        <a href="contact.html">Contact</a>
       </div>
-    </div>
-  </nav>
-
-  <div class="main">
-    <div class="contact-left">
-      <div class="page-title">Get in<br><span class="hl">touch</span></div>
-      <p class="intro">Whether you have a project in mind, want to talk about evaluation, education, or participatory practice — or just want to say hello — I'd love to hear from you.</p>
-      <div class="contact-methods">
-        <div class="contact-method">
-          <div class="method-label">Email</div>
-          <div class="method-value"><a href="mailto:chiaraportinari@outlook.com">chiaraportinari@outlook.com</a></div>
-        </div>
-        <div class="contact-method">
-          <div class="method-label">LinkedIn</div>
-          <div class="method-value"><a href="https://www.linkedin.com/in/chiaraportinari/" target="_blank">Chiara Portinari</a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contact-right">
-      <div class="lets-talk">I'm interested in</div>
-      <div class="contexts">
-        <div class="context-item">
-          <strong>Consultancy &amp; evaluation</strong>
-          Participatory research, focus groups, EDI evaluation, community engagement projects
-        </div>
-        <div class="context-item">
-          <strong>Education &amp; pedagogy</strong>
-          Workshops, facilitation, curriculum co-design, student partnership work
-        </div>
-        <div class="context-item">
-          <strong>Creative collaboration</strong>
-          Community-based creative projects, social impact design, collective practice
-        </div>
-        <div class="context-item">
-          <strong>Speaking &amp; writing</strong>
-          Presentations, papers, and contributions on collective leadership, care, and inclusion
-        </div>
-      </div>
-      <a class="email-btn" href="mailto:chiaraportinari@outlook.com">Send me an email →</a>
     </div>
   </div>
+</nav>
+<div class="stage">
+
+  <div class="page-header">
+    <div class="page-title"><span class="hl">Resources</span></div>
+    <p class="page-subtitle">Frameworks, toolkits, and writing — things made to be used and shared.</p>
+  </div>
+
+  <div class="content">
+    <div class="resource-list">
+
+      <div class="resource-item">
+        <div class="resource-left">
+          <span class="resource-type">Toolkit</span>
+          <span class="resource-name">Situated Evaluation Framework (SEF)</span>
+          <span class="resource-meta">LCC Changemakers, 2024–2026</span>
+          <p class="resource-desc">An adaptable and replicable framework for evaluating student partnerships. Includes templates, guidelines, and reflective activities.</p>
+        </div>
+        <div class="resource-action">
+          <a class="btn-link" href="https://lccchangemakers.myblog.arts.ac.uk/news/sef-toolkit/" target="_blank">View toolkit →</a>
+        </div>
+      </div>
+
+      <div class="resource-item coming-soon">
+        <div class="resource-left">
+          <span class="resource-type">Framework</span>
+          <span class="resource-name">Collective Leadership Framework</span>
+          <span class="resource-meta">Chiara Portinari, 2026</span>
+          <p class="resource-desc">A framework for leading with care: collective decision-making, distribution of labour and inclusion.</p>
+        </div>
+        <div class="resource-action">
+          <span class="btn-link placeholder">Coming soon</span>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <div class="resource-left">
+          <span class="resource-type">Article</span>
+          <span class="resource-name">Beyond the Staff–Student Binary</span>
+          <span class="resource-meta">Wonkhe, 2026 — by Chiara Portinari</span>
+          <p class="resource-desc">On how rigid staff-student categories undermine learning, and the hybrid roles replacing them.</p>
+        </div>
+        <div class="resource-action">
+          <a class="btn-link" href="https://wonkhe.com/blogs/universities-that-can-learn-means-getting-beyond-the-staff-student-binary/" target="_blank">Read →</a>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <div class="resource-left">
+          <span class="resource-type">Blog</span>
+          <span class="resource-name">Writing as a Changemaker</span>
+          <span class="resource-meta">LCC Changemakers, 2026 — by Chiara Portinari</span>
+          <p class="resource-desc">On co-authoring versus writing solo, and the risk of putting yourself out there in a second language.</p>
+        </div>
+        <div class="resource-action">
+          <a class="btn-link" href="https://lccchangemakers.myblog.arts.ac.uk/news/writing-as-a-changemaker/" target="_blank">Read →</a>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <div class="resource-left">
+          <span class="resource-type">Blog</span>
+          <span class="resource-name">Stories as Evidence</span>
+          <span class="resource-meta">AdvanceHE Take5 #151, 2026 — with Saranya Satheesh &amp; Jiayi Wu</span>
+          <p class="resource-desc">How student voices, advocacy, and impact visibility are being heard in new ways through the SEF evaluation process.</p>
+        </div>
+        <div class="resource-action">
+          <a class="btn-link" href="https://aldinhe.ac.uk/take5-151-stories-as-evidence/" target="_blank">Read →</a>
+        </div>
+      </div>
+
+      <div class="resource-item">
+        <div class="resource-left">
+          <span class="resource-type">Article</span>
+          <span class="resource-name">Brand Insights: How LCC Changemakers Turn Employability into Real EDI</span>
+          <span class="resource-meta">Jobs.ac.uk, 2025 — by Michele Palmer</span>
+          <p class="resource-desc">On the LCC Changemakers programme and how student consultancy work is reframing employability through an EDI lens.</p>
+        </div>
+        <div class="resource-action">
+          <a class="btn-link" href="https://blog.jobs.ac.uk/recruiters-hub/how-lcc-changemakers-turn-employability-into-real-edi/" target="_blank">Read →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 <script>
 function toggleNavMenu() {
   document.getElementById('navMenuDropdown').classList.toggle('open');
