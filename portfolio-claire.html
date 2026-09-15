@@ -37,6 +37,8 @@
   .nav-right { display:flex; align-items:center; gap:18px; }
 
   .toggle { font-family:'IBM Plex Sans',sans-serif; font-size:12px; background:transparent; cursor:pointer; padding:8px 16px; border-radius:999px; letter-spacing:0.03em; text-decoration:none; border:1px solid var(--accent); color:var(--accent); transition:all 0.3s ease; }
+  .text-only-link { font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:600; text-decoration:none; padding:6px 9px; border-radius:6px; color:var(--accent); transition:background-color 0.2s ease; }
+  .text-only-link:hover { background: rgba(255,255,255,0.1); }
   .toggle:hover { background:var(--accent); color:var(--ink-blue); }
 
   .nav-menu { position:relative; }
@@ -141,6 +143,7 @@
   nav { padding: 16px 20px; }
   .mark { font-size: 16px; }
   .toggle { font-size: 11px; padding: 6px 11px; }
+  .text-only-link { font-size: 11px; padding: 5px 7px; }
   .dropdown { left: 0; right: auto; min-width: unset; width: max-content; max-width: calc(100vw - 40px); }
 
   .main { display: block; }
@@ -201,6 +204,7 @@
   </div>
   <div class="nav-right">
     <a class="toggle" href="portfolio-chiara.html">switch to Chiara</a>
+    <a class="text-only-link" href="portfolio-claire-text-only.html" aria-label="text-only version">aa</a>
     <div class="nav-menu">
       <button class="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
         <span></span><span></span><span></span>

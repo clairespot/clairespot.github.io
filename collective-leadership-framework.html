@@ -216,10 +216,22 @@
     opacity: 0.75; transition: opacity 0.2s;
   }
   .home-logo:hover { opacity: 1; }
+  .text-only-link {
+    position: fixed; top: 24px; right: 36px; z-index: 10;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none;
+    padding: 6px 9px;
+    border-radius: 6px;
+    color: var(--ink-blue);
+    transition: background-color 0.2s ease;
+  }
+  .text-only-link:hover { background: rgba(30,58,92,0.08); }
 </style>
 </head>
 <body>
 <a class="home-logo" href="index.html" aria-label="Home"></a>
+<a class="text-only-link" href="collective-leadership-framework-text-only.html" aria-label="Text-only version">Aa</a>
 
   <div class="doc-header">
     <div class="doc-kicker">Chiara Portinari · LCC Changemakers</div>
