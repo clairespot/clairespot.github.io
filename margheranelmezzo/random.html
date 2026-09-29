@@ -234,7 +234,7 @@
     </div>`;
 
     const type = item.type.toLowerCase();
-    const media = (src, alt) => `<img src="${src}" alt="${alt}" class="zoomable">`;
+    const media = (src, alt) => `<img src="${src}" alt="${alt}" class="zoomable" loading="lazy" decoding="async">`;
 
     if (type === 'photo' || type === 'illustration') {
       if (Array.isArray(item.src)) {
@@ -245,7 +245,7 @@
     } else if (type === 'video') {
       html += item.src.includes('youtube')
         ? `<iframe src="${item.src}" frameborder="0" allowfullscreen></iframe>`
-        : `<video controls src="${item.src}"></video>`;
+        : `<video controls preload="metadata" playsinline src="${item.src}"></video>`;
     } else if (type === 'audio') {
       html += `<iframe src="${item.src}" width="100%" height="80" frameborder="0" allow="encrypted-media"></iframe>`;
     } else if (type === 'text') {

@@ -16,9 +16,9 @@ function generateContentHTML(item) {
   if (type === 'photo' || type === 'illustration') {
     // Handle multiple or single photos
     if (Array.isArray(item.src)) {
-      return item.src.map(src => `<img src="${src}" alt="Foto">`).join('');
+      return item.src.map(src => `<img src="${src}" alt="Foto" loading="lazy" decoding="async">`).join('');
     } else {
-      return `<img src="${item.src}" alt="Foto">`;
+      return `<img src="${item.src}" alt="Foto" loading="lazy" decoding="async">`;
     }
   }
 
@@ -30,7 +30,7 @@ function generateContentHTML(item) {
     if (item.src.includes('youtube.com') || item.src.includes('youtu.be')) {
       return `<iframe width="560" height="315" src="${item.src}" frameborder="0" allowfullscreen></iframe>`;
     } else {
-      return `<video controls src="${item.src}"></video>`;
+      return `<video controls preload="metadata" playsinline src="${item.src}"></video>`;
     }
   }
 
