@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invia alla Galleria</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+
+  <style>
+  form,
+  input,
+  textarea,
+  select,
+  button {
+    box-sizing: border-box;
+  }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('IMAGES/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: black;
+    }
+    .content {
+      padding: 30px;
+      background-color: rgba(255,255,255,0.9);
+      margin: 40px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      font-family: Arial, sans-serif;
+      color: black;
+      text-align: left;
+      line-height: 24px;
+    }
+    .content h2 { /* Targeting the h2 specifically within .content */
+      margin-bottom: 0px; 
+    }
+    form {
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background-color: black;
+      color: white;
+      font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    #other-type-field {
+      display: none;
+    }
+
+/* Media query for mobile devices */
+
+    @media (max-width: 768px) {
+    .content {
+      margin: 20px;
+      padding: 15px;
+    }
+}
+
+  </style>
+</head>
+
+
+<body>
+  <div id="header"></div>
+
+  <div class="content">
+    <h2>Aggiungi alla galleria</h2>
+
+  <iframe data-tally-src="https://tally.so/embed/mBVjzK?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+    loading="lazy"
+    width="100%"
+    height="920"
+    frameborder="0"
+    marginheight="0"
+    marginwidth="0"
+    title="Aggiungi alla galleria"
+    style="border: none; margin-top: 0;">
+  </iframe>
+  </div>
+
+
+<script>
+  var d = document, w = "https://tally.so/widgets/embed.js", v = function () {
+    "undefined" != typeof Tally ? Tally.loadEmbeds() :
+    d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function (e) {
+      e.src = e.dataset.tallySrc
+    });
+  };
+  if ("undefined" != typeof Tally) v();
+  else if (d.querySelector('script[src="' + w + '"]') == null) {
+    var s = d.createElement("script");
+    s.src = w, s.onload = v, s.onerror = v, d.body.appendChild(s);
+  }
+</script>
+
+<style>
+  @media (max-width: 550px) {
+    #form-wrapper {
+      margin: 30px 20px;
+      padding: 20px;
+      max-width: 100%;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      padding: 0 20px;
+    }
+  }
+</style>
+
+
+
+  <script src="archive.js"></script>
+  <script>
+    // Load shared header markup
+    fetch('header.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('header').innerHTML = html;
+      });
+
+    // Toggle dropdown menu
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+    window.addEventListener('click', function(e) {
+      const menu = document.getElementById('menu');
+      if (menu && !e.target.closest('.menu-icon')) {
+        menu.style.display = 'none';
+      }
+    });
+
+    // Show/hide the "Altro" field
+    function toggleOtherField(select) {
+      document.getElementById('other-type-field').style.display =
+        select.value === 'other' ? 'block' : 'none';
+    }
+
+    // Ensure user provides either file or URL
+    function validateMediaInput() {
+      const fileInput = document.getElementById('file');
+      const urlInput = document.getElementById('url');
+      if (!fileInput.value && !urlInput.value) {
+        alert("Devi caricare un file oppure incollare un link.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
