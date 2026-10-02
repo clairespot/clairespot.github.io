@@ -173,7 +173,7 @@ window.ARCHIVE = [
     "type": "Video",
     "src": "VIDEO/video2.mp4",
     "thumb": "IMAGES/video2-preview.jpg",
-    "description": "Lorenzo Lazzari, Luca Boscolo, Marta Grasp, Giova Rossi, Giulio Rossato, Riccardo Vendramin",
+    "description": "Lorenzo Lazzari, Luca Boscolo, Marta Grespi, Giovanna dei Rossi, Giulio Rossato, Riccardo Vendramin",
     "place": "",
     "bond": ""
   },
