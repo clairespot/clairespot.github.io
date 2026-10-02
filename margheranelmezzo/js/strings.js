@@ -98,7 +98,7 @@ window.MNM_T = {
       galCta: 'Guarda la galleria',
       whyTitle: 'Perché “nel mezzo”',
       whyText: 'Perché sta tra gli estremi e gli stereotipi, come luogo d’incontro tra generazioni, culture, memorie e futuri possibili. Un esperimento collettivo di narrazione urbana, dove l’arte aiuta ad abitare il presente e a progettare insieme il futuro del quartiere.',
-      logoAlt: 'Illustrazione del logo di Marghera nel Mezzo', pressLink: 'Leggi la ricerca',
+      logoAlt: 'Logo di Marghera nel Mezzo', pressLink: 'Leggi la ricerca',
       addSub: 'Gratis e aperto a tutti. Bastano pochi minuti.'
     },
     contatti: {
@@ -231,7 +231,7 @@ window.MNM_T = {
       galCta: 'See the gallery',
       whyTitle: 'Why “in the middle”',
       whyText: 'Because it sits between the extremes and the stereotypes, as a meeting place for generations, cultures, memories and possible futures. A collective experiment in urban storytelling, where art helps us live in the present and plan the neighbourhood’s future together.',
-      logoAlt: 'Marghera nel Mezzo logo illustration', pressLink: 'Read the research',
+      logoAlt: 'Marghera nel Mezzo logo', pressLink: 'Read the research',
       addSub: 'Free and open to everyone. It only takes a few minutes.'
     },
     contatti: {

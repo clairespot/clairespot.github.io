@@ -36,7 +36,7 @@ a:hover { color: inherit; opacity: .8; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-.band :focus-visible, .hero :focus-visible, .site-footer :focus-visible, .lightbox :focus-visible, .panel--ink :focus-visible { outline-color: var(--acc); }
+.band :focus-visible, .hero :focus-visible, .site-header :focus-visible, .site-footer :focus-visible, .lightbox :focus-visible, .panel--ink :focus-visible { outline-color: var(--acc); }
 [hidden] { display: none !important; }
 
 .sr-only {
@@ -64,12 +64,10 @@ button { cursor: pointer; }
 .sym { display: inline-flex; align-items: center; line-height: 1; }
 .sym svg { display: block; }
 
-/* ---------- Header ---------- */
+/* ---------- Header (ink bar, cream text) ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(246, 243, 236, .96);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  border-bottom: 2px solid var(--ink);
+  background: var(--ink); color: var(--cream);
 }
 .site-header__row {
   max-width: 1280px; margin: 0 auto; padding: 10px var(--pad);
@@ -84,11 +82,11 @@ button { cursor: pointer; }
   text-decoration: underline; text-decoration-thickness: 3px;
   text-decoration-color: var(--acc); text-underline-offset: 6px;
 }
-.lang-seg { display: flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; font-weight: 700; font-size: 14px; }
-.lang-seg button { border: 0; padding: 8px 14px; min-height: 40px; font: inherit; background: transparent; color: var(--ink); }
-.lang-seg button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+.lang-seg { display: flex; border: 2px solid var(--cream); border-radius: 999px; overflow: hidden; font-weight: 700; font-size: 14px; }
+.lang-seg button { border: 0; padding: 8px 14px; min-height: 40px; font: inherit; background: transparent; color: inherit; }
+.lang-seg button[aria-pressed="true"] { background: var(--cream); color: var(--ink); }
 .lang-btn {
-  min-width: 48px; min-height: 44px; padding: 8px 12px; border: 2px solid var(--ink);
+  min-width: 48px; min-height: 44px; padding: 8px 12px; border: 2px solid var(--cream);
   border-radius: 999px; background: transparent; font-weight: 700; font-size: 15px;
 }
 .aa {
@@ -97,22 +95,22 @@ button { cursor: pointer; }
 }
 .menu-btn {
   width: 48px; height: 48px; place-items: center; border: 0; border-radius: 12px;
-  background: var(--ink); color: var(--cream); font-size: 24px; line-height: 1;
+  background: var(--cream); color: var(--ink); font-size: 24px; line-height: 1;
 }
 /* Phone menu: a small card that opens over the page, under the ☰ button */
 .menu-mobile {
   position: absolute; top: calc(100% + 8px); right: var(--pad); z-index: 20;
   width: min(300px, calc(100vw - 2 * var(--pad)));
-  padding: 4px 20px; background: var(--cream);
+  padding: 4px 20px; background: var(--ink);
   border: 3px solid var(--ink); border-radius: 18px; box-shadow: var(--lift);
 }
 .menu-mobile a {
-  display: flex; align-items: center; min-height: 56px; padding: 12px 0; border-bottom: 1.5px solid var(--divider);
+  display: flex; align-items: center; min-height: 56px; padding: 12px 0; border-bottom: 1.5px solid rgba(246, 243, 236, .22);
   font-family: var(--f-head); font-weight: 700; font-size: 22px; text-decoration: none;
 }
 .menu-mobile a:last-child { border-bottom: 0; }
 .menu-mobile .menu-mobile__extra { font-family: var(--f-body); font-size: 19px; min-height: 50px; }
-.menu-mobile a:not(.menu-mobile__extra) + .menu-mobile__extra { border-top: 2px solid var(--ink); margin-top: 4px; }
+.menu-mobile a:not(.menu-mobile__extra) + .menu-mobile__extra { border-top: 2px solid var(--cream); margin-top: 4px; }
 .menu-mobile a[aria-current="page"] {
   text-decoration: underline; text-decoration-thickness: 3px;
   text-decoration-color: var(--acc); text-underline-offset: 6px;
@@ -273,8 +271,13 @@ button { cursor: pointer; }
   display: grid; gap: clamp(28px, 4vw, 48px);
 }
 .hero__intro { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(20px, 4vw, 48px); }
-.hero__logo { width: clamp(150px, 22vw, 260px); height: auto; flex: none; animation: logo-sway 7s ease-in-out infinite; }
-/* The little globe rocks gently from side to side */
+.hero__logo {
+  width: clamp(150px, 22vw, 260px); height: auto; flex: none;
+  transform-origin: 43.8% 46.5%; animation: logo-sway 7s ease-in-out infinite;
+  /* soft shadow under the shapes so the logo seems to float over the photo */
+  filter: drop-shadow(0 14px 14px rgba(0, 0, 0, .6));
+}
+/* The logo rocks gently from side to side, turning around its centre circle */
 @keyframes logo-sway {
   0%, 100% { transform: rotate(-5deg); }
   50% { transform: rotate(5deg); }
@@ -666,7 +669,8 @@ button { cursor: pointer; }
 .pj-intro figcaption { font-size: 16px; line-height: 1.4; color: var(--muted); }
 .nowrap { white-space: nowrap; }
 .pj-why { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 5vw, 72px); }
-.pj-why > img { flex: 0 1 280px; min-width: 0; width: 100%; max-width: 280px; display: block; }
+/* margin-inline:auto centres the logo when it sits on its own line (small screens) */
+.pj-why > img { flex: 0 1 280px; min-width: 0; width: 100%; max-width: 280px; display: block; margin-inline: auto; }
 .pj-why__text { flex: 1 1 420px; min-width: 0; display: grid; gap: 22px; }
 .pj-why blockquote {
   margin: 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--acc);

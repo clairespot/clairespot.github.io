@@ -65,7 +65,7 @@ const header = (current, textHref = 'testo.html') => `<a class="skip" href="#mai
 <header class="site-header">
   <div class="site-header__row">
     <a class="brand" href="index.html" aria-label="Marghera nel Mezzo">
-      <img src="IMAGES/web/illustration-96.png" alt="" width="48" height="48">
+      <img src="IMAGES/web/logo.svg" alt="" width="48" height="48">
       <span class="brand__name">Marghera nel Mezzo</span>
     </a>
     <nav class="nav" aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
@@ -122,8 +122,9 @@ const head = ({ file, key, title, desc }) => `<!DOCTYPE html>
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f6f3ec">
-<link rel="icon" type="image/png" href="IMAGES/illustration.png">
+<meta name="theme-color" content="#141210">
+<link rel="icon" type="image/png" sizes="192x192" href="IMAGES/web/logo-192.png">
+<link rel="icon" type="image/svg+xml" href="IMAGES/web/logo.svg">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>`;
@@ -207,7 +208,8 @@ const textPage = ({ file, titleKey, visual, page, body }) => `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="${titleKey}">${escH(IT(titleKey))}</title>
 <meta name="description" content="Marghera nel Mezzo in versione solo testo: senza immagini, contenuto completo.">
-<link rel="icon" type="image/png" href="IMAGES/illustration.png">
+<link rel="icon" type="image/png" sizes="192x192" href="IMAGES/web/logo-192.png">
+<link rel="icon" type="image/svg+xml" href="IMAGES/web/logo.svg">
 <!-- Same text-only stylesheet as the rest of clairespot.com -->
 <link rel="stylesheet" href="../style.css">
 <style>.poem { white-space: pre-line; } [hidden] { display: none !important; }</style>
