@@ -15,6 +15,7 @@
 //           Per una serie di foto, una lista con una poesia per foto, nello stesso ordine: [`...`, `...`]
 //           (si legge con i lettori di schermo e nelle pagine solo testo)
 //   description_en: la descrizione in inglese (se manca, in inglese si vede quella italiana)
+//   title:  se l'opera non ha titolo lascia "": il sito scrive «Senza titolo» (in inglese «Untitled»)
 //   lang:   la lingua dell'opera se non è l'italiano, per esempio "en" (aiuta i lettori di schermo)
 //   id:     (facoltativo) il nome che compare nel link dell'opera; se manca si usa il titolo
 //   place, bond, description: si possono lasciare vuoti ""

@@ -104,16 +104,17 @@ function youtubeId(src) {
 }
 
 function normalize(w, i) {
+  const rawTitle = String(w.title || '').trim();
   const srcs = (Array.isArray(w.src) ? w.src : [w.src]).filter(Boolean);
   const type = TYPES.includes(w.type) ? w.type : 'Other';
   const year = w.year == null ? '' : String(w.year).trim();
   const isImage = type === 'Photo' || type === 'Illustration';
   const yt = youtubeId(srcs[0]);
   const y4 = /\d{4}/.exec(year);
-  return {
+  const o = {
     ...w,
     i, type, year, srcs, isImage,
-    title: String(w.title || '').trim(),
+    rawTitle,
     thumb: w.thumb || (isImage ? srcs[0] : (yt ? `https://img.youtube.com/vi/${yt}/hqdefault.jpg` : '')),
     ytAuto: !w.thumb && !isImage && !!yt, // YouTube's automatic preview has black bands top and bottom
     count: isImage && srcs.length > 1 ? srcs.length : 0,
@@ -125,6 +126,9 @@ function normalize(w, i) {
     place: String(w.place || '').trim(),
     bond: String(w.bond || '').trim()
   };
+  // A work without a title is shown as "Senza titolo" / "Untitled", in the visitor's language.
+  Object.defineProperty(o, 'title', { get: () => rawTitle || t('common.untitled'), enumerable: true });
+  return o;
 }
 
 // Each work's link (detail.html?opera=…) comes from its "id" if it has one, otherwise from its title.
@@ -132,7 +136,7 @@ function normalize(w, i) {
 function withSlugs(list) {
   const seen = new Set();
   list.forEach(w => {
-    const base = slug(w.id || w.title) || 'opera';
+    const base = slug(w.id || w.rawTitle) || 'senza-titolo';
     let s = base;
     for (let k = 2; seen.has(s); k++) s = `${base}-${k}`;
     seen.add(s);
