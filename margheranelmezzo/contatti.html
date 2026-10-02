@@ -1,111 +1,117 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contatti</title>
-  <!-- Core styles -->
-  <link rel="stylesheet" href="style.css">
-  <!-- Koulen font for header -->
-  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
-  
-  <!-- Add FontAwesome for icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-  <style>
-    .content {
-      padding: 30px;
-      background-color: rgba(255, 255, 255, 0.9);
-      margin: 40px auto;
-      max-width: 600px;
-      border-radius: 10px;
-      font-family: Arial, sans-serif;
-      color: black;
-      text-align: left;
-    }
-    .content p {
-      margin: 0 0 10px;
-    }
-    .content a {
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .social-links {
-      margin-top: 20px;
-    }
-
-    .social-links a {
-      color: #E1306C; /* Instagram's pink color */
-      font-size: 1.2rem;
-      margin-right: 10px;
-      transition: color 0.3s ease;
-    }
-
-    .social-links a:hover {
-      color: #bc2a8d; /* Darker pink on hover */
-    }
-
-    .social-links .facebook {
-      color: #3b5998; /* Facebook's blue color */
-    }
-
-    .social-links .facebook:hover {
-      color: #2d4373; /* Darker blue on hover */
-    }
-
-    @media (max-width: 768px) {
-      .content {
-        margin: 20px;
-        padding: 15px; 
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="contatti.docTitle">Contatti · Marghera nel Mezzo</title>
+<meta name="description" content="Scrivi a Marghera nel Mezzo: email, Instagram, Facebook e WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Marghera nel Mezzo">
+<meta property="og:title" content="Contatti · Marghera nel Mezzo">
+<meta property="og:description" content="Scrivi a Marghera nel Mezzo: email, Instagram, Facebook e WhatsApp.">
+<meta property="og:image" content="https://clairespot.com/margheranelmezzo/IMAGES/web/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f3ec">
+<link rel="icon" type="image/png" href="IMAGES/illustration.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header include -->
-  <div id="header"></div>
+<div class="page">
+<a class="skip" href="#main" data-i18n="common.skip">Vai al contenuto</a>
+<header class="site-header">
+  <div class="site-header__row">
+    <a class="brand" href="index.html" aria-label="Marghera nel Mezzo">
+      <img src="IMAGES/web/illustration-96.png" alt="" width="48" height="48">
+      <span class="brand__name">Marghera nel Mezzo</span>
+    </a>
+    <nav class="nav" aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+      <a href="search.html" data-i18n="common.navGallery">Galleria</a>
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="contatti.html" aria-current="page" data-i18n="common.navContact">Contatti</a>
+    </nav>
+    <div class="lang-seg" role="group" aria-label="Lingua / Language">
+      <button type="button" data-lang="it" lang="it" aria-pressed="true">IT</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button type="button" class="lang-btn" lang="en" aria-label="Switch to English">EN</button>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-mobile" aria-label="Menu" data-i18n-attr="aria-label:common.menu">☰</button>
+    <a class="aa" href="testo-contatti.html" aria-label="Solo testo" title="Solo testo" data-i18n-attr="aria-label:common.textOnly;title:common.textOnly">Aa</a>
+  </div>
+  <nav id="menu-mobile" class="menu-mobile" hidden aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+    <a href="search.html" data-i18n="common.navGallery">Galleria</a>
+    <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+    <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+    <a href="contatti.html" aria-current="page" data-i18n="common.navContact">Contatti</a>
+    <a class="menu-mobile__extra" href="upload.html" data-i18n="common.addTitle">Aggiungi la tua opera</a>
+  </nav>
+</header>
 
-  <div class="content">
-    <h2>Contattaci</h2>
-    <p>Se hai una curiosità su <i>Marghera nel Mezzo</i>, <br>puoi scrivere a:</p>
-    <a href="mailto:margheranelmezzo@gmail.com">margheranelmezzo@gmail.com</a>
+<main id="main" tabindex="-1">
+<section class="band">
+  <div class="band__inner">
+    <h1 data-i18n="contatti.h1">Contatti</h1>
+    <p class="band__lede" data-i18n="contatti.lede">Hai una curiosità, un’idea o vuoi collaborare? Scrivici.</p>
+  </div>
+</section>
 
-    <!-- Add the Instagram and Facebook links -->
-    <div class="social-links">
-      <p><br> <br>Seguici su:<br> <br></p>
-      <!-- Instagram Link -->
-      <a href="https://instagram.com/margheranelmezzo" target="_blank" class="instagram-link">
-        <i class="fab fa-instagram"></i> @margheranelmezzo
-      </a><br> <br>
-      <!-- Facebook Link -->
-      <a href="https://facebook.com/margheranelmezzo" target="_blank" class="facebook">
-        <i class="fab fa-facebook-f"></i> @margheranelmezzo
+<div class="wrap ct-main">
+  <div class="ct-row">
+    <div class="ct-email">
+      <span class="ct-label" data-i18n="contatti.emailLabel">Email</span>
+      <a class="ct-address" href="mailto:margheranelmezzo@gmail.com">margheranelmezzo@<wbr>gmail.com</a>
+      <p data-i18n="contatti.emailText">Per domande sul progetto, collaborazioni e ricerca. Rispondiamo di solito entro qualche giorno.</p>
+      <div class="ct-btns">
+        <a class="pill pill--acc pill--50 pill--wide pill--hover-lift" href="mailto:margheranelmezzo@gmail.com"><span data-i18n="contatti.write">Scrivi un’email</span> →</a>
+        <button type="button" class="pill pill--white pill--50 pill--wide" id="copy" data-i18n="contatti.copy">Copia indirizzo</button>
+      </div>
+    </div>
+    <div class="ct-socials">
+      <a class="social-card" href="https://instagram.com/margheranelmezzo" target="_blank" rel="noopener">
+        <span class="social-card__txt"><span class="social-card__name">Instagram</span><span class="social-card__sub" data-i18n="contatti.igSub">@margheranelmezzo</span></span>
+        <span class="social-card__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="social-card" href="https://facebook.com/margheranelmezzo" target="_blank" rel="noopener">
+        <span class="social-card__txt"><span class="social-card__name">Facebook</span><span class="social-card__sub" data-i18n="contatti.fbSub">@margheranelmezzo</span></span>
+        <span class="social-card__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="social-card" href="https://wa.me/447599882486" target="_blank" rel="noopener">
+        <span class="social-card__txt"><span class="social-card__name">WhatsApp · +44 7599 882486</span><span class="social-card__sub" data-i18n="contatti.waSub">Per mandarci un’opera o una domanda veloce</span><span class="social-card__note" data-i18n="contatti.waNote">Il numero è inglese perché Chiara, che coordina il progetto, vive a Londra.</span></span>
+        <span class="social-card__arrow" aria-hidden="true">↗</span>
       </a>
     </div>
   </div>
 
-  <script src="archive.js"></script>
-  <script>
-    // Load the shared header
-    fetch('header.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('header').innerHTML = html;
-      });
+  <div class="ct-more">
+    <span><span data-i18n="contatti.addQ">Vuoi aggiungere un’opera?</span> <a class="link-arrow" href="upload.html"><span data-i18n="contatti.addLink">Usa il modulo</span> →</a></span>
+    <span><span data-i18n="contatti.pressQ">Ti interessa la ricerca?</span> <a class="link-arrow" href="ricerca.html"><span data-i18n="contatti.pressLink">Leggi la ricerca</span> →</a></span>
+  </div>
+</div>
 
-    // Menu toggle logic
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
-    window.addEventListener('click', function(e) {
-      const menu = document.getElementById('menu');
-      if (menu && !e.target.closest('.menu-icon')) {
-        menu.style.display = 'none';
-      }
-    });
-  </script>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <nav aria-label="Link utili" data-i18n-attr="aria-label:common.footerNav">
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="ringraziamenti.html" data-i18n="common.thanks">Ringraziamenti</a>
+      <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+      <a href="privacy.html" data-i18n="common.privacy">Privacy</a>
+      <a href="https://instagram.com/margheranelmezzo" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://facebook.com/margheranelmezzo" target="_blank" rel="noopener">Facebook</a>
+    </nav>
+    <span class="site-footer__place">Marghera nel Mezzo · Venezia</span>
+  </div>
+</footer>
+</div>
+<script src="archive.js" defer></script>
+<script src="js/strings.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/contatti.js" defer></script>
+
 </body>
 </html>

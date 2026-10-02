@@ -1,0 +1,71 @@
+<section class="band band--upload">
+  <div class="band__inner">
+    <h1 data-i18n="upload.h1">Aggiungi la tua opera</h1>
+    <p class="band__lede" data-i18n="upload.lede">Una foto, un video, una canzone, un racconto o un disegno su Marghera, di ieri o di oggi. È gratis e aperto a tutti.</p>
+    <ol class="steps" id="steps" aria-label="Passaggi" data-i18n-attr="aria-label:upload.stepsLabel">
+      <li aria-current="step"><span class="steps__mark">1</span><span data-i18n="upload.steps.0">Scegli il tipo</span></li>
+      <li><span class="steps__mark">2</span><span data-i18n="upload.steps.1">Raccontaci l’opera</span></li>
+      <li><span class="steps__mark">3</span><span data-i18n="upload.steps.2">Fatto</span></li>
+    </ol>
+  </div>
+</section>
+
+<div class="wrap up-main">
+  <div class="up-col">
+    <section id="step-type" aria-labelledby="type-q">
+      <h2 id="type-q" class="up-h2" data-i18n="upload.typeQ">Che cosa vuoi condividere?</h2>
+      <p class="up-hint" data-i18n="upload.typeHint">Scegli una voce. Potrai cambiarla dopo.</p>
+      <p class="up-alt-link"><span data-i18n="upload.altShort">Preferisci mandarla su WhatsApp o per email?</span> <a href="#alt-panel" data-i18n="upload.altLink">Ecco come</a></p>
+      <div class="type-grid">
+        {{typeCards}}
+      </div>
+    </section>
+
+    <section id="step-form" hidden aria-label="Raccontaci l’opera" data-i18n-attr="aria-label:upload.steps.1">
+      <div class="chosen">
+        <span class="chosen__chip" id="chosen"></span>
+        <button type="button" class="linkbtn" id="change" data-i18n="upload.change">Cambia</button>
+      </div>
+      <p class="up-note" id="video-note" hidden data-i18n="upload.videoNote">Il modulo accetta file fino a 10 MB: per i video incolla un link (YouTube, Google Drive…) oppure mandalo su WhatsApp.</p>
+      <div class="tally-wrap" id="tally"></div>
+    </section>
+
+    <section id="step-sent" hidden tabindex="-1" aria-labelledby="sent-title">
+      <div class="sent">
+        <span class="sent__tick" aria-hidden="true">✓</span>
+        <h2 id="sent-title" data-i18n="upload.thanksTitle">Grazie! Abbiamo ricevuto la tua opera.</h2>
+        <p data-i18n="upload.thanksBody">La guardiamo entro una settimana. Se abbiamo domande ti scriviamo, poi la pubblichiamo nella galleria.</p>
+        <div class="sent__btns">
+          <button type="button" class="pill pill--ink" id="again">+ <span data-i18n="upload.again">Aggiungi un’altra opera</span></button>
+          <a class="pill" href="search.html"><span data-i18n="upload.toGallery">Torna alla galleria</span> →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="up-aside">
+    <div class="panel panel--ink" id="alt-panel" tabindex="-1">
+      <h2 data-i18n="upload.altTitle">Preferisci mandarla in un altro modo?</h2>
+      <p data-i18n="upload.altBody">Mandaci l’opera su WhatsApp o per email, con il tuo nome e l’anno. Al resto pensiamo noi.</p>
+      <a href="https://wa.me/447599882486" target="_blank" rel="noopener">WhatsApp · +44 7599 882486</a>
+      <a href="mailto:margheranelmezzo@gmail.com">margheranelmezzo@gmail.com</a>
+    </div>
+    <div class="panel">
+      <h2 data-i18n="upload.nextTitle">Cosa succede dopo</h2>
+      <ol class="next-list">
+        <li><span class="next-list__n" aria-hidden="true">1</span><span data-i18n="upload.next.0">Ti scriviamo per confermare che l’abbiamo ricevuta.</span></li>
+        <li><span class="next-list__n" aria-hidden="true">2</span><span data-i18n="upload.next.1">Guardiamo l’opera entro una settimana.</span></li>
+        <li><span class="next-list__n" aria-hidden="true">3</span><span data-i18n="upload.next.2">La pubblichiamo nella galleria con il nome che hai scelto.</span></li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h2 data-i18n="upload.privTitle">La tua privacy, in breve</h2>
+      <ul class="priv-list">
+        <li data-i18n="upload.priv.0">Email e telefono servono solo a noi per contattarti.</li>
+        <li data-i18n="upload.priv.1">Pubblichiamo l’opera con titolo, anno, descrizione, luogo, il tuo legame con Marghera e il nome che scegli.</li>
+        <li data-i18n="upload.priv.2">Puoi chiederci di toglierla quando vuoi.</li>
+      </ul>
+      <a class="link-arrow" href="privacy.html"><span data-i18n="upload.privLink">Leggi l’informativa completa</span> →</a>
+    </div>
+  </aside>
+</div>

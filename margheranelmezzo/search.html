@@ -1,163 +1,138 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Archivio</title>
-  <!-- Global styles -->
-  <link rel="stylesheet" href="style.css">
-  <!-- Koulen font for header text -->
-  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
-  <style>
-    /* Page-specific table styles */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('IMAGES/background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: black;
-    }
-    table {
-      width: 90%;
-      margin: 30px auto;
-      border-collapse: collapse;
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-      font-size: 1rem;
-      vertical-align: top;
-    }
-    td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-      font-size: 1rem;
-    }
-    th {
-      background-color: #f5f5f5;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-    }
-    th::after {
-      content: " ⇅";
-      font-size: 0.8rem;
-      color: gray;
-    }
-    th.sorted-asc::after {
-      content: " ↑";
-      color: black;
-    }
-    th.sorted-desc::after {
-      content: " ↓";
-      color: black;
-    }
-    tbody tr {
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    tbody tr:hover {
-      background-color: #e0e0e0;
-    }
-    .icon {
-      font-size: 1.3rem;
-      margin-right: 8px;
-    }
-
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="gallery.docTitle">Galleria · Marghera nel Mezzo</title>
+<meta name="description" content="Tutte le opere di Marghera nel Mezzo: foto, video, musica, testi e disegni. Cerca, filtra per tipo o ordina per anno.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Marghera nel Mezzo">
+<meta property="og:title" content="Galleria · Marghera nel Mezzo">
+<meta property="og:description" content="Tutte le opere di Marghera nel Mezzo: foto, video, musica, testi e disegni. Cerca, filtra per tipo o ordina per anno.">
+<meta property="og:image" content="https://clairespot.com/margheranelmezzo/IMAGES/web/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f3ec">
+<link rel="icon" type="image/png" href="IMAGES/illustration.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Shared header include -->
-  <div id="header"></div>
+<div class="page">
+<a class="skip" href="#main" data-i18n="common.skip">Vai al contenuto</a>
+<header class="site-header">
+  <div class="site-header__row">
+    <a class="brand" href="index.html" aria-label="Marghera nel Mezzo">
+      <img src="IMAGES/web/illustration-96.png" alt="" width="48" height="48">
+      <span class="brand__name">Marghera nel Mezzo</span>
+    </a>
+    <nav class="nav" aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+      <a href="search.html" aria-current="page" data-i18n="common.navGallery">Galleria</a>
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+    </nav>
+    <div class="lang-seg" role="group" aria-label="Lingua / Language">
+      <button type="button" data-lang="it" lang="it" aria-pressed="true">IT</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button type="button" class="lang-btn" lang="en" aria-label="Switch to English">EN</button>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-mobile" aria-label="Menu" data-i18n-attr="aria-label:common.menu">☰</button>
+    <a class="aa" href="testo-galleria.html" aria-label="Solo testo" title="Solo testo" data-i18n-attr="aria-label:common.textOnly;title:common.textOnly">Aa</a>
+  </div>
+  <nav id="menu-mobile" class="menu-mobile" hidden aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+    <a href="search.html" aria-current="page" data-i18n="common.navGallery">Galleria</a>
+    <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+    <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+    <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+    <a class="menu-mobile__extra" href="upload.html" data-i18n="common.addTitle">Aggiungi la tua opera</a>
+  </nav>
+</header>
 
-  <!-- Archive table -->
-  <table id="archiveTable">
-    <thead>
-      <tr>
-        <th id="th-author" onclick="sortTable('author')">Artista</th>
-        <th id="th-year" onclick="sortTable('year')">Anno</th>
-        <th id="th-title" onclick="sortTable('title')">Titolo</th>
-        <th id="th-type" onclick="sortTable('type')">Tipo</th>
-      </tr>
-    </thead>
-    <tbody id="archiveBody">
-      <!-- Content dynamically generated -->
-    </tbody>
-  </table>
+<main id="main" tabindex="-1">
+<section class="band">
+  <div class="band__inner band__inner--split">
+    <div>
+      <h1 data-i18n="gallery.h1">Galleria</h1>
+      <p class="band__lede" data-i18n="gallery.lede">Tutte le opere di Marghera nel Mezzo. Cerca, filtra per tipo o ordina per anno.</p>
+    </div>
+    <a class="pill-add" href="upload.html">+ <span data-i18n="gallery.add">Aggiungi la tua opera</span></a>
+  </div>
+</section>
 
-  <script src="archive.js"></script>
-  <script>
-    // Load shared header
-    fetch('header.html')
-      .then(res => res.text())
-      .then(html => document.getElementById('header').innerHTML = html);
+<div class="wrap gal-main">
+  <div class="controls">
+    <label class="search">
+      <span class="sr-only" data-i18n="gallery.searchLabel">Cerca</span>
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="6" stroke="#141210" stroke-width="2.5"/><line x1="13" y1="13" x2="18" y2="18" stroke="#141210" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <input type="search" id="q" autocomplete="off" placeholder="Cerca un titolo o un autore" data-i18n-attr="placeholder:gallery.searchPh">
+    </label>
 
-    // Dropdown toggle
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      if (menu) menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
-    window.addEventListener('click', e => {
-      const menu = document.getElementById('menu');
-      if (menu && !e.target.closest('.menu-icon')) {
-        menu.style.display = 'none';
-      }
-    });
+    <!-- Phones: "Filtri" opens a small panel with sort and type. On computers the panel's contents sit in the page as before. -->
+    <button type="button" class="filters-btn" id="filters-btn" aria-expanded="false" aria-controls="filters-panel">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="6" r="2"/><path d="M4 6h8M16 6h4"/><circle cx="8" cy="12" r="2"/><path d="M4 12h2M10 12h10"/><circle cx="17" cy="18" r="2"/><path d="M4 18h11M19 18h1"/></svg>
+      <span data-i18n="gallery.filters">Filtri</span>
+      <span class="filters-btn__n" id="filters-n" hidden></span>
+    </button>
+    <div class="filters-panel" id="filters-panel">
+      <label class="select-pill select-pill--sort">
+        <span data-i18n="gallery.sortLabel">Ordina</span>
+        <select id="sort">
+          <option value="new" data-i18n="gallery.sorts.new">Anno: dal più recente</option>
+          <option value="old" data-i18n="gallery.sorts.old">Anno: dal più vecchio</option>
+          <option value="author" data-i18n="gallery.sorts.author">Autore A–Z</option>
+          <option value="title" data-i18n="gallery.sorts.title">Titolo A–Z</option>
+        </select>
+      </label>
+      <div class="filters-panel__types">
+        <span class="filters-panel__label" aria-hidden="true" data-i18n="gallery.typeLabel">Tipo</span>
+        <div class="chips" id="chips" role="group" aria-label="Filtra per tipo" data-i18n-attr="aria-label:gallery.filterLabel"></div>
+      </div>
+    </div>
 
-    // Archive rendering and sorting
-    const typeIcons = { 'Photo': '📸', 'Audio': '🎵', 'Video': '🎥', 'Text': '📄', 'Illustration': '✏️' };
-    let currentSort = { key: 'author', asc: true };
+    <div class="seg" role="group" aria-label="Vista" data-i18n-attr="aria-label:gallery.viewLabel">
+      <button type="button" data-view="grid" aria-pressed="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg> <span class="seg__txt" data-i18n="gallery.grid">Griglia</span></button>
+      <button type="button" data-view="list" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="4.5" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.6" fill="currentColor" stroke="none"/><path d="M9.5 6H21M9.5 12H21M9.5 18H21"/></svg> <span class="seg__txt" data-i18n="gallery.list">Elenco</span></button>
+    </div>
+    <div class="count">
+      <span id="count" aria-live="polite"></span>
+      <!-- Phones: the order is shown here and can be changed by tapping it -->
+      <label class="count__sort"><span class="count__sep" aria-hidden="true">·</span><span class="count__sort-txt" id="sort-txt">dal più recente</span><span class="count__caret" aria-hidden="true">▾</span>
+        <select id="sort-m" aria-label="Ordina" data-i18n-attr="aria-label:gallery.sortLabel">
+          <option value="new" data-i18n="gallery.sorts.new">Anno: dal più recente</option>
+          <option value="old" data-i18n="gallery.sorts.old">Anno: dal più vecchio</option>
+          <option value="author" data-i18n="gallery.sorts.author">Autore A–Z</option>
+          <option value="title" data-i18n="gallery.sorts.title">Titolo A–Z</option>
+        </select>
+      </label>
+    </div>
+  </div>
 
-    function renderTable() {
-      const tbody = document.getElementById('archiveBody');
-      tbody.innerHTML = '';
-      archive.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.author}</td>
-          <td>${item.year}</td>
-          <td>${item.title}</td>
-          <td style="text-align:center;" title="${capitalize(item.type)}">${typeIcons[item.type]}</td>
-        `;
-        tr.onclick = () => {
-          localStorage.setItem('currentContent', JSON.stringify(item));
-          window.location.href = 'detail.html';
-        };
-        tbody.appendChild(tr);
-      });
-    }
+  <div id="results"></div>
+</div>
 
-    function capitalize(text) {
-      return text.charAt(0).toUpperCase() + text.slice(1);
-    }
+</main>
 
-    function sortTable(key) {
-      if (currentSort.key === key) currentSort.asc = !currentSort.asc;
-      else { currentSort.key = key; currentSort.asc = true; }
-      doSort();
-    }
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <nav aria-label="Link utili" data-i18n-attr="aria-label:common.footerNav">
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="ringraziamenti.html" data-i18n="common.thanks">Ringraziamenti</a>
+      <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+      <a href="privacy.html" data-i18n="common.privacy">Privacy</a>
+      <a href="https://instagram.com/margheranelmezzo" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://facebook.com/margheranelmezzo" target="_blank" rel="noopener">Facebook</a>
+    </nav>
+    <span class="site-footer__place">Marghera nel Mezzo · Venezia</span>
+  </div>
+</footer>
+</div>
+<script src="archive.js" defer></script>
+<script src="js/strings.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/gallery.js" defer></script>
 
-    function doSort() {
-      archive.sort((a, b) => a[currentSort.key] < b[currentSort.key] ? (currentSort.asc ? -1 : 1) : (a[currentSort.key] > b[currentSort.key] ? (currentSort.asc ? 1 : -1) : 0));
-      updateHeaders(); renderTable();
-    }
-
-    function updateHeaders() {
-      ['author','year','title','type'].forEach(h => {
-        const th = document.getElementById('th-' + h);
-        th.classList.remove('sorted-asc','sorted-desc');
-        if (h === currentSort.key) th.classList.add(currentSort.asc ? 'sorted-asc' : 'sorted-desc');
-      });
-    }
-
-    // Initialize
-    window.onload = async () => { await loadArchive(); doSort(); };
-
-  </script>
 </body>
 </html>

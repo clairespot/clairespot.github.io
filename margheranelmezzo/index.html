@@ -1,103 +1,163 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-
-  <!-- Load Koulen -->
-  <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('IMAGES/background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: black;
-    }
-    .top-title {
-      font-family: 'Koulen', sans-serif;
-      text-align: center;
-      padding: 40px 20px 20px;
-      background: linear-gradient(to bottom, white 0%, transparent 100%);
-      line-height: 1.2;
-      font-size: 2rem;
-      font-weight: regular;
-      letter-spacing: 1px;
-    }
-    .illustration {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      gap: 20px;
-    }
-    .illustration img {
-      width: 100%;
-      max-width: 500px;
-      cursor: pointer;
-    }
-    /* Button group styling */
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    .button-group button {
-      background-color: black;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-family: 'Koulen', sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-    .button-group button:hover {
-      background-color: rgba(0, 0, 0, 0.85);
-      transform: scale(1.03);
-    }
-
-  /* MEDIA QUERY for desktop layout */
-  @media (min-width: 768px) {
-    .illustration {
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .button-group {
-      flex-direction: column;
-    }
-
-    .illustration > .button-group:first-child {
-      margin-right: 20px;
-    }
-
-    .illustration > .button-group:last-child {
-      margin-left: 20px;
-    }
-  }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="home.docTitle">Marghera nel Mezzo · Una galleria d’arte comunitaria</title>
+<meta name="description" content="Una galleria d’arte comunitaria: foto, video, musica, testi e disegni di Marghera (Venezia), raccontata da chi la vive. Guarda le opere o aggiungi la tua.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Marghera nel Mezzo">
+<meta property="og:title" content="Marghera nel Mezzo · Una galleria d’arte comunitaria">
+<meta property="og:description" content="Una galleria d’arte comunitaria: foto, video, musica, testi e disegni di Marghera (Venezia), raccontata da chi la vive. Guarda le opere o aggiungi la tua.">
+<meta property="og:image" content="https://clairespot.com/margheranelmezzo/IMAGES/web/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f3ec">
+<link rel="icon" type="image/png" href="IMAGES/illustration.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="top-title">UNA GALLERIA D'ARTE<br><i>COMUNITARIA</i></div>
-  <div class="illustration">
-      <div class="button-group">
-        <button onclick="location.href='search.html'">L'Archivio Classico</button>
-      </div>
-      <img src="IMAGES/illustration.png" alt="Vai alla galleria">
-      <div class="button-group">
-        <button onclick="location.href='random.html'">Contenuti a Sorpresa</button>
-      </div>
+<div class="page">
+<a class="skip" href="#main" data-i18n="common.skip">Vai al contenuto</a>
+<header class="site-header">
+  <div class="site-header__row">
+    <a class="brand" href="index.html" aria-label="Marghera nel Mezzo">
+      <img src="IMAGES/web/illustration-96.png" alt="" width="48" height="48">
+      <span class="brand__name">Marghera nel Mezzo</span>
+    </a>
+    <nav class="nav" aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+      <a href="search.html" data-i18n="common.navGallery">Galleria</a>
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+    </nav>
+    <div class="lang-seg" role="group" aria-label="Lingua / Language">
+      <button type="button" data-lang="it" lang="it" aria-pressed="true">IT</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button type="button" class="lang-btn" lang="en" aria-label="Switch to English">EN</button>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu-mobile" aria-label="Menu" data-i18n-attr="aria-label:common.menu">☰</button>
+    <a class="aa" href="testo.html" aria-label="Solo testo" title="Solo testo" data-i18n-attr="aria-label:common.textOnly;title:common.textOnly">Aa</a>
   </div>
+  <nav id="menu-mobile" class="menu-mobile" hidden aria-label="Menu principale" data-i18n-attr="aria-label:common.mainNav">
+    <a href="search.html" data-i18n="common.navGallery">Galleria</a>
+    <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+    <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+    <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+    <a class="menu-mobile__extra" href="upload.html" data-i18n="common.addTitle">Aggiungi la tua opera</a>
+  </nav>
+</header>
 
-  <script src="archive.js"></script>
+<main id="main" tabindex="-1">
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__intro">
+      <img class="hero__logo" src="IMAGES/web/illustration-560.png" alt="Marghera nel Mezzo" width="260" height="260">
+      <div class="hero__text">
+        <p class="hero__kicker" data-i18n="home.kicker">Una galleria d’arte comunitaria</p>
+        <h1 data-i18n="home.h1">Marghera raccontata da chi la vive</h1>
+        <p class="hero__lede" data-i18n="home.lede">Foto, video, musica, testi e disegni del quartiere, di ieri e di oggi. Aperta a tutti: guarda le opere o aggiungi la tua.</p>
+      </div>
+    </div>
+
+    <div class="hero__cards">
+      <a class="big-card big-card--ink" href="search.html">
+        <div class="strip-photos" aria-hidden="true">
+          <div><img class="fix-border" src="thumbs/IMAGES/photo3.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/photo1.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/multi_photo_artist1/img1.jpg" alt=""></div>
+          <div><img class="fix-band" src="thumbs/IMAGES/photo5.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/photo2.jpg" alt=""></div>
+        </div>
+        <div class="big-card__body">
+          <div>
+            <span class="big-card__title" data-i18n="home.seeTitle">Guarda la galleria</span>
+            <span class="big-card__sub" data-i18n="home.seeSub">Foto, video, musica e racconti di Marghera</span>
+          </div>
+          <span class="big-card__circle" aria-hidden="true">→</span>
+        </div>
+      </a>
+
+      <a class="big-card big-card--acc" href="upload.html">
+        <div class="strip-icons">
+          <span class="sym" role="img" aria-label="Foto" title="Foto" data-i18n-attr="aria-label:common.symbols.0;title:common.symbols.0"><svg width="36" height="31" viewBox="0 0 40 34" fill="none" aria-hidden="true" focusable="false"><rect x="10" y="2" width="12" height="7" rx="2" fill="currentColor"/><rect x="2" y="6" width="36" height="26" rx="5" fill="currentColor"/><circle cx="20" cy="19" r="8" fill="none" stroke-width="4" style="stroke:var(--lens,#fff)"/></svg></span>
+          <span class="sym" role="img" aria-label="Video" title="Video" data-i18n-attr="aria-label:common.symbols.1;title:common.symbols.1">▶</span>
+          <span class="sym" role="img" aria-label="Musica" title="Musica" data-i18n-attr="aria-label:common.symbols.2;title:common.symbols.2">♪</span>
+          <span class="sym" role="img" aria-label="Testo" title="Testo" data-i18n-attr="aria-label:common.symbols.3;title:common.symbols.3">¶</span>
+          <span class="sym" role="img" aria-label="Disegno" title="Disegno" data-i18n-attr="aria-label:common.symbols.4;title:common.symbols.4">✎</span>
+        </div>
+        <div class="big-card__body">
+          <div>
+            <span class="big-card__title" data-i18n="common.addTitle">Aggiungi la tua opera</span>
+            <span class="big-card__sub" data-i18n="common.addSub">Gratis e aperto a tutti. Bastano pochi minuti.</span>
+          </div>
+          <span class="big-card__circle" aria-hidden="true">+</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section id="galleria" class="preview" aria-labelledby="gal-title">
+    <div class="preview__head">
+      <div>
+        <h2 id="gal-title" class="home-h2" data-i18n="home.galTitle">Dalla galleria</h2>
+        <p data-i18n="home.galSub">Una selezione diversa a ogni visita.</p>
+      </div>
+      <div class="preview__actions">
+        <button type="button" class="pill pill--hover-ink" id="shuffle"><span aria-hidden="true">↻</span> <span data-i18n="home.shuffle">Mescola</span></button>
+        <a class="pill pill--ink" href="search.html"><span data-i18n="home.archive">Tutto l’archivio</span> →</a>
+      </div>
+    </div>
+    <ul class="row-works" id="preview"></ul>
+  </section>
+
+  <section class="about" aria-labelledby="about-title">
+    <div class="about__photo">
+      <img src="IMAGES/web/walk1.jpg" alt="Una passeggiata di ricerca lungo Via Fratelli Bandiera" data-i18n-attr="alt:home.walkAlt" loading="lazy" decoding="async" width="1200" height="926">
+    </div>
+    <div>
+      <h2 id="about-title" class="home-h2" data-i18n="home.aboutTitle">Cos’è Marghera nel Mezzo</h2>
+      <p data-i18n="home.about1">Un progetto di ricerca partecipativa: con abitanti, artisti, ricercatori e realtà del quartiere abbiamo fatto interviste, passeggiate di ricerca e mappature collettive per far emergere storie, ricordi e desideri di Marghera oggi.</p>
+      <p data-i18n="home.about2">Da lì è nata questa galleria, che cresce con le opere di chi vive il quartiere. “Nel mezzo”, perché vuole stare tra gli estremi e gli stereotipi: un luogo d’incontro tra generazioni, culture e memorie.</p>
+      <div class="about__links">
+        <a class="link-arrow" href="progetto.html"><span data-i18n="home.aboutLink">La storia del progetto</span> →</a>
+        <a class="link-arrow" href="ricerca.html"><span data-i18n="home.pressLink">Leggi la ricerca</span> →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="cta-band">
+  <div class="cta-band__inner">
+    <h2 data-i18n="common.ctaTitle">Hai una foto, un disegno, una canzone o un racconto su Marghera?</h2>
+    <a class="btn-ink-lg" href="upload.html">+ <span data-i18n="common.addTitle">Aggiungi la tua opera</span></a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <nav aria-label="Link utili" data-i18n-attr="aria-label:common.footerNav">
+      <a href="progetto.html" data-i18n="common.navProject">Progetto</a>
+      <a href="ricerca.html" data-i18n="common.navResearch">Ricerca</a>
+      <a href="ringraziamenti.html" data-i18n="common.thanks">Ringraziamenti</a>
+      <a href="contatti.html" data-i18n="common.navContact">Contatti</a>
+      <a href="privacy.html" data-i18n="common.privacy">Privacy</a>
+      <a href="https://instagram.com/margheranelmezzo" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://facebook.com/margheranelmezzo" target="_blank" rel="noopener">Facebook</a>
+    </nav>
+    <span class="site-footer__place">Marghera nel Mezzo · Venezia</span>
+  </div>
+</footer>
+</div>
+<script src="archive.js" defer></script>
+<script src="js/strings.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/home.js" defer></script>
+
 </body>
 </html>

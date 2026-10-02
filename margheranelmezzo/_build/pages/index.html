@@ -1,0 +1,73 @@
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__intro">
+      <img class="hero__logo" src="IMAGES/web/illustration-560.png" alt="Marghera nel Mezzo" width="260" height="260">
+      <div class="hero__text">
+        <p class="hero__kicker" data-i18n="home.kicker">Una galleria d’arte comunitaria</p>
+        <h1 data-i18n="home.h1">Marghera raccontata da chi la vive</h1>
+        <p class="hero__lede" data-i18n="home.lede">Foto, video, musica, testi e disegni del quartiere, di ieri e di oggi. Aperta a tutti: guarda le opere o aggiungi la tua.</p>
+      </div>
+    </div>
+
+    <div class="hero__cards">
+      <a class="big-card big-card--ink" href="search.html">
+        <div class="strip-photos" aria-hidden="true">
+          <div><img class="fix-border" src="thumbs/IMAGES/photo3.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/photo1.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/multi_photo_artist1/img1.jpg" alt=""></div>
+          <div><img class="fix-band" src="thumbs/IMAGES/photo5.jpg" alt=""></div>
+          <div><img src="thumbs/IMAGES/photo2.jpg" alt=""></div>
+        </div>
+        <div class="big-card__body">
+          <div>
+            <span class="big-card__title" data-i18n="home.seeTitle">Guarda la galleria</span>
+            <span class="big-card__sub" data-i18n="home.seeSub">Foto, video, musica e racconti di Marghera</span>
+          </div>
+          <span class="big-card__circle" aria-hidden="true">→</span>
+        </div>
+      </a>
+
+      <a class="big-card big-card--acc" href="upload.html">
+        {{symbolStrip}}
+        <div class="big-card__body">
+          <div>
+            <span class="big-card__title" data-i18n="common.addTitle">Aggiungi la tua opera</span>
+            <span class="big-card__sub" data-i18n="common.addSub">Gratis e aperto a tutti. Bastano pochi minuti.</span>
+          </div>
+          <span class="big-card__circle" aria-hidden="true">+</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section id="galleria" class="preview" aria-labelledby="gal-title">
+    <div class="preview__head">
+      <div>
+        <h2 id="gal-title" class="home-h2" data-i18n="home.galTitle">Dalla galleria</h2>
+        <p data-i18n="home.galSub">Una selezione diversa a ogni visita.</p>
+      </div>
+      <div class="preview__actions">
+        <button type="button" class="pill pill--hover-ink" id="shuffle"><span aria-hidden="true">↻</span> <span data-i18n="home.shuffle">Mescola</span></button>
+        <a class="pill pill--ink" href="search.html"><span data-i18n="home.archive">Tutto l’archivio</span> →</a>
+      </div>
+    </div>
+    <ul class="row-works" id="preview"></ul>
+  </section>
+
+  <section class="about" aria-labelledby="about-title">
+    <div class="about__photo">
+      <img src="IMAGES/web/walk1.jpg" alt="Una passeggiata di ricerca lungo Via Fratelli Bandiera" data-i18n-attr="alt:home.walkAlt" loading="lazy" decoding="async" width="1200" height="926">
+    </div>
+    <div>
+      <h2 id="about-title" class="home-h2" data-i18n="home.aboutTitle">Cos’è Marghera nel Mezzo</h2>
+      <p data-i18n="home.about1">Un progetto di ricerca partecipativa: con abitanti, artisti, ricercatori e realtà del quartiere abbiamo fatto interviste, passeggiate di ricerca e mappature collettive per far emergere storie, ricordi e desideri di Marghera oggi.</p>
+      <p data-i18n="home.about2">Da lì è nata questa galleria, che cresce con le opere di chi vive il quartiere. “Nel mezzo”, perché vuole stare tra gli estremi e gli stereotipi: un luogo d’incontro tra generazioni, culture e memorie.</p>
+      <div class="about__links">
+        <a class="link-arrow" href="progetto.html"><span data-i18n="home.aboutLink">La storia del progetto</span> →</a>
+        <a class="link-arrow" href="ricerca.html"><span data-i18n="home.pressLink">Leggi la ricerca</span> →</a>
+      </div>
+    </div>
+  </section>
+</div>
