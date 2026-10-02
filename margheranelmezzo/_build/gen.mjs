@@ -2,6 +2,7 @@
 // plus the text-only pages. Run from the margheranelmezzo folder:  node _build/gen.mjs .
 // (Folders starting with _ are not published by GitHub Pages.)
 import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
@@ -11,6 +12,10 @@ const out = process.argv[2];
 if (!out) throw new Error('output dir required');
 
 const SITE = 'https://clairespot.com/margheranelmezzo/';
+
+// Adds ?v=<fingerprint of the file> so browsers fetch the new stylesheet/script as soon as it changes,
+// instead of reusing a saved copy for up to 10 minutes (GitHub Pages' cache time).
+const v = file => `${file}?v=${createHash('md5').update(readFileSync(join(out, file))).digest('hex').slice(0, 8)}`;
 
 const camera = (w, sw = 3) => {
   const h = Math.round(w * 34 / 40);
@@ -125,8 +130,8 @@ const head = ({ file, key, title, desc }) => `<!DOCTYPE html>
 <meta name="theme-color" content="#141210">
 <link rel="icon" type="image/png" sizes="192x192" href="IMAGES/web/logo-192.png">
 <link rel="icon" type="image/svg+xml" href="IMAGES/web/logo.svg">
-<link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="${v('fonts/fonts.css')}">
+<link rel="stylesheet" href="${v('style.css')}">
 </head>`;
 
 const PAGES = [
@@ -160,9 +165,9 @@ ${p.cta ? '\n' + cta : ''}
 ${footer}
 </div>
 <script src="archive.js" defer></script>
-<script src="js/strings.js" defer></script>
-<script src="js/site.js" defer></script>
-${p.script === 'site' ? '' : `<script src="js/${p.script}.js" defer></script>\n`}
+<script src="${v('js/strings.js')}" defer></script>
+<script src="${v('js/site.js')}" defer></script>
+${p.script === 'site' ? '' : `<script src="${v(`js/${p.script}.js`)}" defer></script>\n`}
 </body>
 </html>
 `;
@@ -234,9 +239,9 @@ Marghera nel Mezzo · Venezia &nbsp;·&nbsp; <a href="testo-ringraziamenti.html"
 </footer>
 
 <script src="archive.js" defer></script>
-<script src="js/strings.js" defer></script>
-<script src="js/site.js" defer></script>
-<script src="js/testo.js" defer></script>
+<script src="${v('js/strings.js')}" defer></script>
+<script src="${v('js/site.js')}" defer></script>
+<script src="${v('js/testo.js')}" defer></script>
 </body>
 </html>
 `;
