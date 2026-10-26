@@ -2,14 +2,14 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Costituzione Flow</title>
+<title>Principi fondamentali in inglese</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500&family=Noto+Sans:wght@400;500&display=swap">
 <style>
-/* Layout: one-column practice app. Stamp masthead, article picker, the lyric sheet as the only card, controls under it, notes at the foot. */
+/* Layout: one column of 12 article cards under a sticky row of article numbers; each card holds text, optional pronunciation and Italian lines, and its own gap tests. */
 :root{
   --paper:#F2F5F1;
   --sheet:#FCFDFB;
@@ -17,21 +17,25 @@
   --muted:#5D6963;
   --rule:#C8D1CA;
   --red:#D8353B;
-  --green:#0B9555;
+  --green:#0B8A4F;
   --onred:#FFFFFF;
+  --tint-red:#FBE4E3;
+  --tint-green:#DDF1E5;
+  --pron-ink:#A23A3F;
   --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --pron:"Noto Sans","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#95A29B; --rule:#2B3631;
-    --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; color-scheme:dark;
+    --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#9AA79F; --rule:#2B3631;
+    --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; --tint-red:#3A1A1C; --tint-green:#14301F; --pron-ink:#F2989B; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#95A29B; --rule:#2B3631;
-  --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; color-scheme:dark;
+  --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#9AA79F; --rule:#2B3631;
+  --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; --tint-red:#3A1A1C; --tint-green:#14301F; --pron-ink:#F2989B; color-scheme:dark;
 }
 
 body{
@@ -39,119 +43,145 @@ body{
   font-family:var(--body); font-size:16px; line-height:1.5;
   padding-left:max(16px, env(safe-area-inset-left, 0px));
   padding-right:max(16px, env(safe-area-inset-right, 0px));
-  padding-block:20px 48px;
+  padding-block:20px 56px;
 }
-.wrap{max-width:640px; margin:0 auto; display:flex; flex-direction:column; gap:20px}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:10; background:var(--paper)}
+.wrap{max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:20px}
+button{font:inherit; color:inherit}
+[hidden]{display:none !important}
 
 /* Masthead */
 .mast{display:flex; gap:16px; align-items:flex-start}
 .stamp{
-  flex:none; margin-top:8px; min-width:4.6em; text-align:center;
-  font-family:var(--display); font-weight:800; font-size:20px; line-height:1; letter-spacing:.02em;
-  color:var(--red); border:3px solid var(--red); border-radius:3px; padding:7px 9px 6px;
-  transform:rotate(-5deg); font-variant-numeric:tabular-nums;
+  flex:none; margin-top:8px; text-align:center;
+  font-family:var(--display); font-weight:800; font-size:18px; line-height:1; letter-spacing:.02em;
+  color:var(--red); border:3px solid var(--red); border-radius:3px; padding:7px 8px 6px;
+  transform:rotate(-5deg); font-variant-numeric:tabular-nums; white-space:nowrap;
 }
 .eyebrow{margin:0; font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
-h1{margin:4px 0 8px; font-family:var(--display); font-weight:800; font-size:clamp(30px,8.4vw,46px); line-height:1; letter-spacing:-.015em; text-wrap:balance}
-.lede{margin:0; color:var(--muted); max-width:52ch}
+h1{margin:4px 0 8px; font-family:var(--display); font-weight:800; font-size:clamp(30px,8vw,46px); line-height:1; letter-spacing:-.015em; text-wrap:balance}
+.lede{margin:0; color:var(--muted); max-width:56ch}
 
-/* Article picker */
-.label{display:block; margin-bottom:7px; font:500 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
-.picker{display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px}
-.picker button{
-  min-height:42px; padding:0; cursor:pointer;
-  font:700 17px/1 var(--display); font-variant-numeric:tabular-nums;
-  background:var(--sheet); color:var(--ink); border:1.5px solid var(--rule); border-radius:4px;
+/* Show-for-all row */
+.global{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px}
+.global .label{margin:0 4px 0 0}
+.label{font:500 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
+.tip{flex-basis:100%; margin:2px 0 0; color:var(--muted); font-size:14.5px}
+
+/* Toggle pills */
+.pill{
+  display:inline-flex; align-items:center; gap:8px; min-height:38px; padding:0 14px 0 11px; cursor:pointer;
+  font:700 14.5px/1 var(--body); background:var(--sheet); border:1.5px solid var(--rule); border-radius:999px;
 }
-.picker button.all{font:700 13.5px/1 var(--body)}
-.picker button[aria-checked="true"]{background:var(--red); border-color:var(--red); color:var(--onred)}
-.picker button.playing:not([aria-checked="true"]){border-color:var(--red); color:var(--red)}
+.pill .dot{width:10px; height:10px; border-radius:50%; border:2px solid currentColor; flex:none}
+.pill.pr .dot{color:var(--red)} .pill.it .dot{color:var(--green)}
+.pill[aria-pressed="true"]{border-color:var(--ink)}
+.pill.pr[aria-pressed="true"]{background:var(--tint-red)} .pill.it[aria-pressed="true"]{background:var(--tint-green)}
+.pill[aria-pressed="true"] .dot{background:currentColor}
+.pill svg{width:16px; height:16px; fill:currentColor; flex:none}
+.pill:disabled{opacity:.45; cursor:default}
 
-/* Lyric sheet */
-.sheet{
+/* Sticky article numbers */
+.nav{
+  position:sticky; top:env(safe-area-inset-top, 0px); z-index:5;
+  background:var(--paper); border-bottom:1px solid var(--rule);
+  margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding:8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
+}
+.nav-row{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; max-width:720px; margin:0 auto}
+.nav-row::-webkit-scrollbar{display:none}
+.navchip{
+  flex:1 0 40px; min-height:44px; padding:0; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  color:var(--ink); background:var(--sheet); border:1.5px solid var(--rule); border-radius:4px;
+  font:700 16px/1 var(--display); font-variant-numeric:tabular-nums;
+}
+.navchip.on{border-color:var(--red); background:var(--red); color:var(--onred)}
+.navchip.on .dots i{background:var(--onred); opacity:.45}
+.navchip.on .dots i.done{opacity:1}
+.pager{display:flex; flex-wrap:wrap; gap:8px; border-top:1px dashed var(--rule); padding-top:14px}
+.pager .next{margin-left:auto}
+.navchip .dots{display:flex; gap:3px}
+.navchip .dots i{width:5px; height:5px; border-radius:50%; background:var(--rule)}
+.navchip .dots i.done{background:var(--green)}
+
+/* Cards */
+.cards{display:flex; flex-direction:column; gap:22px}
+.card{
+  scroll-margin-top:calc(env(safe-area-inset-top, 0px) + 76px);
   background:var(--sheet); border:1.5px solid var(--ink); border-radius:4px;
-  box-shadow:5px 5px 0 var(--rule);
-  padding:14px 16px 16px;
+  box-shadow:5px 5px 0 var(--rule); padding:16px 16px 18px;
+  display:flex; flex-direction:column; gap:14px; min-width:0;
 }
-.sheet-top{display:flex; align-items:center; gap:12px 14px; flex-wrap:wrap; padding-bottom:12px; margin-bottom:10px; border-bottom:1px dashed var(--rule)}
-.play{
-  display:inline-flex; align-items:center; gap:9px; min-height:48px;
-  font:700 16px/1 var(--body); background:var(--red); color:var(--onred);
-  border:0; border-radius:999px; padding:0 22px 0 17px; cursor:pointer;
+.card-head{display:flex; align-items:center; gap:12px}
+.card-num{
+  flex:none; font:800 15px/1 var(--display); letter-spacing:.03em; color:var(--red);
+  border:2.5px solid var(--red); border-radius:3px; padding:5px 7px 4px; transform:rotate(-3deg); font-variant-numeric:tabular-nums;
 }
-.play svg{width:16px; height:16px; fill:currentColor}
-.play .i-stop{display:none}
-.play[aria-pressed="true"]{background:var(--ink); color:var(--sheet)}
-.play[aria-pressed="true"] .i-play{display:none}
-.play[aria-pressed="true"] .i-stop{display:block}
-.beats{display:flex; gap:6px}
-.beats i{
-  width:24px; height:24px; display:grid; place-items:center;
-  font:500 11px/1 var(--mono); font-style:normal; color:var(--muted);
-  border:1.5px solid var(--rule); border-radius:3px;
-}
-.beats i.on{background:var(--red); border-color:var(--red); color:var(--onred)}
-.beats i.on:first-child{background:var(--green); border-color:var(--green)}
-.status{margin:0 0 0 auto; font:500 12px/1.3 var(--mono); color:var(--muted); font-variant-numeric:tabular-nums; text-align:right}
-
-.lyrics{
-  position:relative; display:flex; flex-direction:column; gap:7px;
-  max-height:max(280px, 52vh); overflow-y:auto; overscroll-behavior:contain;
-  padding-block:2px 6px; scrollbar-width:thin;
-}
-.line{display:grid; grid-template-columns:1.6rem 1fr; align-items:baseline}
-.line.para{margin-top:12px}
-.line .bar{font:500 11px var(--mono); color:var(--rule); font-variant-numeric:tabular-nums}
-.line.active .bar{color:var(--red)}
-.line .txt{
-  min-width:0;
-  font-family:var(--display); font-weight:700; font-size:clamp(18px,4.9vw,27px); line-height:1.34;
-  color:var(--muted); transition:color .2s;
-}
-.line.active .txt{color:var(--ink)}
-.line.hook .txt{color:var(--red); text-transform:uppercase; letter-spacing:.01em}
-.line.fill .txt{font:500 12px/2 var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
-.line.fill.active .txt{color:var(--green)}
-.paren, .w.echo{font-weight:500}
-.line.hook .w.echo{text-transform:none}
-
-.w{border-radius:2px; padding:0 .07em; -webkit-box-decoration-break:clone; box-decoration-break:clone; transition:background-color .06s}
-.w.now{background-color:var(--red); color:var(--onred); box-shadow:.11em .09em 0 var(--green)}
-.w.hideAll, .w.hideRest{
-  background-image:linear-gradient(var(--muted),var(--muted));
-  background-size:100% 2px; background-position:0 90%; background-repeat:no-repeat;
-}
-.w.hideAll .c0, .w.hideAll .cr, .w.hideRest .cr{color:transparent}
-.w.rev{color:var(--green)}
-
-/* Controls */
-.controls{display:flex; flex-direction:column; gap:18px}
-.seg{display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:3px; border:1.5px solid var(--ink); border-radius:999px}
-.seg.speed{grid-template-columns:repeat(3,1fr)}
-.seg button{
-  min-height:40px; padding:0 4px; border:0; border-radius:999px; cursor:pointer;
-  font:700 14.5px/1 var(--body); background:transparent; color:var(--ink);
-}
+.card-head h2{margin:0; font:700 clamp(18px,4.6vw,21px)/1.2 var(--display); text-wrap:balance; min-width:0}
+.tools{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.seg{flex:1 1 300px; display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:3px; border:1.5px solid var(--ink); border-radius:999px; min-width:0}
+.seg button{min-height:36px; padding:0 2px; border:0; border-radius:999px; cursor:pointer; background:transparent; font:700 14px/1 var(--body); white-space:nowrap}
 .seg button[aria-checked="true"]{background:var(--ink); color:var(--sheet)}
-.hint{margin:8px 0 0; color:var(--muted); font-size:15px}
-.row{display:flex; flex-wrap:wrap; gap:16px 20px; align-items:flex-end}
-.row > *{flex:1 1 230px; min-width:0}
-.switch{display:flex; gap:11px; align-items:flex-start; cursor:pointer; padding-bottom:4px}
-.switch input{width:22px; height:22px; margin:1px 0 0; accent-color:var(--red); flex:none}
-.switch b{display:block}
-.switch small{display:block; color:var(--muted); font-size:14px; line-height:1.35}
+.seg button .ok{color:var(--green); margin-left:3px}
+.seg button[aria-checked="true"] .ok{color:inherit}
+.toggles{display:flex; flex-wrap:wrap; gap:8px}
+
+.body{display:flex; flex-direction:column; gap:16px; border-top:1px dashed var(--rule); padding-top:14px}
+.para{display:flex; flex-direction:column; gap:7px; min-width:0}
+.en{margin:0; font:400 clamp(18px,4.6vw,21px)/1.55 var(--body); overflow-wrap:anywhere}
+.unit{display:inline}
+.unit .ptx{display:none}
+.show-pr .en{line-height:1.25}
+.show-pr .unit{display:inline-flex; flex-direction:column; align-items:flex-start; vertical-align:top; margin-bottom:10px}
+.show-pr .unit .ptx{display:block; margin-top:3px; font:400 14.5px/1.2 var(--pron); color:var(--pron-ink); white-space:nowrap}
+.it-line{margin:0; padding-left:10px; border-left:3px solid var(--green); font:400 16px/1.5 var(--body); color:var(--ink); overflow-wrap:anywhere}
+.can-say .en .tx{cursor:pointer; border-radius:2px}
+.can-say .en .tx:not(.gap):hover{background:var(--tint-red)}
+.tx.saying{background:var(--tint-red)}
+
+/* Gaps */
+.gap{
+  display:inline-block; vertical-align:baseline; line-height:1.15; text-align:left;
+  border-bottom:2.5px solid var(--muted); background:var(--paper); border-radius:2px 2px 0 0;
+  padding:0 3px; color:var(--red); font-weight:700;
+}
+.gap.cur{border-bottom-color:var(--red); background:var(--tint-red)}
+.got{color:var(--green); font-weight:700}
+.ptx.gap{border-bottom-width:2px; color:var(--muted); min-height:1.1em}
+
+.test{display:flex; flex-direction:column; gap:12px; border-top:1px dashed var(--rule); padding-top:14px}
+.status{margin:0; font-weight:700}
+.status.done{color:var(--green)}
+.status small{display:block; font-weight:400; color:var(--muted); font-size:14.5px}
+.bank{display:flex; flex-wrap:wrap; gap:8px}
+.chip{
+  min-height:40px; padding:0 13px; cursor:pointer; border-radius:4px;
+  border:1.5px solid var(--ink); background:var(--sheet); font:700 16px/1 var(--body);
+}
+.chip:disabled{border-style:dashed; border-color:var(--rule); color:var(--rule); cursor:default; text-decoration:line-through}
+.chip.wrong{border-color:var(--red); color:var(--red); animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)} 75%{transform:translateX(4px)}}
+.test-actions{display:flex; flex-wrap:wrap; gap:8px}
+.btn{min-height:40px; padding:0 16px; cursor:pointer; border-radius:999px; border:1.5px solid var(--ink); background:transparent; font:700 14.5px/1 var(--body)}
+.btn.primary{background:var(--red); border-color:var(--red); color:var(--onred)}
 
 /* Notes */
 .notes{display:flex; flex-direction:column; gap:16px; border-top:1px solid var(--rule); padding-top:20px}
-h2{margin:0 0 6px; font-family:var(--display); font-weight:700; font-size:20px; line-height:1.2}
+.notes h2{margin:0 0 6px; font:700 20px/1.2 var(--display)}
 .notes p{margin:0; max-width:62ch}
-.small{font-size:14.5px; color:var(--muted)}
-ol{margin:0; padding-left:1.35em} li{margin:3px 0; padding-left:2px}
+ol{margin:0; padding-left:1.35em} li{margin:4px 0; padding-left:2px; max-width:62ch}
 li::marker{font-family:var(--mono); font-size:13px; color:var(--red)}
+details{border:1px solid var(--rule); border-radius:4px; padding:12px 14px; background:var(--sheet)}
+summary{cursor:pointer; font-weight:700}
+details[open] summary{margin-bottom:10px}
+dl{margin:0; display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; align-items:baseline}
+dt{font:500 16px var(--pron); color:var(--red)}
+dd{margin:0; min-width:0}
+.small{font-size:14.5px; color:var(--muted)}
 a{color:var(--green); text-underline-offset:2px}
 
 :focus-visible{outline:2.5px solid var(--green); outline-offset:2px}
-@media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; scroll-behavior:auto !important} }
 </style>
 </head>
 <body>
@@ -159,393 +189,365 @@ a{color:var(--green); text-underline-offset:2px}
 
 <main class="wrap">
   <header class="mast">
-    <div class="stamp" id="stamp" aria-hidden="true">ART.&nbsp;1</div>
+    <div class="stamp" aria-hidden="true">ART.&nbsp;1–12</div>
     <div>
-      <p class="eyebrow">Costituzione della Repubblica Italiana · Principi fondamentali</p>
-      <h1>Costituzione Flow</h1>
-      <p class="lede">Rappa gli articoli da 1 a 12 sulla base finché non li sai a memoria. Scegli un articolo, parti da Leggi e a ogni giro nascondi più parole.</p>
+      <p class="eyebrow">Costituzione della Repubblica Italiana · in inglese</p>
+      <h1>Principi fondamentali</h1>
+      <p class="lede">I primi 12 articoli della Costituzione in inglese. Leggi ogni articolo, apri la pronuncia o il testo italiano solo quando ti serve, poi mettiti alla prova con le parole chiave.</p>
     </div>
   </header>
 
-  <div>
-    <span class="label" id="artLbl">Articolo</span>
-    <div class="picker" id="picker" role="radiogroup" aria-labelledby="artLbl"></div>
+  <div class="global">
+    <span class="label">Mostra in tutti gli articoli</span>
+    <button type="button" class="pill pr" id="g-pr" aria-pressed="false"><span class="dot"></span>Pronuncia</button>
+    <button type="button" class="pill it" id="g-it" aria-pressed="false"><span class="dot"></span>Italiano</button>
+    <p class="tip">Tocca un numero per aprire l’articolo.<span id="tip"> Tocca una parola inglese per sentire come si pronuncia.</span></p>
   </div>
 
-  <section class="sheet" aria-label="Testo">
-    <div class="sheet-top">
-      <button id="play" class="play" type="button" aria-pressed="false">
-        <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
-        <svg class="i-stop" viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="1"/></svg>
-        <span id="playLbl">Play</span>
-      </button>
-      <div class="beats" id="beats" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i></div>
-      <p class="status" id="status"></p>
-    </div>
-    <div class="lyrics" id="lyrics" lang="en"></div>
-  </section>
+  <nav class="nav" aria-label="Articoli"><div class="nav-row" id="nav"></div></nav>
 
-  <section class="controls">
-    <div>
-      <span class="label" id="modeLbl">Livello</span>
-      <div class="seg" id="modes" role="radiogroup" aria-labelledby="modeLbl">
-        <button type="button" role="radio" id="m-read" data-mode="read">Leggi</button>
-        <button type="button" role="radio" id="m-gaps" data-mode="gaps">Buchi</button>
-        <button type="button" role="radio" id="m-initials" data-mode="initials">Iniziali</button>
-        <button type="button" role="radio" id="m-solo" data-mode="solo">Solo</button>
-      </div>
-      <p class="hint" id="modeHint"></p>
-    </div>
-    <div class="row">
-      <div>
-        <span class="label" id="speedLbl">Velocità</span>
-        <div class="seg speed" id="speeds" role="radiogroup" aria-labelledby="speedLbl">
-          <button type="button" role="radio" id="s-slow" data-bpm="76">Lenta</button>
-          <button type="button" role="radio" id="s-normal" data-bpm="88">Normale</button>
-          <button type="button" role="radio" id="s-fast" data-bpm="98">Veloce</button>
-        </div>
-      </div>
-      <label class="switch" for="guide">
-        <input type="checkbox" id="guide" checked>
-        <span><b>Note guida</b><small>Un bip su ogni sillaba, per sentire il ritmo delle parole.</small></span>
-      </label>
-    </div>
-  </section>
+  <div class="cards" id="cards"></div>
 
   <section class="notes">
     <div>
-      <h2>Come esercitarsi</h2>
+      <h2>Come usarla</h2>
       <ol>
-        <li>Impara un articolo alla volta. Fai due giri su Leggi a velocità Lenta, dicendo il testo ad alta voce.</li>
-        <li>Passa a Buchi. Di’ la parola che manca prima che diventi verde.</li>
-        <li>Poi passa a Iniziali e infine a Solo, e alza la velocità a Normale.</li>
-        <li>Quando qualche articolo è sicuro, usa Tutti per ripassarli in ordine.</li>
+        <li>Leggi l’articolo in inglese. Tocca una parola per sentirla, oppure premi Ascolta per sentire tutto l’articolo.</li>
+        <li>Se non capisci una frase, apri Italiano: è il testo originale della Costituzione.</li>
+        <li>Se non sai come si dice una parola, apri Pronuncia.</li>
+        <li>Quando l’articolo è chiaro, fai Prova 1, 2 e 3. Ogni prova toglie parole chiave diverse e insieme le coprono tutte. Tocca le parole nell’ordine in cui mancano.</li>
       </ol>
     </div>
+    <details>
+      <summary>Come leggere la pronuncia</summary>
+      <p class="small" style="margin-bottom:12px">La pronuncia è quella dell’inglese britannico, scritta con le lettere italiane. È un aiuto: per il suono esatto usa Ascolta. Le vocali senza accento si dicono deboli e veloci.</p>
+      <dl>
+        <dt>à è ì ò ù</dt><dd>La sillaba con l’accento è quella da dire più forte: <i>ripàblik</i>.</dd>
+        <dt>z</dt><dd>Una s sonora, che vibra, come in “rosa” detto al nord: <i>iz</i> (is).</dd>
+        <dt>dh</dt><dd>“th” dolce, con la lingua tra i denti: <i>dhis</i> (this).</dd>
+        <dt>th</dt><dd>“th” sorda, con la lingua tra i denti: <i>thri</i> (three).</dd>
+        <dt>h</dt><dd>H aspirata, come un respiro: <i>hiùman</i> (human).</dd>
+        <dt>sh</dt><dd>Come “sci” in scivolo: <i>shal</i> (shall).</dd>
+        <dt>c’ g’</dt><dd>C e g dolci a fine parola: <i>sac’</i> (such), <i>lànguig’</i> (language).</dd>
+        <dt>j</dt><dd>Come la “j” francese di journal: <i>mèja</i> (measure).</dd>
+        <dt>k · gh</dt><dd>Sempre suono duro, come in “casa” e “ghiro”.</dd>
+        <dt>u + vocale</dt><dd>Suono w, come in “uomo”: <i>uor</i> (war), <i>uork</i> (work).</dd>
+      </dl>
+    </details>
     <p>Niente audio su iPhone? Togli la modalità silenziosa.</p>
-    <p class="small">Testo: <a href="https://www.senato.it/sites/default/files/repository/Costituzione_INGLESE_2023.pdf" target="_blank" rel="noopener">Costituzione della Repubblica Italiana, edizione in lingua inglese del Senato della Repubblica (2023)</a>. Lo spazio in più tra le righe indica un nuovo comma dell’articolo.</p>
+    <p class="small">Testo inglese: <a href="https://www.senato.it/sites/default/files/repository/Costituzione_INGLESE_2023.pdf" target="_blank" rel="noopener">Senato della Repubblica, edizione in lingua inglese (2023)</a>. Testo italiano: <a href="https://conoscere.camera.it/sites/conoscere/files/2024-07/Costituzione_22_ottobre_2023.pdf" target="_blank" rel="noopener">Camera dei deputati, testo della Costituzione</a>.</p>
   </section>
 </main>
 
 <script>
 (() => {
-  /* Each article: hook bar, text bars (16 steps each, word syllables placed on the grid), breathing bar. */
-  const ARTS = [{"n":1,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"One","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"One","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"is","p":"","s":[4]},{"t":"a","p":"","s":[6]},{"t":"democratic","p":"","s":[7,8,9,10],"k":1},{"t":"Republic","p":"","s":[11,12,14]}]},{"kind":"text","chord":"F","words":[{"t":"founded","p":"","s":[0,2]},{"t":"on","p":"","s":[3]},{"t":"labour","p":".","s":[4,6],"k":1},{"t":"labour","p":"!","s":[8,10],"k":1,"echo":1}]},{"kind":"text","chord":"C","para":1,"words":[{"t":"Sovereignty","p":"","s":[0,1,2],"k":1},{"t":"shall","p":"","s":[4],"k":1},{"t":"belong","p":"","s":[6,8],"k":1},{"t":"to","p":"","s":[10]},{"t":"the","p":"","s":[11]},{"t":"people","p":"","s":[12,14]}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"exercised","p":"","s":[4,5,6],"k":1},{"t":"by","p":"","s":[10]},{"t":"the","p":"","s":[11]},{"t":"people","p":"","s":[12,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"forms","p":"","s":[4],"k":1},{"t":"and","p":"","s":[6]},{"t":"within","p":"","s":[7,8]},{"t":"the","p":"","s":[11]},{"t":"limits","p":"","s":[12,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"this","p":"","s":[4],"k":1},{"t":"Constitution","p":".","s":[6,7,8,10]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":2,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Two","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Two","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"recognise","p":"","s":[8,10,12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"protect","p":"","s":[2,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"inviolable","p":"","s":[7,8,9,10,11],"k":1},{"t":"rights","p":"","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[1]},{"t":"person","p":",","s":[2,3],"k":1},{"t":"both","p":"","s":[4]},{"t":"as","p":"","s":[6]},{"t":"an","p":"","s":[7]},{"t":"individual","p":"","s":[8,10,12,13,14],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[2]},{"t":"in","p":"","s":[4]},{"t":"the","p":"","s":[6]},{"t":"social","p":"","s":[8,10],"k":1},{"t":"groups","p":"","s":[12],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"where","p":"","s":[0]},{"t":"human","p":"","s":[2,3]},{"t":"personality","p":"","s":[4,5,6,7,9],"k":1},{"t":"is","p":"","s":[10]},{"t":"expressed","p":".","s":[11,12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"expects","p":"","s":[6,8],"k":1}],"para":1},{"kind":"text","chord":"C","words":[{"t":"that","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"fundamental","p":"","s":[4,6,8,10],"k":1},{"t":"duties","p":"","s":[12,13]}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"political","p":",","s":[2,4,5,6],"k":1},{"t":"economic","p":"","s":[8,10,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[2]},{"t":"social","p":"","s":[4,5]},{"t":"solidarity","p":"","s":[6,7,8,9,10],"k":1},{"t":"be","p":"","s":[11]},{"t":"fulfilled","p":".","s":[13,14],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":3,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Three","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Three","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"All","p":"","s":[0]},{"t":"citizens","p":"","s":[2,3,4],"k":1},{"t":"shall","p":"","s":[5]},{"t":"have","p":"","s":[6]},{"t":"equal","p":"","s":[8,9]},{"t":"social","p":"","s":[10,11]},{"t":"dignity","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"be","p":"","s":[3]},{"t":"equal","p":"","s":[4,5],"k":1},{"t":"before","p":"","s":[6,8],"k":1},{"t":"the","p":"","s":[10]},{"t":"law","p":",","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"without","p":"","s":[2,4],"k":1},{"t":"distinction","p":"","s":[6,8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"gender","p":",","s":[12,13]},{"t":"race","p":",","s":[14]}]},{"kind":"text","chord":"G","words":[{"t":"language","p":",","s":[0,1]},{"t":"religion","p":",","s":[2,4,5]},{"t":"political","p":"","s":[6,8,9,10],"k":1},{"t":"opinion","p":",","s":[11,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"personal","p":"","s":[0,2,4]},{"t":"and","p":"","s":[6]},{"t":"social","p":"","s":[8,9]},{"t":"conditions","p":".","s":[10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[1]},{"t":"be","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"duty","p":"","s":[4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"Republic","p":"","s":[10,12,13],"k":1}],"para":1},{"kind":"text","chord":"C","words":[{"t":"to","p":"","s":[0]},{"t":"remove","p":"","s":[2,4]},{"t":"those","p":"","s":[6]},{"t":"obstacles","p":"","s":[8,9,10],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"an","p":"","s":[1]},{"t":"economic","p":"","s":[2,3,4,5],"k":1},{"t":"or","p":"","s":[6]},{"t":"social","p":"","s":[8,10]},{"t":"nature","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"which","p":"","s":[0]},{"t":"constrain","p":"","s":[2,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"freedom","p":"","s":[8,9]}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"equality","p":"","s":[2,4,6,8],"k":1},{"t":"of","p":"","s":[10]},{"t":"citizens","p":",","s":[12,13,14]}]},{"kind":"text","chord":"C","words":[{"t":"thereby","p":"","s":[0,2]},{"t":"impeding","p":"","s":[3,4,5],"k":1},{"t":"the","p":"","s":[6]},{"t":"full","p":"","s":[8]},{"t":"development","p":"","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"human","p":"","s":[4,6]},{"t":"person","p":"","s":[8,9],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"effective","p":"","s":[3,4,5]},{"t":"participation","p":"","s":[6,8,10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[0]},{"t":"all","p":"","s":[2]},{"t":"workers","p":"","s":[4,5],"k":1},{"t":"in","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"political","p":",","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"economic","p":"","s":[0,1,2,3]},{"t":"and","p":"","s":[5]},{"t":"social","p":"","s":[6,7]},{"t":"organisation","p":"","s":[8,10,11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"country","p":".","s":[4,5],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":4,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Four","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Four","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"recognise","p":"","s":[8,9,10],"k":1},{"t":"the","p":"","s":[11]},{"t":"right","p":"","s":[12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"all","p":"","s":[4]},{"t":"citizens","p":"","s":[6,7,9],"k":1},{"t":"to","p":"","s":[10]},{"t":"work","p":"","s":[12],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"promote","p":"","s":[3,4],"k":1},{"t":"such","p":"","s":[6]},{"t":"conditions","p":"","s":[7,8,9],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"as","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"render","p":"","s":[4,5],"k":1},{"t":"this","p":"","s":[6]},{"t":"right","p":"","s":[8]},{"t":"effective","p":".","s":[10,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"Every","p":"","s":[0,2],"k":1},{"t":"citizen","p":"","s":[4,5,6],"k":1},{"t":"shall","p":"","s":[7]},{"t":"have","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"duty","p":",","s":[12,13]}],"para":1},{"kind":"text","chord":"F","words":[{"t":"according","p":"","s":[2,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"personal","p":"","s":[8,9,10]},{"t":"potential","p":"","s":[11,12,13]}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[2]},{"t":"individual","p":"","s":[4,6,8,9,10],"k":1},{"t":"choice","p":",","s":[12]}]},{"kind":"text","chord":"G","words":[{"t":"to","p":"","s":[0]},{"t":"perform","p":"","s":[1,2]},{"t":"any","p":"","s":[4,5]},{"t":"activity","p":"","s":[6,8,9,10],"k":1},{"t":"or","p":"","s":[11]},{"t":"function","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"contributing","p":"","s":[2,4,5,6],"k":1},{"t":"to","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"material","p":"","s":[11,12,13,14]}]},{"kind":"text","chord":"F","words":[{"t":"or","p":"","s":[2]},{"t":"spiritual","p":"","s":[4,5,6,7],"k":1},{"t":"progress","p":"","s":[8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"society","p":".","s":[11,12,13,14]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":5,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Five","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Five","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5],"k":1},{"t":"shall","p":"","s":[6]},{"t":"be","p":"","s":[7]},{"t":"one","p":"","s":[8]},{"t":"and","p":"","s":[9]},{"t":"indivisible","p":";","s":[10,11,12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"it","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"recognise","p":"","s":[4,6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"promote","p":"","s":[11,12],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"local","p":"","s":[0,1]},{"t":"autonomies","p":"","s":[2,4,6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"implement","p":"","s":[12,13,14]}]},{"kind":"text","chord":"G","words":[{"t":"the","p":"","s":[2]},{"t":"fullest","p":"","s":[4,6],"k":1},{"t":"measure","p":"","s":[8,9]}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[0]},{"t":"administrative","p":"","s":[1,2,3,4,5]},{"t":"decentralisation","p":"","s":[6,8,10,11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[0]},{"t":"those","p":"","s":[2]},{"t":"services","p":"","s":[4,6,7],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"which","p":"","s":[0]},{"t":"are","p":"","s":[2]},{"t":"provided","p":"","s":[3,4,6],"k":1},{"t":"by","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"State","p":";","s":[12],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"it","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"adapt","p":"","s":[3,4]},{"t":"the","p":"","s":[6]},{"t":"principles","p":"","s":[8,9,10],"k":1},{"t":"and","p":"","s":[11]},{"t":"methods","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[0]},{"t":"its","p":"","s":[2]},{"t":"legislation","p":"","s":[4,6,8,9],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"to","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"requirements","p":"","s":[3,4,6],"k":1},{"t":"of","p":"","s":[8]},{"t":"autonomy","p":"","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[0]},{"t":"decentralisation","p":".","s":[2,4,6,7,8,9],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":6,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Six","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Six","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"safeguard","p":"","s":[8,10],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"language","p":"","s":[0,1]},{"t":"minorities","p":"","s":[2,4,6,7],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"by","p":"","s":[2]},{"t":"means","p":"","s":[4]},{"t":"of","p":"","s":[6]},{"t":"appropriate","p":"","s":[7,8,9,10],"k":1},{"t":"measures","p":".","s":[12,13],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":7,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Seven","p":"!","s":[4,5],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Seven","p":"!","s":[12,13],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[2]},{"t":"State","p":"","s":[4]},{"t":"and","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"Catholic","p":"","s":[8,9,10],"k":1},{"t":"Church","p":"","s":[12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"independent","p":"","s":[4,6,8,9],"k":1},{"t":"and","p":"","s":[10]},{"t":"sovereign","p":",","s":[12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"each","p":"","s":[0]},{"t":"within","p":"","s":[2,4],"k":1},{"t":"its","p":"","s":[6]},{"t":"own","p":"","s":[8]},{"t":"sphere","p":".","s":[10],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"Their","p":"","s":[0]},{"t":"relations","p":"","s":[2,4,5],"k":1},{"t":"shall","p":"","s":[6]},{"t":"be","p":"","s":[7]},{"t":"regulated","p":"","s":[8,10,12,13],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"by","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Lateran","p":"","s":[4,5,6],"k":1},{"t":"Pacts","p":".","s":[8]}]},{"kind":"text","chord":"F","words":[{"t":"Amendments","p":"","s":[2,4,6],"k":1},{"t":"to","p":"","s":[8]},{"t":"such","p":"","s":[10]},{"t":"Pacts","p":"","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"which","p":"","s":[0]},{"t":"are","p":"","s":[2]},{"t":"accepted","p":"","s":[3,4,5],"k":1},{"t":"by","p":"","s":[6]},{"t":"both","p":"","s":[8]},{"t":"parties","p":"","s":[10,11],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"shall","p":"","s":[2]},{"t":"not","p":"","s":[4]},{"t":"require","p":"","s":[6,8,9],"k":1},{"t":"the","p":"","s":[10]},{"t":"procedure","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[2]},{"t":"constitutional","p":"","s":[4,6,8,9,10],"k":1},{"t":"amendments","p":".","s":[11,12,13]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":8,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Eight","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Eight","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"All","p":"","s":[0]},{"t":"religious","p":"","s":[2,4,5]},{"t":"denominations","p":"","s":[6,8,10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"equally","p":"","s":[4,5,6],"k":1},{"t":"free","p":"","s":[8]},{"t":"before","p":"","s":[10,12],"k":1},{"t":"the","p":"","s":[13]},{"t":"law","p":".","s":[14]}]},{"kind":"text","chord":"C","words":[{"t":"Religious","p":"","s":[2,4,5]},{"t":"denominations","p":"","s":[6,8,10,12,13],"k":1}],"para":1},{"kind":"text","chord":"G","words":[{"t":"other","p":"","s":[0,2]},{"t":"than","p":"","s":[4]},{"t":"Catholicism","p":"","s":[6,8,9,10,11],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"shall","p":"","s":[0]},{"t":"have","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"right","p":"","s":[4],"k":1},{"t":"to","p":"","s":[6]},{"t":"self-organisation","p":"","s":[8,9,10,11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"according","p":"","s":[2,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"their","p":"","s":[8]},{"t":"own","p":"","s":[10]},{"t":"statutes","p":",","s":[12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"provided","p":"","s":[2,4,5],"k":1},{"t":"these","p":"","s":[6]},{"t":"do","p":"","s":[8]},{"t":"not","p":"","s":[10]},{"t":"conflict","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"with","p":"","s":[0]},{"t":"Italian","p":"","s":[2,4,6],"k":1},{"t":"law","p":".","s":[8]}]},{"kind":"text","chord":"Am","words":[{"t":"Their","p":"","s":[0]},{"t":"relations","p":"","s":[2,4,6],"k":1},{"t":"with","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"State","p":"","s":[12],"k":1}],"para":1},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"regulated","p":"","s":[4,6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":",","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"based","p":"","s":[0]},{"t":"on","p":"","s":[2]},{"t":"agreements","p":"","s":[3,4,6],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"with","p":"","s":[0]},{"t":"their","p":"","s":[2]},{"t":"respective","p":"","s":[3,4,6]},{"t":"representatives","p":".","s":[8,10,12,13,14],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":9,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Nine","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Nine","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"promote","p":"","s":[7,8],"k":1},{"t":"the","p":"","s":[10]},{"t":"development","p":"","s":[11,12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"culture","p":"","s":[4,5]},{"t":"and","p":"","s":[6]},{"t":"scientific","p":"","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[2]},{"t":"technical","p":"","s":[4,6,8],"k":1},{"t":"research","p":".","s":[10,12]}]},{"kind":"text","chord":"G","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"safeguard","p":"","s":[4,6],"k":1},{"t":"natural","p":"","s":[8,9,10]},{"t":"landscape","p":"","s":[12,14],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[2]},{"t":"the","p":"","s":[4]},{"t":"historical","p":"","s":[6,8,9,10],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"artistic","p":"","s":[2,4,6],"k":1},{"t":"heritage","p":"","s":[8,9,10]}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Nation","p":".","s":[4,5],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"protect","p":"","s":[3,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"environment","p":",","s":[7,8,9,10],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"biodiversity","p":"","s":[0,2,3,4,5,6],"k":1},{"t":"and","p":"","s":[7]},{"t":"ecosystems","p":",","s":[8,10,12,13]}]},{"kind":"text","chord":"F","words":[{"t":"also","p":"","s":[0,2]},{"t":"in","p":"","s":[4]},{"t":"the","p":"","s":[6]},{"t":"interest","p":"","s":[8,9],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[2]},{"t":"future","p":"","s":[4,6]},{"t":"generations","p":".","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"The","p":"","s":[2]},{"t":"law","p":"","s":[4]},{"t":"shall","p":"","s":[6]},{"t":"regulate","p":"","s":[8,10,12],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"the","p":"","s":[0]},{"t":"ways","p":"","s":[2]},{"t":"and","p":"","s":[3]},{"t":"forms","p":"","s":[4]},{"t":"of","p":"","s":[6]},{"t":"animal","p":"","s":[8,9,10],"k":1},{"t":"protection","p":".","s":[11,12,13],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":10,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Ten","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Ten","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Italian","p":"","s":[2,4,6],"k":1},{"t":"legal","p":"","s":[8,10]},{"t":"system","p":"","s":[12,13]}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"conform","p":"","s":[2,4]},{"t":"to","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"generally","p":"","s":[8,9,10,11],"k":1},{"t":"recognised","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"principles","p":"","s":[0,1,2]},{"t":"of","p":"","s":[3]},{"t":"international","p":"","s":[4,6,8,9,10],"k":1},{"t":"law","p":".","s":[12]}]},{"kind":"text","chord":"G","words":[{"t":"The","p":"","s":[2]},{"t":"legal","p":"","s":[4,6]},{"t":"status","p":"","s":[8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"foreigners","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"regulated","p":"","s":[4,6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":"","s":[12]}]},{"kind":"text","chord":"F","words":[{"t":"in","p":"","s":[0]},{"t":"compliance","p":"","s":[2,4,5]},{"t":"with","p":"","s":[6]},{"t":"international","p":"","s":[8,10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"provisions","p":"","s":[2,4,5],"k":1},{"t":"and","p":"","s":[6]},{"t":"treaties","p":".","s":[8,9]}]},{"kind":"text","chord":"G","words":[{"t":"A","p":"","s":[0]},{"t":"foreign","p":"","s":[2,3],"k":1},{"t":"national","p":",","s":[4,5,6],"k":1},{"t":"who","p":"","s":[8]},{"t":"is","p":"","s":[10]},{"t":"denied","p":" \u2013","s":[11,12]}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[0]},{"t":"his","p":"","s":[2]},{"t":"or","p":"","s":[4]},{"t":"her","p":"","s":[6]},{"t":"country","p":" \u2013","s":[8,9],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"the","p":"","s":[0]},{"t":"enjoyment","p":"","s":[2,4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"democratic","p":"","s":[8,9,10,11],"k":1},{"t":"freedoms","p":"","s":[12,13]}]},{"kind":"text","chord":"C","words":[{"t":"established","p":"","s":[2,4,5]},{"t":"by","p":"","s":[6]},{"t":"this","p":"","s":[8]},{"t":"Constitution","p":",","s":[10,11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"entitled","p":"","s":[3,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"right","p":"","s":[8]},{"t":"of","p":"","s":[10]},{"t":"asylum","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Republic","p":"","s":[3,4,6]},{"t":"under","p":"","s":[8,9],"k":1},{"t":"such","p":"","s":[10]},{"t":"conditions","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"as","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"be","p":"","s":[4]},{"t":"established","p":"","s":[6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":".","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"A","p":"","s":[2]},{"t":"foreign","p":"","s":[4,6]},{"t":"national","p":"","s":[8,9,10],"k":1}],"para":1},{"kind":"text","chord":"G","words":[{"t":"may","p":"","s":[2]},{"t":"not","p":"","s":[4]},{"t":"be","p":"","s":[6]},{"t":"extradited","p":"","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"for","p":"","s":[0]},{"t":"a","p":"","s":[2]},{"t":"political","p":"","s":[3,4,6,8],"k":1},{"t":"offence","p":".","s":[10,12]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":11,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Eleven","p":"!","s":[4,5,6],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Eleven","p":"!","s":[12,13,14],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"shall","p":"","s":[4]},{"t":"reject","p":"","s":[6,8],"k":1},{"t":"war","p":"","s":[10]}]},{"kind":"text","chord":"F","words":[{"t":"as","p":"","s":[0]},{"t":"an","p":"","s":[2]},{"t":"instrument","p":"","s":[4,5,6],"k":1},{"t":"of","p":"","s":[8]},{"t":"aggression","p":"","s":[10,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"against","p":"","s":[0,2],"k":1},{"t":"the","p":"","s":[3]},{"t":"freedom","p":"","s":[4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"other","p":"","s":[8,10]},{"t":"peoples","p":"","s":[12,13]}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[2]},{"t":"as","p":"","s":[4]},{"t":"a","p":"","s":[6]},{"t":"means","p":"","s":[8],"k":1},{"t":"for","p":"","s":[9]},{"t":"the","p":"","s":[10]},{"t":"settlement","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[2]},{"t":"international","p":"","s":[4,6,8,9,10],"k":1},{"t":"disputes","p":";","s":[11,12]}]},{"kind":"text","chord":"F","words":[{"t":"Italy","p":"","s":[0,1,2],"k":1},{"t":"shall","p":"","s":[4]},{"t":"agree","p":",","s":[6,8]},{"t":"on","p":"","s":[10]},{"t":"conditions","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"equality","p":"","s":[2,4,5,6],"k":1},{"t":"with","p":"","s":[7]},{"t":"other","p":"","s":[8,10]},{"t":"States","p":",","s":[12],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"to","p":"","s":[0]},{"t":"such","p":"","s":[2]},{"t":"limitations","p":"","s":[4,6,8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"sovereignty","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"as","p":"","s":[0]},{"t":"may","p":"","s":[2]},{"t":"be","p":"","s":[3]},{"t":"necessary","p":"","s":[4,6,8,9],"k":1},{"t":"to","p":"","s":[10]},{"t":"ensure","p":"","s":[11,12],"k":1},{"t":"peace","p":"","s":[14]}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[2]},{"t":"justice","p":"","s":[4,5],"k":1},{"t":"among","p":"","s":[6,8]},{"t":"Nations","p":";","s":[10,11]}]},{"kind":"text","chord":"C","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"shall","p":"","s":[4]},{"t":"promote","p":"","s":[6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"encourage","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"international","p":"","s":[0,2,4,5,6],"k":1},{"t":"organisations","p":"","s":[8,10,11,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"pursuing","p":"","s":[2,4,5],"k":1},{"t":"such","p":"","s":[6]},{"t":"goals","p":".","s":[8]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]},{"n":12,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Twelve","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Twelve","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[2]},{"t":"flag","p":"","s":[4],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"Republic","p":"","s":[10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"the","p":"","s":[4]},{"t":"Italian","p":"","s":[6,8,10],"k":1},{"t":"tricolour","p":";","s":[12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"green","p":",","s":[2],"k":1},{"t":"white","p":"","s":[4]},{"t":"and","p":"","s":[6]},{"t":"red","p":"","s":[8]}]},{"kind":"text","chord":"G","words":[{"t":"in","p":"","s":[0]},{"t":"three","p":"","s":[2],"k":1},{"t":"vertical","p":"","s":[4,5,6],"k":1},{"t":"bands","p":"","s":[8]},{"t":"of","p":"","s":[10]},{"t":"equal","p":"","s":[12,13]},{"t":"size","p":".","s":[14]}]},{"kind":"fill","chord":"E","words":[],"label":"Respira \u00b7 e si ricomincia"}]}];
-  const CH = {
-    Am: { root: 45, keys: [57, 60, 64, 67] },
-    F:  { root: 41, keys: [53, 57, 60, 64] },
-    C:  { root: 48, keys: [55, 60, 64, 67] },
-    G:  { root: 43, keys: [55, 59, 62, 65] },
-    E:  { root: 40, keys: [56, 59, 62, 64] }
+  /* Each article: n, theme, paras[{en:[{w, r, p?, k?}], it}]. r = pronunciation, k = which test (0,1,2) hides the word. */
+  const DATA = [{"n":1,"theme":"Democrazia e sovranità popolare","paras":[{"en":[{"w":"Italy","r":"ìtali"},{"w":"is","r":"iz"},{"w":"a","r":"a"},{"w":"democratic","r":"demokràtik","k":0},{"w":"Republic","r":"ripàblik","k":1},{"w":"founded","r":"fàundid","k":2},{"w":"on","r":"on"},{"w":"labour","r":"lèiba","p":".","k":0}],"it":"L’Italia è una Repubblica democratica, fondata sul lavoro."},{"en":[{"w":"Sovereignty","r":"sòvranti","k":1},{"w":"shall","r":"shal"},{"w":"belong","r":"bilòng","k":2},{"w":"to","r":"tu"},{"w":"the","r":"dhe"},{"w":"people","r":"pìpol","k":0},{"w":"and","r":"and"},{"w":"be","r":"bi"},{"w":"exercised","r":"èxercaizd","k":1},{"w":"by","r":"bai"},{"w":"the","r":"dhe"},{"w":"people","r":"pìpol"},{"w":"in","r":"in"},{"w":"the","r":"dhe"},{"w":"forms","r":"forms","k":2},{"w":"and","r":"and"},{"w":"within","r":"uidhìn"},{"w":"the","r":"dhe"},{"w":"limits","r":"lìmits","k":0},{"w":"of","r":"ov"},{"w":"this","r":"dhis"},{"w":"Constitution","r":"konstitiùshon","p":".","k":1}],"it":"La sovranità appartiene al popolo, che la esercita nelle forme e nei limiti della Costituzione."}]},{"n":2,"theme":"Diritti inviolabili e doveri di solidarietà","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"recognise","r":"rèkog-naiz","k":0},{"w":"and","r":"and"},{"w":"protect","r":"protèkt","k":1},{"w":"the","r":"dhi"},{"w":"inviolable","r":"invàiolabol","k":2},{"w":"rights","r":"raits","k":0},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"person","r":"pèrson","p":",","k":1},{"w":"both","r":"both"},{"w":"as","r":"az"},{"w":"an","r":"an"},{"w":"individual","r":"indivìgiual","k":2},{"w":"and","r":"and"},{"w":"in","r":"in"},{"w":"the","r":"dhe"},{"w":"social","r":"sòshal","k":0},{"w":"groups","r":"grups","k":1},{"w":"where","r":"uer"},{"w":"human","r":"hiùman"},{"w":"personality","r":"personàliti","k":2},{"w":"is","r":"iz"},{"w":"expressed","r":"iksprèst","p":".","k":0},{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"expects","r":"ikspèkts"},{"w":"that","r":"dhat"},{"w":"the","r":"dhe"},{"w":"fundamental","r":"fandamèntal","k":1},{"w":"duties","r":"diùtis","k":2},{"w":"of","r":"ov"},{"w":"political","r":"polìtikal","p":",","k":0},{"w":"economic","r":"ikonòmik","k":1},{"w":"and","r":"and"},{"w":"social","r":"sòshal"},{"w":"solidarity","r":"solidàriti","k":2},{"w":"be","r":"bi"},{"w":"fulfilled","r":"fulfìld","p":".","k":0}],"it":"La Repubblica riconosce e garantisce i diritti inviolabili dell’uomo, sia come singolo sia nelle formazioni sociali ove si svolge la sua personalità, e richiede l’adempimento dei doveri inderogabili di solidarietà politica, economica e sociale."}]},{"n":3,"theme":"Uguaglianza","paras":[{"en":[{"w":"All","r":"ol"},{"w":"citizens","r":"sìtizens","k":0},{"w":"shall","r":"shal"},{"w":"have","r":"hav"},{"w":"equal","r":"ìkual","k":1},{"w":"social","r":"sòshal"},{"w":"dignity","r":"dìg-niti","k":2},{"w":"and","r":"and"},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"equal","r":"ìkual","k":0},{"w":"before","r":"bifòr"},{"w":"the","r":"dhe"},{"w":"law","r":"lo","p":",","k":1},{"w":"without","r":"uidhàut"},{"w":"distinction","r":"distìnkshon","k":2},{"w":"of","r":"ov"},{"w":"gender","r":"gènda","p":",","k":0},{"w":"race","r":"reis","p":",","k":1},{"w":"language","r":"lànguig'","p":",","k":2},{"w":"religion","r":"rilìgion","p":",","k":0},{"w":"political","r":"polìtikal"},{"w":"opinion","r":"opìnion","p":",","k":1},{"w":"personal","r":"pèrsonal"},{"w":"and","r":"and"},{"w":"social","r":"sòshal"},{"w":"conditions","r":"kondìshons","p":".","k":2}],"it":"Tutti i cittadini hanno pari dignità sociale e sono eguali davanti alla legge, senza distinzione di sesso, di razza, di lingua, di religione, di opinioni politiche, di condizioni personali e sociali."},{"en":[{"w":"It","r":"it"},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"the","r":"dhe"},{"w":"duty","r":"diùti","k":0},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"to","r":"tu"},{"w":"remove","r":"rimùv","k":1},{"w":"those","r":"dhoz"},{"w":"obstacles","r":"òbstakols","k":2},{"w":"of","r":"ov"},{"w":"an","r":"an"},{"w":"economic","r":"ikonòmik","k":0},{"w":"or","r":"or"},{"w":"social","r":"sòshal"},{"w":"nature","r":"nèicia"},{"w":"which","r":"uic'"},{"w":"constrain","r":"konstrèin","k":1},{"w":"the","r":"dhe"},{"w":"freedom","r":"frìdom","k":2},{"w":"and","r":"and"},{"w":"equality","r":"ikuòliti","k":0},{"w":"of","r":"ov"},{"w":"citizens","r":"sìtizens","p":","},{"w":"thereby","r":"dherbài"},{"w":"impeding","r":"impìding","k":1},{"w":"the","r":"dhe"},{"w":"full","r":"ful"},{"w":"development","r":"divèlopment","k":2},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"human","r":"hiùman"},{"w":"person","r":"pèrson","k":0},{"w":"and","r":"and"},{"w":"the","r":"dhi"},{"w":"effective","r":"ifèktiv"},{"w":"participation","r":"partisipèishon","k":1},{"w":"of","r":"ov"},{"w":"all","r":"ol"},{"w":"workers","r":"uòrkas","k":2},{"w":"in","r":"in"},{"w":"the","r":"dhe"},{"w":"political","r":"polìtikal","p":","},{"w":"economic","r":"ikonòmik"},{"w":"and","r":"and"},{"w":"social","r":"sòshal"},{"w":"organisation","r":"organaizèishon","k":0},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"country","r":"kàntri","p":"."}],"it":"È compito della Repubblica rimuovere gli ostacoli di ordine economico e sociale, che, limitando di fatto la libertà e l’eguaglianza dei cittadini, impediscono il pieno sviluppo della persona umana e l’effettiva partecipazione di tutti i lavoratori all’organizzazione politica, economica e sociale del Paese."}]},{"n":4,"theme":"Diritto e dovere al lavoro","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"recognise","r":"rèkog-naiz","k":0},{"w":"the","r":"dhe"},{"w":"right","r":"rait","k":1},{"w":"of","r":"ov"},{"w":"all","r":"ol"},{"w":"citizens","r":"sìtizens","k":2},{"w":"to","r":"tu"},{"w":"work","r":"uork","k":0},{"w":"and","r":"and"},{"w":"shall","r":"shal"},{"w":"promote","r":"promòt","k":1},{"w":"such","r":"sac'"},{"w":"conditions","r":"kondìshons","k":2},{"w":"as","r":"az"},{"w":"shall","r":"shal"},{"w":"render","r":"rènda"},{"w":"this","r":"dhis"},{"w":"right","r":"rait"},{"w":"effective","r":"ifèktiv","p":".","k":0}],"it":"La Repubblica riconosce a tutti i cittadini il diritto al lavoro e promuove le condizioni che rendano effettivo questo diritto."},{"en":[{"w":"Every","r":"èvri"},{"w":"citizen","r":"sìtizen"},{"w":"shall","r":"shal"},{"w":"have","r":"hav"},{"w":"the","r":"dhe"},{"w":"duty","r":"diùti","p":",","k":1},{"w":"according","r":"akòrding"},{"w":"to","r":"tu"},{"w":"personal","r":"pèrsonal"},{"w":"potential","r":"potènshal","k":2},{"w":"and","r":"and"},{"w":"individual","r":"indivìgiual"},{"w":"choice","r":"ciois","p":",","k":0},{"w":"to","r":"tu"},{"w":"perform","r":"perfòrm"},{"w":"any","r":"èni"},{"w":"activity","r":"aktìviti","k":1},{"w":"or","r":"or"},{"w":"function","r":"fànkshon","k":2},{"w":"contributing","r":"kontrìbiuting"},{"w":"to","r":"tu"},{"w":"the","r":"dhe"},{"w":"material","r":"matìrial","k":0},{"w":"or","r":"or"},{"w":"spiritual","r":"spìriciual","k":1},{"w":"progress","r":"prògres","k":2},{"w":"of","r":"ov"},{"w":"society","r":"sosàiati","p":".","k":0}],"it":"Ogni cittadino ha il dovere di svolgere, secondo le proprie possibilità e la propria scelta, un’attività o una funzione che concorra al progresso materiale o spirituale della società."}]},{"n":5,"theme":"Unità e autonomie locali","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"one","r":"uan","k":0},{"w":"and","r":"and"},{"w":"indivisible","r":"indivìzibol","p":";","k":1},{"w":"it","r":"it"},{"w":"shall","r":"shal"},{"w":"recognise","r":"rèkog-naiz","k":2},{"w":"and","r":"and"},{"w":"promote","r":"promòt","k":0},{"w":"local","r":"lòkal","k":1},{"w":"autonomies","r":"otònomis","k":2},{"w":"and","r":"and"},{"w":"implement","r":"ìmpliment"},{"w":"the","r":"dhe"},{"w":"fullest","r":"fùlist"},{"w":"measure","r":"mèja"},{"w":"of","r":"ov"},{"w":"administrative","r":"admìnistrativ","k":0},{"w":"decentralisation","r":"disentralaizèishon","k":1},{"w":"of","r":"ov"},{"w":"those","r":"dhoz"},{"w":"services","r":"sèrvisis","k":2},{"w":"which","r":"uic'"},{"w":"are","r":"ar"},{"w":"provided","r":"provàidid"},{"w":"by","r":"bai"},{"w":"the","r":"dhe"},{"w":"State","r":"steit","p":";","k":0},{"w":"it","r":"it"},{"w":"shall","r":"shal"},{"w":"adapt","r":"adàpt","k":1},{"w":"the","r":"dhe"},{"w":"principles","r":"prìnsipols","k":2},{"w":"and","r":"and"},{"w":"methods","r":"mèthods"},{"w":"of","r":"ov"},{"w":"its","r":"its"},{"w":"legislation","r":"legislèishon","k":0},{"w":"to","r":"tu"},{"w":"the","r":"dhe"},{"w":"requirements","r":"rikuàiaments","k":1},{"w":"of","r":"ov"},{"w":"autonomy","r":"otònomi","k":2},{"w":"and","r":"and"},{"w":"decentralisation","r":"disentralaizèishon","p":".","k":0}],"it":"La Repubblica, una e indivisibile, riconosce e promuove le autonomie locali; attua nei servizi che dipendono dallo Stato il più ampio decentramento amministrativo; adegua i principi ed i metodi della sua legislazione alle esigenze dell’autonomia e del decentramento."}]},{"n":6,"theme":"Minoranze linguistiche","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"safeguard","r":"sèifgard","k":0},{"w":"language","r":"lànguig'","k":1},{"w":"minorities","r":"mainòritis","k":2},{"w":"by","r":"bai"},{"w":"means","r":"mins"},{"w":"of","r":"ov"},{"w":"appropriate","r":"apròpriat","k":0},{"w":"measures","r":"mèjas","p":".","k":1}],"it":"La Repubblica tutela con apposite norme le minoranze linguistiche."}]},{"n":7,"theme":"Stato e Chiesa cattolica","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"State","r":"steit","k":0},{"w":"and","r":"and"},{"w":"the","r":"dhe"},{"w":"Catholic","r":"kàthlik"},{"w":"Church","r":"cerc'","k":1},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"independent","r":"indipèndent","k":2},{"w":"and","r":"and"},{"w":"sovereign","r":"sòvrin","p":",","k":0},{"w":"each","r":"ic'"},{"w":"within","r":"uidhìn"},{"w":"its","r":"its"},{"w":"own","r":"oun"},{"w":"sphere","r":"sfir","p":".","k":1}],"it":"Lo Stato e la Chiesa cattolica sono, ciascuno nel proprio ordine, indipendenti e sovrani."},{"en":[{"w":"Their","r":"dher"},{"w":"relations","r":"rilèishons","k":2},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"regulated","r":"règhiuleitid","k":0},{"w":"by","r":"bai"},{"w":"the","r":"dhe"},{"w":"Lateran","r":"làteran","k":1},{"w":"Pacts","r":"pakts","p":"."},{"w":"Amendments","r":"amèndments","k":2},{"w":"to","r":"tu"},{"w":"such","r":"sac'"},{"w":"Pacts","r":"pakts"},{"w":"which","r":"uic'"},{"w":"are","r":"ar"},{"w":"accepted","r":"aksèptid","k":0},{"w":"by","r":"bai"},{"w":"both","r":"both"},{"w":"parties","r":"pàrtis","k":1},{"w":"shall","r":"shal"},{"w":"not","r":"not"},{"w":"require","r":"rikuàia"},{"w":"the","r":"dhe"},{"w":"procedure","r":"prosìgia","k":2},{"w":"of","r":"ov"},{"w":"constitutional","r":"konstitiùshonal","k":0},{"w":"amendments","r":"amèndments","p":"."}],"it":"I loro rapporti sono regolati dai Patti Lateranensi. Le modificazioni dei Patti, accettate dalle due parti, non richiedono procedimento di revisione costituzionale."}]},{"n":8,"theme":"Libertà religiosa","paras":[{"en":[{"w":"All","r":"ol"},{"w":"religious","r":"rilìgios","k":0},{"w":"denominations","r":"dinominèishons","k":1},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"equally","r":"ìkuali","k":2},{"w":"free","r":"fri","k":0},{"w":"before","r":"bifòr"},{"w":"the","r":"dhe"},{"w":"law","r":"lo","p":"."}],"it":"Tutte le confessioni religiose sono egualmente libere davanti alla legge."},{"en":[{"w":"Religious","r":"rilìgios"},{"w":"denominations","r":"dinominèishons"},{"w":"other","r":"àdha"},{"w":"than","r":"dhan"},{"w":"Catholicism","r":"kathòlisizm","k":1},{"w":"shall","r":"shal"},{"w":"have","r":"hav"},{"w":"the","r":"dhe"},{"w":"right","r":"rait"},{"w":"to","r":"tu"},{"w":"self-organisation","r":"self-organaizèishon","k":2},{"w":"according","r":"akòrding"},{"w":"to","r":"tu"},{"w":"their","r":"dher"},{"w":"own","r":"oun"},{"w":"statutes","r":"stàciuts","p":",","k":0},{"w":"provided","r":"provàidid"},{"w":"these","r":"dhiz"},{"w":"do","r":"du"},{"w":"not","r":"not"},{"w":"conflict","r":"kònflikt","k":1},{"w":"with","r":"uidh"},{"w":"Italian","r":"itàlian"},{"w":"law","r":"lo","p":"."}],"it":"Le confessioni religiose diverse dalla cattolica hanno diritto di organizzarsi secondo i propri statuti, in quanto non contrastino con l’ordinamento giuridico italiano."},{"en":[{"w":"Their","r":"dher"},{"w":"relations","r":"rilèishons","k":2},{"w":"with","r":"uidh"},{"w":"the","r":"dhe"},{"w":"State","r":"steit","k":0},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"regulated","r":"règhiuleitid","k":1},{"w":"by","r":"bai"},{"w":"law","r":"lo","p":","},{"w":"based","r":"beist"},{"w":"on","r":"on"},{"w":"agreements","r":"agrìments","k":2},{"w":"with","r":"uidh"},{"w":"their","r":"dher"},{"w":"respective","r":"rispèktiv"},{"w":"representatives","r":"reprisèntativs","p":".","k":0}],"it":"I loro rapporti con lo Stato sono regolati per legge sulla base di intese con le relative rappresentanze."}]},{"n":9,"theme":"Cultura, paesaggio e ambiente","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"promote","r":"promòt","k":0},{"w":"the","r":"dhe"},{"w":"development","r":"divèlopment","k":1},{"w":"of","r":"ov"},{"w":"culture","r":"kàlcia","k":2},{"w":"and","r":"and"},{"w":"scientific","r":"saiantìfik","k":0},{"w":"and","r":"and"},{"w":"technical","r":"tèknikal"},{"w":"research","r":"risèrc'","p":".","k":1}],"it":"La Repubblica promuove lo sviluppo della cultura e la ricerca scientifica e tecnica."},{"en":[{"w":"It","r":"it"},{"w":"shall","r":"shal"},{"w":"safeguard","r":"sèifgard","k":2},{"w":"natural","r":"nàciral"},{"w":"landscape","r":"lànskeip","k":0},{"w":"and","r":"and"},{"w":"the","r":"dhe"},{"w":"historical","r":"històrikal","k":1},{"w":"and","r":"and"},{"w":"artistic","r":"artìstik","k":2},{"w":"heritage","r":"hèritig'","k":0},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"Nation","r":"nèishon","p":"."}],"it":"Tutela il paesaggio e il patrimonio storico e artistico della Nazione."},{"en":[{"w":"It","r":"it"},{"w":"shall","r":"shal"},{"w":"protect","r":"protèkt"},{"w":"the","r":"dhi"},{"w":"environment","r":"invàironment","p":",","k":1},{"w":"biodiversity","r":"baiodaivèrsiti","k":2},{"w":"and","r":"and"},{"w":"ecosystems","r":"ìkosistems","p":",","k":0},{"w":"also","r":"òlso"},{"w":"in","r":"in"},{"w":"the","r":"dhi"},{"w":"interest","r":"ìntrest"},{"w":"of","r":"ov"},{"w":"future","r":"fiùcia","k":1},{"w":"generations","r":"generèishons","p":".","k":2},{"w":"The","r":"dhe"},{"w":"law","r":"lo"},{"w":"shall","r":"shal"},{"w":"regulate","r":"règhiuleit","k":0},{"w":"the","r":"dhe"},{"w":"ways","r":"ueis"},{"w":"and","r":"and"},{"w":"forms","r":"forms"},{"w":"of","r":"ov"},{"w":"animal","r":"ànimal","k":1},{"w":"protection","r":"protèkshon","p":".","k":2}],"it":"Tutela l’ambiente, la biodiversità e gli ecosistemi, anche nell’interesse delle future generazioni. La legge dello Stato disciplina i modi e le forme di tutela degli animali."}]},{"n":10,"theme":"Diritto internazionale e diritto d’asilo","paras":[{"en":[{"w":"The","r":"dhi"},{"w":"Italian","r":"itàlian"},{"w":"legal","r":"lìghal","k":0},{"w":"system","r":"sìstem","k":1},{"w":"shall","r":"shal"},{"w":"conform","r":"konfòrm","k":2},{"w":"to","r":"tu"},{"w":"the","r":"dhe"},{"w":"generally","r":"gènerali"},{"w":"recognised","r":"rèkog-naizd","k":0},{"w":"principles","r":"prìnsipols","k":1},{"w":"of","r":"ov"},{"w":"international","r":"internàshonal","k":2},{"w":"law","r":"lo","p":"."},{"w":"The","r":"dhe"},{"w":"legal","r":"lìghal"},{"w":"status","r":"stèitas","k":0},{"w":"of","r":"ov"},{"w":"foreigners","r":"fòrinas","k":1},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"regulated","r":"règhiuleitid"},{"w":"by","r":"bai"},{"w":"law","r":"lo"},{"w":"in","r":"in"},{"w":"compliance","r":"komplàians","k":2},{"w":"with","r":"uidh"},{"w":"international","r":"internàshonal"},{"w":"provisions","r":"provìjons"},{"w":"and","r":"and"},{"w":"treaties","r":"trìtis","p":".","k":0}],"it":"L’ordinamento giuridico italiano si conforma alle norme del diritto internazionale generalmente riconosciute. La condizione giuridica dello straniero è regolata dalla legge in conformità delle norme e dei trattati internazionali."},{"en":[{"w":"A","r":"a"},{"w":"foreign","r":"fòrin","k":1},{"w":"national","r":"nàshonal","p":","},{"w":"who","r":"hu"},{"w":"is","r":"iz"},{"w":"denied","r":"dinàid","k":2},{"w":"","r":"","p":"–"},{"w":"in","r":"in"},{"w":"his","r":"hiz"},{"w":"or","r":"or"},{"w":"her","r":"her"},{"w":"country","r":"kàntri"},{"w":"","r":"","p":"–"},{"w":"the","r":"dhi"},{"w":"enjoyment","r":"ingiòiment"},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"democratic","r":"demokràtik","k":0},{"w":"freedoms","r":"frìdoms","k":1},{"w":"established","r":"istàblisht"},{"w":"by","r":"bai"},{"w":"this","r":"dhis"},{"w":"Constitution","r":"konstitiùshon","p":","},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"entitled","r":"intàiteld","k":2},{"w":"to","r":"tu"},{"w":"the","r":"dhe"},{"w":"right","r":"rait"},{"w":"of","r":"ov"},{"w":"asylum","r":"asàilam","k":0},{"w":"in","r":"in"},{"w":"the","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"under","r":"ànda"},{"w":"such","r":"sac'"},{"w":"conditions","r":"kondìshons","k":1},{"w":"as","r":"az"},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"established","r":"istàblisht"},{"w":"by","r":"bai"},{"w":"law","r":"lo","p":"."}],"it":"Lo straniero, al quale sia impedito nel suo paese l’effettivo esercizio delle libertà democratiche garantite dalla Costituzione italiana, ha diritto d’asilo nel territorio della Repubblica, secondo le condizioni stabilite dalla legge."},{"en":[{"w":"A","r":"a"},{"w":"foreign","r":"fòrin"},{"w":"national","r":"nàshonal"},{"w":"may","r":"mei"},{"w":"not","r":"not"},{"w":"be","r":"bi"},{"w":"extradited","r":"èkstradaitid","k":2},{"w":"for","r":"for"},{"w":"a","r":"a"},{"w":"political","r":"polìtikal","k":0},{"w":"offence","r":"ofèns","p":".","k":1}],"it":"Non è ammessa l’estradizione dello straniero per reati politici."}]},{"n":11,"theme":"Ripudio della guerra","paras":[{"en":[{"w":"Italy","r":"ìtali"},{"w":"shall","r":"shal"},{"w":"reject","r":"rigèkt","k":0},{"w":"war","r":"uor","k":1},{"w":"as","r":"az"},{"w":"an","r":"an"},{"w":"instrument","r":"ìnstrument","k":2},{"w":"of","r":"ov"},{"w":"aggression","r":"agrèshon","k":0},{"w":"against","r":"aghènst"},{"w":"the","r":"dhe"},{"w":"freedom","r":"frìdom","k":1},{"w":"of","r":"ov"},{"w":"other","r":"àdha"},{"w":"peoples","r":"pìpols","k":2},{"w":"and","r":"and"},{"w":"as","r":"az"},{"w":"a","r":"a"},{"w":"means","r":"mins"},{"w":"for","r":"for"},{"w":"the","r":"dhe"},{"w":"settlement","r":"sètelment","k":0},{"w":"of","r":"ov"},{"w":"international","r":"internàshonal"},{"w":"disputes","r":"dispiùts","p":";","k":1},{"w":"Italy","r":"ìtali"},{"w":"shall","r":"shal"},{"w":"agree","r":"agrì","p":",","k":2},{"w":"on","r":"on"},{"w":"conditions","r":"kondìshons"},{"w":"of","r":"ov"},{"w":"equality","r":"ikuòliti","k":0},{"w":"with","r":"uidh"},{"w":"other","r":"àdha"},{"w":"States","r":"steits","p":",","k":1},{"w":"to","r":"tu"},{"w":"such","r":"sac'"},{"w":"limitations","r":"limitèishons","k":2},{"w":"of","r":"ov"},{"w":"sovereignty","r":"sòvranti","k":0},{"w":"as","r":"az"},{"w":"may","r":"mei"},{"w":"be","r":"bi"},{"w":"necessary","r":"nèsesari"},{"w":"to","r":"tu"},{"w":"ensure","r":"inshòr"},{"w":"peace","r":"pis","k":1},{"w":"and","r":"and"},{"w":"justice","r":"giàstis","k":2},{"w":"among","r":"amàng"},{"w":"Nations","r":"nèishons","p":";","k":0},{"w":"Italy","r":"ìtali"},{"w":"shall","r":"shal"},{"w":"promote","r":"promòt","k":1},{"w":"and","r":"and"},{"w":"encourage","r":"inkàrig'","k":2},{"w":"international","r":"internàshonal"},{"w":"organisations","r":"organaizèishons","k":0},{"w":"pursuing","r":"persiùing"},{"w":"such","r":"sac'"},{"w":"goals","r":"gols","p":".","k":1}],"it":"L’Italia ripudia la guerra come strumento di offesa alla libertà degli altri popoli e come mezzo di risoluzione delle controversie internazionali; consente, in condizioni di parità con gli altri Stati, alle limitazioni di sovranità necessarie ad un ordinamento che assicuri la pace e la giustizia fra le Nazioni; promuove e favorisce le organizzazioni internazionali rivolte a tale scopo."}]},{"n":12,"theme":"La bandiera","paras":[{"en":[{"w":"The","r":"dhe"},{"w":"flag","r":"flag","k":0},{"w":"of","r":"ov"},{"w":"the","r":"dhe"},{"w":"Republic","r":"ripàblik"},{"w":"shall","r":"shal"},{"w":"be","r":"bi"},{"w":"the","r":"dhi"},{"w":"Italian","r":"itàlian"},{"w":"tricolour","r":"trìkola","p":";","k":1},{"w":"green","r":"grin","p":",","k":2},{"w":"white","r":"uait","k":0},{"w":"and","r":"and"},{"w":"red","r":"red","k":1},{"w":"in","r":"in"},{"w":"three","r":"thri","k":2},{"w":"vertical","r":"vèrtikal","k":0},{"w":"bands","r":"bands","k":1},{"w":"of","r":"ov"},{"w":"equal","r":"ìkual","k":2},{"w":"size","r":"saiz","p":".","k":0}],"it":"La bandiera della Repubblica è il tricolore italiano: verde, bianco e rosso, a tre bande verticali di eguali dimensioni."}]}];
+  const VLABEL = ['Testo', 'Prova 1', 'Prova 2', 'Prova 3'];
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   };
-  ARTS.forEach(A => {
-    A.syl = A.lines.map(L => {
-      const m = new Map();
-      L.words.forEach(w => w.s.forEach(st => m.set(st, { stress: st % 4 === 0, echo: !!w.echo, hook: !!w.hook })));
-      return m;
+  const G = store.get('pf-global', { pr: false, it: false });
+  const DONE = new Set(store.get('pf-done', []));
+
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const ICON_PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5.2a3.5 3.5 0 0 1 0 5.6l-.8-1a2.2 2.2 0 0 0 0-3.6z"/></svg>';
+  const ICON_STOP = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1"/></svg>';
+
+  /* ---------- Speech ---------- */
+  const synth = window.speechSynthesis;
+  const canSpeak = !!(synth && window.SpeechSynthesisUtterance);
+  let voice = null, speakToken = 0, speakingCard = null;
+  function pickVoice() {
+    if (!canSpeak) return;
+    const vs = synth.getVoices() || [];
+    voice = vs.find(v => /en[-_]GB/i.test(v.lang) && /google|daniel|serena|kate|female|male/i.test(v.name))
+      || vs.find(v => /en[-_]GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null;
+  }
+  if (canSpeak) { pickVoice(); try { synth.addEventListener('voiceschanged', pickVoice); } catch (e) {} }
+  function stopSpeech() {
+    speakToken++;
+    if (canSpeak) synth.cancel();
+    if (speakingCard) { const c = speakingCard; speakingCard = null; updateListen(c); }
+  }
+  function speak(parts, rate, card) {
+    stopSpeech();
+    if (!voice) pickVoice();
+    const token = speakToken;
+    if (card) { speakingCard = card; updateListen(card); }
+    parts.forEach((t, i) => {
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = voice ? voice.lang : 'en-GB'; if (voice) u.voice = voice; u.rate = rate;
+      if (i === parts.length - 1) u.onend = u.onerror = () => {
+        if (token !== speakToken) return;
+        if (speakingCard) { const c = speakingCard; speakingCard = null; updateListen(c); }
+      };
+      synth.speak(u);
     });
-  });
-  const HINTS = {
-    read: 'Tutte le parole. Rappa insieme alla base e segui la parola in rosso.',
-    gaps: 'Le parole chiave spariscono. Dille prima che diventino verdi.',
-    initials: 'Solo le iniziali. Il resto lo completi a memoria.',
-    solo: 'Solo la base. Le parole diventano verdi dopo che le hai dette.'
-  };
+  }
+  if (!canSpeak) document.getElementById('tip').hidden = true;
 
-  /* ---------- State ---------- */
-  let mode = 'read', bpm = 88, guide = true, artSel = 0;
-  try {
-    const m = localStorage.getItem('a1flow-mode'); if (m && HINTS[m]) mode = m;
-    const b = parseInt(localStorage.getItem('a1flow-bpm'), 10); if ([76, 88, 98].includes(b)) bpm = b;
-    const a = localStorage.getItem('cflow-art'); if (a === 'all') artSel = 'all'; else if (a !== null && +a >= 0 && +a < 12) artSel = +a;
-  } catch (e) {}
-  const playlist = () => (artSel === 'all' ? ARTS.map((_, i) => i) : [artSel]);
+  /* ---------- Cards ---------- */
+  const cardsEl = document.getElementById('cards'), navEl = document.getElementById('nav');
+  const cards = DATA.map(build);
 
-  /* ---------- Picker ---------- */
-  const picker = document.getElementById('picker');
-  ARTS.forEach((A, i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.setAttribute('role', 'radio'); b.id = 'art-' + A.n; b.dataset.art = String(i);
-    b.textContent = A.n; b.setAttribute('aria-label', 'Articolo ' + A.n);
-    picker.append(b);
-  });
-  const allBtn = document.createElement('button');
-  allBtn.type = 'button'; allBtn.setAttribute('role', 'radio'); allBtn.id = 'art-all'; allBtn.dataset.art = 'all';
-  allBtn.className = 'all'; allBtn.textContent = 'Tutti';
-  picker.append(allBtn);
-  const pickBtns = [...picker.querySelectorAll('button')];
+  function build(a) {
+    const c = { a, mode: 0, pr: G.pr, it: G.it, test: null };
+    const card = el('article', 'card'); card.id = 'art-' + a.n; c.el = card;
+    card.setAttribute('aria-labelledby', 'h-' + a.n);
 
-  /* ---------- Lyric sheet ---------- */
-  const lyricsEl = document.getElementById('lyrics');
-  const stampEl = document.getElementById('stamp');
-  let shownArt = -1, lineEls = [], wordEls = [];
-  const span = (cls, text) => { const s = document.createElement('span'); s.className = cls; s.textContent = text; return s; };
-  function buildSheet(ai) {
-    shownArt = ai; lineEls = []; wordEls = [];
-    lyricsEl.textContent = '';
-    ARTS[ai].lines.forEach((L, li) => {
-      const row = document.createElement('div');
-      row.className = 'line ' + L.kind + (L.para ? ' para' : '');
-      row.append(span('bar', String(li + 1)));
-      const txt = document.createElement('span'); txt.className = 'txt';
-      const els = [];
-      if (L.kind === 'fill') { txt.textContent = L.label; txt.lang = 'it'; }
-      L.words.forEach((w, wi) => {
-        const prev = L.words[wi - 1], next = L.words[wi + 1];
-        if (wi > 0) txt.append(' ');
-        if (w.echo && !(prev && prev.echo)) txt.append(span('paren', '('));
-        const el = document.createElement('span');
-        el.append(span('c0', w.t[0]), span('cr', w.t.slice(1)));
-        if (w.p) el.append(span('p', w.p));
-        el._base = 'w' + (w.echo ? ' echo' : '');
-        el.className = el._base;
-        txt.append(el); els.push(el);
-        if (w.echo && !(next && next.echo)) txt.append(span('paren', ')'));
+    const head = el('header', 'card-head');
+    head.append(el('span', 'card-num', 'ART. ' + a.n));
+    const h = el('h2', null, a.theme); h.id = 'h-' + a.n; head.append(h);
+
+    const tools = el('div', 'tools');
+    const seg = el('div', 'seg'); seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-label', 'Modalità articolo ' + a.n);
+    c.segBtns = VLABEL.map((label, v) => {
+      const b = el('button'); b.type = 'button'; b.setAttribute('role', 'radio'); b.id = 'm-' + a.n + '-' + v;
+      b.addEventListener('click', () => setMode(c, v));
+      seg.append(b); return b;
+    });
+    const toggles = el('div', 'toggles');
+    c.prBtn = el('button', 'pill pr'); c.prBtn.type = 'button'; c.prBtn.id = 'pr-' + a.n;
+    c.prBtn.innerHTML = '<span class="dot"></span>Pronuncia';
+    c.prBtn.addEventListener('click', () => { c.pr = !c.pr; render(c); });
+    c.itBtn = el('button', 'pill it'); c.itBtn.type = 'button'; c.itBtn.id = 'it-' + a.n;
+    c.itBtn.innerHTML = '<span class="dot"></span>Italiano';
+    c.itBtn.addEventListener('click', () => { c.it = !c.it; render(c); });
+    toggles.append(c.prBtn, c.itBtn);
+    if (canSpeak) {
+      c.listenBtn = el('button', 'pill'); c.listenBtn.type = 'button'; c.listenBtn.id = 'ls-' + a.n;
+      c.listenBtn.addEventListener('click', () => {
+        if (speakingCard === c) { stopSpeech(); return; }
+        const parts = [];
+        a.paras.forEach(P => {
+          const text = P.en.map(x => x.w ? x.w + (x.p || '') : x.p).join(' ').replace(/\s+–\s+/g, ', ');
+          (text.match(/[^.;]+[.;]?/g) || []).forEach(s => { s = s.trim(); if (s) parts.push(s); });
+        });
+        speak(parts, 0.9, c);
       });
-      row.append(txt); lyricsEl.append(row);
-      lineEls.push(row); wordEls.push(els);
-    });
-    lyricsEl.scrollTop = 0; lastActive = -1;
-    stampEl.textContent = 'ART. ' + ARTS[ai].n;
-    pickBtns.forEach(b => b.classList.toggle('playing', playing && artSel === 'all' && b.dataset.art === String(ai)));
-  }
+      toggles.append(c.listenBtn);
+    }
+    tools.append(seg, toggles);
 
-  /* ---------- Rendering ---------- */
-  const beatEls = [...document.querySelectorAll('#beats i')];
-  const statusEl = document.getElementById('status');
-  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let pos = null, playing = false, lastActive = -1;
-
-  function stateFor(li, wi) {
-    if (!pos || pos.bar < 0 || pos.art !== shownArt || li > pos.bar) return 'future';
-    if (li < pos.bar) return 'past';
-    const ws = ARTS[shownArt].lines[li].words, w = ws[wi], next = ws[wi + 1];
-    if (w.s[0] > pos.step) return 'future';
-    const last = w.s[w.s.length - 1];
-    if ((next && next.s[0] <= pos.step) || pos.step > last + 3) return 'past';
-    return 'now';
-  }
-  function hideFor(w) {
-    if (w.hook) return '';
-    if (mode === 'gaps') return w.k ? 'hideAll' : '';
-    if (mode === 'initials') return 'hideRest';
-    if (mode === 'solo') return 'hideAll';
-    return '';
-  }
-  function scrollToLine(li) {
-    const el = lineEls[li];
-    if (!el || lyricsEl.scrollHeight <= lyricsEl.clientHeight + 4) return;
-    const top = Math.max(0, el.offsetTop - lyricsEl.clientHeight * 0.3);
-    try { lyricsEl.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' }); } catch (e) { lyricsEl.scrollTop = top; }
-  }
-  function render() {
-    const A = ARTS[shownArt];
-    const activeLine = pos && pos.bar >= 0 && pos.art === shownArt ? pos.bar : -1;
-    A.lines.forEach((L, li) => {
-      const active = li === activeLine;
-      if (lineEls[li]._a !== active) { lineEls[li].classList.toggle('active', active); lineEls[li]._a = active; }
-      L.words.forEach((w, wi) => {
-        const el = wordEls[li][wi], st = stateFor(li, wi), hide = hideFor(w);
-        let cls = el._base;
-        if (st === 'now') cls += ' now';
-        if (hide) cls += st === 'past' ? ' rev' : ' ' + hide;
-        if (el.className !== cls) el.className = cls;
+    const body = el('div', 'body');
+    c.items = [];
+    a.paras.forEach(P => {
+      const wrap = el('div', 'para');
+      const en = el('p', 'en'); en.lang = 'en';
+      const it = el('p', 'it-line', P.it); it.lang = 'it';
+      P.en.forEach((x, i) => {
+        if (i > 0) en.append(' ');
+        const unit = el('span', 'unit'), top = el('span', 'top');
+        unit.append(top);
+        if (!x.w) { top.append(x.p); en.append(unit); return; }
+        const tx = el('span', 'tx', x.w), ptx = el('span', 'ptx', x.r);
+        ptx.lang = 'it';
+        tx.dataset.i = String(c.items.length);
+        top.append(tx); if (x.p) top.append(x.p);
+        unit.append(ptx); en.append(unit);
+        c.items.push({ x, tx, ptx });
       });
+      wrap.append(en, it); body.append(wrap);
+      c.itLines = (c.itLines || []).concat(it);
     });
-    if (activeLine !== lastActive) { if (activeLine >= 0) scrollToLine(activeLine); lastActive = activeLine; }
-    const beat = pos ? Math.floor(pos.step / 4) : -1;
-    beatEls.forEach((b, i) => b.classList.toggle('on', i === beat));
-    if (!playing) statusEl.textContent = A.lines.length + ' bars · ' + bpm + ' BPM';
-    else if (!pos || pos.bar < 0) statusEl.textContent = 'Si parte…';
-    else statusEl.textContent = 'Giro ' + pos.round + ' · Bar ' + (pos.bar + 1) + '/' + A.lines.length;
-  }
-
-  /* ---------- Audio ---------- */
-  let ctx = null, comp = null, bus = null, noise = null;
-  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
-  function initAudio() {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    ctx = new AC();
-    comp = ctx.createDynamicsCompressor();
-    comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = 0.003; comp.release.value = 0.2;
-    comp.connect(ctx.destination);
-    noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
-    const d = noise.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  }
-  function newBus() { bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(comp); }
-  function vca(t, peak, a, d) {
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t + a);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
-    g.connect(bus); return g;
-  }
-  function osc(type, f, t, end, dest) { const o = ctx.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.connect(dest); o.start(t); o.stop(end); return o; }
-  function noiseSrc(t, dur, dest, filterType, freq) {
-    const n = ctx.createBufferSource(); n.buffer = noise;
-    const f = ctx.createBiquadFilter(); f.type = filterType; f.frequency.value = freq;
-    n.connect(f); f.connect(dest); n.start(t, Math.random() * 0.5, dur);
-  }
-  function kick(t, v) {
-    const o = osc('sine', 155, t, t + 0.42, vca(t, 0.95 * v, 0.003, 0.36));
-    o.frequency.exponentialRampToValueAtTime(48, t + 0.11);
-    const k = osc('triangle', 320, t, t + 0.08, vca(t, 0.35 * v, 0.001, 0.05));
-    k.frequency.exponentialRampToValueAtTime(110, t + 0.05);
-  }
-  function snare(t, v) {
-    noiseSrc(t, 0.25, vca(t, 0.42 * v, 0.002, 0.17), 'highpass', 1400);
-    const o = osc('triangle', 200, t, t + 0.14, vca(t, 0.26 * v, 0.002, 0.09));
-    o.frequency.exponentialRampToValueAtTime(150, t + 0.08);
-  }
-  function hat(t, v) { noiseSrc(t, 0.06, vca(t, 0.12 * v, 0.001, 0.035), 'highpass', 7200); }
-  function click(t, v) { osc('sine', v > 0.9 ? 2000 : 1500, t, t + 0.06, vca(t, 0.14 * v, 0.001, 0.04)); }
-  function bass(t, m, len) {
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.26, t + 0.008);
-    g.gain.setTargetAtTime(0.0001, t + len * 0.85, 0.03);
-    g.connect(bus);
-    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = 2;
-    f.frequency.setValueAtTime(1100, t); f.frequency.exponentialRampToValueAtTime(260, t + 0.18);
-    f.connect(g);
-    osc('sawtooth', mtof(m), t, t + len + 0.2, f);
-  }
-  function keys(t, notes, len) {
-    notes.forEach((m, i) => {
-      const o = osc('triangle', mtof(m), t, t + len + 0.3, vca(t + i * 0.012, 0.045, 0.012, Math.min(len, 2.2)));
-      o.detune.value = i % 2 ? 4 : -4;
+    body.addEventListener('click', e => {
+      const t = e.target.closest('.en .tx'); if (!t || !canSpeak) return;
+      const item = c.items[+t.dataset.i];
+      if (c.mode !== 0 && !item.filled && item.x.k === c.mode - 1) return;
+      t.classList.add('saying'); setTimeout(() => t.classList.remove('saying'), 600);
+      speak([item.x.w], 0.8, null);
     });
-  }
-  function blip(t, m, v) { osc('triangle', mtof(m), t, t + 0.16, vca(t, 0.17 * v, 0.004, 0.12)); }
 
-  function playStep(ai, li, step, t, sd) {
-    if (li < 0) {
-      if (step % 2 === 0) hat(t, step % 4 === 0 ? 0.8 : 0.5);
-      if (step % 4 === 0) click(t, step === 0 ? 1 : 0.75);
-      return;
+    const test = el('div', 'test'); test.hidden = true;
+    c.status = el('p', 'status'); c.status.setAttribute('aria-live', 'polite');
+    c.bank = el('div', 'bank');
+    const acts = el('div', 'test-actions');
+    c.hintBtn = el('button', 'btn', 'Aiuto'); c.hintBtn.type = 'button'; c.hintBtn.id = 'hint-' + a.n;
+    c.hintBtn.addEventListener('click', () => hint(c));
+    c.resetBtn = el('button', 'btn', 'Ricomincia'); c.resetBtn.type = 'button'; c.resetBtn.id = 'reset-' + a.n;
+    c.resetBtn.addEventListener('click', () => startTest(c));
+    c.nextBtn = el('button', 'btn primary', 'Prova successiva'); c.nextBtn.type = 'button'; c.nextBtn.id = 'next-' + a.n;
+    c.nextBtn.addEventListener('click', () => setMode(c, c.mode + 1));
+    acts.append(c.hintBtn, c.resetBtn, c.nextBtn);
+    test.append(c.status, c.bank, acts);
+    c.testEl = test;
+
+    card.append(head, tools, body, test);
+    card.classList.toggle('can-say', canSpeak);
+    cardsEl.append(card);
+
+    const pager = el('div', 'pager');
+    if (a.n > 1) {
+      const prev = el('button', 'btn', '← Articolo ' + (a.n - 1)); prev.type = 'button'; prev.id = 'prev-' + a.n;
+      prev.addEventListener('click', () => show(a.n - 1, true)); pager.append(prev);
     }
-    const A = ARTS[ai], L = A.lines[li], c = CH[L.chord], fill = L.kind === 'fill';
-    if (step === 0) kick(t, 1);
-    if (step === 7 && !fill) kick(t, 0.65);
-    if (step === 10) kick(t, 0.85);
-    if (step === 4) snare(t, 1);
-    if (step === 12 && !fill) snare(t, 1);
-    if (fill && step >= 12) snare(t, 0.35 + (step - 12) * 0.2);
-    if (!(fill && step >= 12)) {
-      if (step % 2 === 0) hat(t, step % 4 === 2 ? 1 : 0.6);
-      else if (step === 15) hat(t, 0.35);
+    if (a.n < DATA.length) {
+      const next = el('button', 'btn next', 'Articolo ' + (a.n + 1) + ' →'); next.type = 'button'; next.id = 'nextart-' + a.n;
+      next.addEventListener('click', () => show(a.n + 1, true)); pager.append(next);
     }
-    if (step === 0) bass(t, c.root, sd * 5.5);
-    if (step === 7) bass(t, c.root, sd * 2.5);
-    if (step === 10) bass(t, c.root + 7, sd * 3.5);
-    if (step === 14 && !fill) bass(t, c.root + 12, sd * 1.6);
-    if (step === 0) keys(t, c.keys, sd * 15);
-    if (guide) {
-      const s = A.syl[li].get(step);
-      if (s) {
-        let m = s.hook ? (s.stress ? c.keys[3] : c.keys[2]) + 12 : (s.stress ? c.keys[2] : c.keys[1]) + 12;
-        if (s.echo) m -= 12;
-        blip(t, m, s.stress ? 1 : 0.7);
+    card.append(pager);
+
+    const chip = el('button', 'navchip'); chip.type = 'button'; chip.id = 'nav-' + a.n;
+    chip.setAttribute('aria-label', 'Articolo ' + a.n);
+    chip.append(el('span', null, String(a.n)));
+    const dots = el('span', 'dots'); dots.setAttribute('aria-hidden', 'true');
+    c.dots = [0, 1, 2].map(() => { const d = el('i'); dots.append(d); return d; });
+    chip.append(dots);
+    chip.addEventListener('click', () => show(a.n, false));
+    navEl.append(chip); c.chip = chip;
+
+    render(c);
+    return c;
+  }
+
+  function updateListen(c) {
+    if (!c.listenBtn) return;
+    const on = speakingCard === c;
+    c.listenBtn.innerHTML = (on ? ICON_STOP : ICON_PLAY) + (on ? 'Stop' : 'Ascolta');
+    c.listenBtn.setAttribute('aria-pressed', String(on));
+    c.listenBtn.disabled = c.mode !== 0 && !(c.test && c.test.done);
+  }
+
+  function setMode(c, v) {
+    if (speakingCard === c) stopSpeech();
+    c.mode = v;
+    if (v === 0) c.test = null; else startTest(c);
+    render(c);
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function startTest(c) {
+    const v = c.mode - 1;
+    c.items.forEach(it => { it.filled = false; it.hint = false; });
+    const gaps = c.items.filter(it => it.x.k === v);
+    c.test = { gaps, cur: 0, mistakes: 0, done: false, msg: '' };
+    c.bank.textContent = '';
+    shuffle(gaps.map(g => g.x.w)).forEach((w, i) => {
+      const b = el('button', 'chip', w); b.type = 'button'; b.id = 'chip-' + c.a.n + '-' + v + '-' + i;
+      b.addEventListener('click', () => pick(c, b));
+      c.bank.append(b);
+    });
+    render(c);
+  }
+  function pick(c, b) {
+    const T = c.test; if (!T || T.done) return;
+    const g = T.gaps[T.cur];
+    if (b.textContent.toLowerCase() === g.x.w.toLowerCase()) {
+      b.disabled = true; g.filled = true; T.cur++; T.msg = '';
+      if (T.cur >= T.gaps.length) finish(c);
+    } else {
+      T.mistakes++; T.msg = 'Non è “' + b.textContent + '”. Riprova.';
+      b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong');
+      setTimeout(() => b.classList.remove('wrong'), 400);
+    }
+    render(c);
+  }
+  function hint(c) {
+    const T = c.test; if (!T || T.done) return;
+    const g = T.gaps[T.cur];
+    if (!g.hint) { g.hint = true; T.msg = 'Inizia con “' + g.x.w[0] + '”.'; }
+    else {
+      g.filled = true; T.mistakes++; T.cur++;
+      const chip = [...c.bank.children].find(b => !b.disabled && b.textContent.toLowerCase() === g.x.w.toLowerCase());
+      if (chip) chip.disabled = true;
+      T.msg = 'Era “' + g.x.w + '”.';
+      if (T.cur >= T.gaps.length) finish(c);
+    }
+    render(c);
+  }
+  function finish(c) {
+    const T = c.test; T.done = true;
+    DONE.add(c.a.n + '-' + (c.mode - 1)); store.set('pf-done', [...DONE]);
+  }
+
+  function render(c) {
+    const T = c.test, v = c.mode - 1;
+    c.segBtns.forEach((b, i) => {
+      b.setAttribute('aria-checked', String(i === c.mode));
+      b.textContent = VLABEL[i];
+      if (i > 0 && DONE.has(c.a.n + '-' + (i - 1))) b.append(el('span', 'ok', '✓'));
+    });
+    c.prBtn.setAttribute('aria-pressed', String(c.pr));
+    c.itBtn.setAttribute('aria-pressed', String(c.it));
+    c.el.classList.toggle('show-pr', c.pr);
+    c.itLines.forEach(p => { p.hidden = !c.it; });
+    c.items.forEach((it, idx) => {
+      const isGap = c.mode > 0 && it.x.k === v;
+      if (!isGap) {
+        it.tx.className = 'tx'; it.tx.textContent = it.x.w; it.tx.style.minWidth = '';
+        it.ptx.className = 'ptx'; it.ptx.textContent = it.x.r; it.ptx.style.minWidth = '';
+        it.tx.removeAttribute('aria-label');
+        return;
       }
-    }
-  }
-
-  /* ---------- Scheduler ---------- */
-  let timer = 0, raf = 0, seq = null;
-  const queue = [];
-  function schedule() {
-    const sd = 60 / bpm / 4, list = playlist();
-    if (seq.next < ctx.currentTime - 0.05) seq.next = ctx.currentTime + 0.03;
-    while (seq.next < ctx.currentTime + 0.12) {
-      const ai = list[seq.pi];
-      const t = seq.next + (seq.step % 2 === 1 ? sd * 0.16 : 0);
-      playStep(ai, seq.bar, seq.step, t, sd);
-      queue.push({ t, art: ai, bar: seq.bar, step: seq.step, round: seq.round });
-      seq.next += sd;
-      if (++seq.step === 16) {
-        seq.step = 0;
-        if (++seq.bar >= ARTS[ai].lines.length) {
-          seq.bar = 0;
-          if (++seq.pi >= list.length) { seq.pi = 0; seq.round++; }
-        }
+      if (it.filled) {
+        it.tx.className = 'tx got'; it.tx.textContent = it.x.w; it.tx.style.minWidth = '';
+        it.ptx.className = 'ptx got'; it.ptx.textContent = it.x.r; it.ptx.style.minWidth = '';
+        it.tx.removeAttribute('aria-label');
+      } else {
+        const cur = T && !T.done && T.gaps[T.cur] === it;
+        it.tx.className = 'tx gap' + (cur ? ' cur' : '');
+        it.tx.textContent = it.hint ? it.x.w[0] : ' ';
+        it.tx.style.minWidth = Math.max(3, it.x.w.length * 0.62) + 'em';
+        it.tx.setAttribute('aria-label', cur ? 'parola mancante, da trovare ora' : 'parola mancante');
+        it.ptx.className = 'ptx gap'; it.ptx.textContent = ' '; it.ptx.style.minWidth = Math.max(2.5, it.x.r.length * 0.55) + 'em';
       }
+    });
+    c.testEl.hidden = c.mode === 0;
+    if (T) {
+      const total = T.gaps.length;
+      c.status.classList.toggle('done', T.done);
+      if (T.done) {
+        c.status.textContent = T.mistakes === 0 ? 'Perfetto! Tutte le ' + total + ' parole senza errori.' : 'Fatto! ' + total + ' parole su ' + total + ', con ' + T.mistakes + (T.mistakes === 1 ? ' errore.' : ' errori.');
+      } else {
+        c.status.textContent = 'Parola ' + (T.cur + 1) + ' di ' + total + '. Tocca la parola che va nello spazio rosso.';
+        if (T.msg) c.status.append(el('small', null, T.msg));
+        else if (T.cur === 0) c.status.append(el('small', null, 'Se ti blocchi, apri Italiano: ti aiuta a capire quale parola manca.'));
+      }
+      c.hintBtn.hidden = T.done; c.nextBtn.hidden = !T.done || c.mode === 3;
+      c.resetBtn.textContent = T.done ? 'Rifai la prova' : 'Ricomincia';
     }
-  }
-  function frame() {
-    raf = requestAnimationFrame(frame);
-    let changed = false;
-    const now = ctx.currentTime;
-    while (queue.length && queue[0].t <= now) { pos = queue.shift(); changed = true; }
-    if (changed) {
-      if (pos.art !== shownArt) buildSheet(pos.art);
-      render();
-    }
+    c.dots.forEach((d, i) => d.classList.toggle('done', DONE.has(c.a.n + '-' + i)));
+    updateListen(c);
   }
 
-  let lock = null;
-  async function wake() { try { if (navigator.wakeLock) lock = await navigator.wakeLock.request('screen'); } catch (e) { lock = null; } }
-  function unwake() { try { if (lock) lock.release(); } catch (e) {} lock = null; }
-  document.addEventListener('visibilitychange', () => { if (playing && document.visibilityState === 'visible') wake(); });
+  /* ---------- Show-for-all toggles ---------- */
+  const gPr = document.getElementById('g-pr'), gIt = document.getElementById('g-it');
+  function syncGlobal() { gPr.setAttribute('aria-pressed', String(G.pr)); gIt.setAttribute('aria-pressed', String(G.it)); }
+  gPr.addEventListener('click', () => { G.pr = !G.pr; cards.forEach(c => { c.pr = G.pr; render(c); }); syncGlobal(); store.set('pf-global', G); });
+  gIt.addEventListener('click', () => { G.it = !G.it; cards.forEach(c => { c.it = G.it; render(c); }); syncGlobal(); store.set('pf-global', G); });
+  syncGlobal();
 
-  const playBtn = document.getElementById('play'), playLbl = document.getElementById('playLbl');
-  function start() {
-    if (!ctx) initAudio();
-    if (ctx.resume) ctx.resume();
-    newBus();
-    seq = { pi: 0, bar: -1, step: 0, round: 1, next: ctx.currentTime + 0.08 };
-    queue.length = 0; playing = true;
-    const first = playlist()[0];
-    pos = { art: first, bar: -1, step: -1, round: 1 };
-    buildSheet(first);
-    schedule(); timer = setInterval(schedule, 25);
-    cancelAnimationFrame(raf); frame();
-    playBtn.setAttribute('aria-pressed', 'true'); playLbl.textContent = 'Stop';
-    wake(); render();
+  /* ---------- One card at a time ---------- */
+  const navBar = document.querySelector('.nav');
+  function show(n, fromPager) {
+    const target = cards.find(c => c.a.n === n); if (!target) return;
+    stopSpeech();
+    cards.forEach(c => {
+      const on = c === target;
+      c.el.hidden = !on;
+      c.chip.classList.toggle('on', on);
+      if (on) c.chip.setAttribute('aria-current', 'true'); else c.chip.removeAttribute('aria-current');
+    });
+    const row = navEl, l = target.chip.offsetLeft, r = l + target.chip.offsetWidth;
+    if (l < row.scrollLeft || r > row.scrollLeft + row.clientWidth) row.scrollTo({ left: Math.max(0, l - 16) });
+    store.set('pf-current', n);
+    // Bring the card's top into view when the number row is stuck at the top or the pager was used.
+    const navTop = navBar.getBoundingClientRect().top;
+    const cardTop = target.el.getBoundingClientRect().top;
+    if (fromPager || cardTop < navBar.offsetHeight + navTop) target.el.scrollIntoView({ block: 'start' });
+    if (fromPager) target.chip.focus({ preventScroll: true });
   }
-  function stop() {
-    playing = false; clearInterval(timer); cancelAnimationFrame(raf);
-    queue.length = 0; pos = null;
-    if (bus) { const old = bus; old.gain.setTargetAtTime(0, ctx.currentTime, 0.02); setTimeout(() => old.disconnect(), 400); bus = null; }
-    playBtn.setAttribute('aria-pressed', 'false'); playLbl.textContent = 'Play';
-    pickBtns.forEach(b => b.classList.remove('playing'));
-    unwake(); render();
-  }
-  playBtn.addEventListener('click', () => (playing ? stop() : start()));
-  document.addEventListener('keydown', e => {
-    if (e.code === 'Space' && !e.target.closest('button, input, summary, a')) { e.preventDefault(); playing ? stop() : start(); }
-  });
-
-  /* ---------- Controls ---------- */
-  const hintEl = document.getElementById('modeHint');
-  function syncControls() {
-    pickBtns.forEach(b => b.setAttribute('aria-checked', String(b.dataset.art === String(artSel))));
-    document.querySelectorAll('#modes button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
-    document.querySelectorAll('#speeds button').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.bpm === bpm)));
-    hintEl.textContent = HINTS[mode];
-  }
-  picker.addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    const was = playing;
-    if (playing) stop();
-    artSel = b.dataset.art === 'all' ? 'all' : +b.dataset.art;
-    try { localStorage.setItem('cflow-art', String(artSel)); } catch (err) {}
-    syncControls(); buildSheet(playlist()[0]); render();
-    if (was) start();
-  });
-  document.getElementById('modes').addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    mode = b.dataset.mode; try { localStorage.setItem('a1flow-mode', mode); } catch (err) {}
-    syncControls(); render();
-  });
-  document.getElementById('speeds').addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    bpm = +b.dataset.bpm; try { localStorage.setItem('a1flow-bpm', String(bpm)); } catch (err) {}
-    syncControls(); render();
-  });
-  document.getElementById('guide').addEventListener('change', e => { guide = e.target.checked; });
-
-  syncControls(); buildSheet(playlist()[0]); render();
+  const m = /^#art-(\d{1,2})$/.exec(location.hash);
+  const startN = m ? +m[1] : store.get('pf-current', 1);
+  show(cards.some(c => c.a.n === startN) ? startN : 1, false);
+  window.scrollTo(0, 0);
 })();
 </script>
 
