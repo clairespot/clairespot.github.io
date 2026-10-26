@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Constitution Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one-column practice app. Stamp masthead, article picker, the lyric sheet as the only card, controls under it, notes at the foot. */
+:root{
+  --paper:#F2F5F1;
+  --sheet:#FCFDFB;
+  --ink:#17211C;
+  --muted:#5D6963;
+  --rule:#C8D1CA;
+  --red:#D8353B;
+  --green:#0B9555;
+  --onred:#FFFFFF;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#95A29B; --rule:#2B3631;
+    --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1310; --sheet:#141C18; --ink:#E7EEE9; --muted:#95A29B; --rule:#2B3631;
+  --red:#FF5C61; --green:#3CC985; --onred:#1A0A0B; color-scheme:dark;
+}
+
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:16px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:20px 48px;
+}
+.wrap{max-width:640px; margin:0 auto; display:flex; flex-direction:column; gap:20px}
+
+/* Masthead */
+.mast{display:flex; gap:16px; align-items:flex-start}
+.stamp{
+  flex:none; margin-top:8px; min-width:4.6em; text-align:center;
+  font-family:var(--display); font-weight:800; font-size:20px; line-height:1; letter-spacing:.02em;
+  color:var(--red); border:3px solid var(--red); border-radius:3px; padding:7px 9px 6px;
+  transform:rotate(-5deg); font-variant-numeric:tabular-nums;
+}
+.eyebrow{margin:0; font-family:var(--mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
+h1{margin:4px 0 8px; font-family:var(--display); font-weight:800; font-size:clamp(30px,8.4vw,46px); line-height:1; letter-spacing:-.015em; text-wrap:balance}
+.lede{margin:0; color:var(--muted); max-width:52ch}
+
+/* Article picker */
+.label{display:block; margin-bottom:7px; font:500 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
+.picker{display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px}
+.picker button{
+  min-height:42px; padding:0; cursor:pointer;
+  font:700 17px/1 var(--display); font-variant-numeric:tabular-nums;
+  background:var(--sheet); color:var(--ink); border:1.5px solid var(--rule); border-radius:4px;
+}
+.picker button.all{font:700 13.5px/1 var(--body)}
+.picker button[aria-checked="true"]{background:var(--red); border-color:var(--red); color:var(--onred)}
+.picker button.playing:not([aria-checked="true"]){border-color:var(--red); color:var(--red)}
+
+/* Lyric sheet */
+.sheet{
+  background:var(--sheet); border:1.5px solid var(--ink); border-radius:4px;
+  box-shadow:5px 5px 0 var(--rule);
+  padding:14px 16px 16px;
+}
+.sheet-top{display:flex; align-items:center; gap:12px 14px; flex-wrap:wrap; padding-bottom:12px; margin-bottom:10px; border-bottom:1px dashed var(--rule)}
+.play{
+  display:inline-flex; align-items:center; gap:9px; min-height:48px;
+  font:700 16px/1 var(--body); background:var(--red); color:var(--onred);
+  border:0; border-radius:999px; padding:0 22px 0 17px; cursor:pointer;
+}
+.play svg{width:16px; height:16px; fill:currentColor}
+.play .i-stop{display:none}
+.play[aria-pressed="true"]{background:var(--ink); color:var(--sheet)}
+.play[aria-pressed="true"] .i-play{display:none}
+.play[aria-pressed="true"] .i-stop{display:block}
+.beats{display:flex; gap:6px}
+.beats i{
+  width:24px; height:24px; display:grid; place-items:center;
+  font:500 11px/1 var(--mono); font-style:normal; color:var(--muted);
+  border:1.5px solid var(--rule); border-radius:3px;
+}
+.beats i.on{background:var(--red); border-color:var(--red); color:var(--onred)}
+.beats i.on:first-child{background:var(--green); border-color:var(--green)}
+.status{margin:0 0 0 auto; font:500 12px/1.3 var(--mono); color:var(--muted); font-variant-numeric:tabular-nums; text-align:right}
+
+.lyrics{
+  position:relative; display:flex; flex-direction:column; gap:7px;
+  max-height:max(280px, 52vh); overflow-y:auto; overscroll-behavior:contain;
+  padding-block:2px 6px; scrollbar-width:thin;
+}
+.line{display:grid; grid-template-columns:1.6rem 1fr; align-items:baseline}
+.line.para{margin-top:12px}
+.line .bar{font:500 11px var(--mono); color:var(--rule); font-variant-numeric:tabular-nums}
+.line.active .bar{color:var(--red)}
+.line .txt{
+  min-width:0;
+  font-family:var(--display); font-weight:700; font-size:clamp(18px,4.9vw,27px); line-height:1.34;
+  color:var(--muted); transition:color .2s;
+}
+.line.active .txt{color:var(--ink)}
+.line.hook .txt{color:var(--red); text-transform:uppercase; letter-spacing:.01em}
+.line.fill .txt{font:500 12px/2 var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.line.fill.active .txt{color:var(--green)}
+.paren, .w.echo{font-weight:500}
+.line.hook .w.echo{text-transform:none}
+
+.w{border-radius:2px; padding:0 .07em; -webkit-box-decoration-break:clone; box-decoration-break:clone; transition:background-color .06s}
+.w.now{background-color:var(--red); color:var(--onred); box-shadow:.11em .09em 0 var(--green)}
+.w.hideAll, .w.hideRest{
+  background-image:linear-gradient(var(--muted),var(--muted));
+  background-size:100% 2px; background-position:0 90%; background-repeat:no-repeat;
+}
+.w.hideAll .c0, .w.hideAll .cr, .w.hideRest .cr{color:transparent}
+.w.rev{color:var(--green)}
+
+/* Controls */
+.controls{display:flex; flex-direction:column; gap:18px}
+.seg{display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:3px; border:1.5px solid var(--ink); border-radius:999px}
+.seg.speed{grid-template-columns:repeat(3,1fr)}
+.seg button{
+  min-height:40px; padding:0 4px; border:0; border-radius:999px; cursor:pointer;
+  font:700 14.5px/1 var(--body); background:transparent; color:var(--ink);
+}
+.seg button[aria-checked="true"]{background:var(--ink); color:var(--sheet)}
+.hint{margin:8px 0 0; color:var(--muted); font-size:15px}
+.row{display:flex; flex-wrap:wrap; gap:16px 20px; align-items:flex-end}
+.row > *{flex:1 1 230px; min-width:0}
+.switch{display:flex; gap:11px; align-items:flex-start; cursor:pointer; padding-bottom:4px}
+.switch input{width:22px; height:22px; margin:1px 0 0; accent-color:var(--red); flex:none}
+.switch b{display:block}
+.switch small{display:block; color:var(--muted); font-size:14px; line-height:1.35}
+
+/* Notes */
+.notes{display:flex; flex-direction:column; gap:16px; border-top:1px solid var(--rule); padding-top:20px}
+h2{margin:0 0 6px; font-family:var(--display); font-weight:700; font-size:20px; line-height:1.2}
+.notes p{margin:0; max-width:62ch}
+.small{font-size:14.5px; color:var(--muted)}
+ol{margin:0; padding-left:1.35em} li{margin:3px 0; padding-left:2px}
+li::marker{font-family:var(--mono); font-size:13px; color:var(--red)}
+a{color:var(--green); text-underline-offset:2px}
+
+:focus-visible{outline:2.5px solid var(--green); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+</head>
+<body>
+
+
+<main class="wrap">
+  <header class="mast">
+    <div class="stamp" id="stamp" aria-hidden="true">ART.&nbsp;1</div>
+    <div>
+      <p class="eyebrow">Costituzione della Repubblica Italiana · Fundamental Principles</p>
+      <h1>Constitution Flow</h1>
+      <p class="lede">Rap Articles 1 to 12 over a beat until they stick. Pick an article, start on Read, then hide more of the words each time you go round.</p>
+    </div>
+  </header>
+
+  <div>
+    <span class="label" id="artLbl">Article</span>
+    <div class="picker" id="picker" role="radiogroup" aria-labelledby="artLbl"></div>
+  </div>
+
+  <section class="sheet" aria-label="Lyrics">
+    <div class="sheet-top">
+      <button id="play" class="play" type="button" aria-pressed="false">
+        <svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg>
+        <svg class="i-stop" viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="1"/></svg>
+        <span id="playLbl">Play</span>
+      </button>
+      <div class="beats" id="beats" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i></div>
+      <p class="status" id="status"></p>
+    </div>
+    <div class="lyrics" id="lyrics"></div>
+  </section>
+
+  <section class="controls">
+    <div>
+      <span class="label" id="modeLbl">Practice level</span>
+      <div class="seg" id="modes" role="radiogroup" aria-labelledby="modeLbl">
+        <button type="button" role="radio" id="m-read" data-mode="read">Read</button>
+        <button type="button" role="radio" id="m-gaps" data-mode="gaps">Gaps</button>
+        <button type="button" role="radio" id="m-initials" data-mode="initials">Initials</button>
+        <button type="button" role="radio" id="m-solo" data-mode="solo">Solo</button>
+      </div>
+      <p class="hint" id="modeHint"></p>
+    </div>
+    <div class="row">
+      <div>
+        <span class="label" id="speedLbl">Speed</span>
+        <div class="seg speed" id="speeds" role="radiogroup" aria-labelledby="speedLbl">
+          <button type="button" role="radio" id="s-slow" data-bpm="76">Slow</button>
+          <button type="button" role="radio" id="s-normal" data-bpm="88">Normal</button>
+          <button type="button" role="radio" id="s-fast" data-bpm="98">Fast</button>
+        </div>
+      </div>
+      <label class="switch" for="guide">
+        <input type="checkbox" id="guide" checked>
+        <span><b>Guide notes</b><small>Bleeps on each syllable so you hear the rhythm of the words.</small></span>
+      </label>
+    </div>
+  </section>
+
+  <section class="notes">
+    <div>
+      <h2>How to practise</h2>
+      <ol>
+        <li>Learn one article at a time. Two rounds on Read at Slow speed, saying it out loud.</li>
+        <li>Switch to Gaps. Say the missing word before it turns green.</li>
+        <li>Move to Initials, then Solo, and speed up to Normal.</li>
+        <li>Once a few articles are solid, use All 12 to run through them in order.</li>
+      </ol>
+    </div>
+    <p>No sound on an iPhone? Turn off silent mode with the switch on the side of the phone.</p>
+    <p class="small">Text: <a href="https://www.senato.it/sites/default/files/repository/Costituzione_INGLESE_2023.pdf" target="_blank" rel="noopener">Constitution of the Italian Republic, Senate of the Republic English edition (2023)</a>. Extra space between lines marks a new paragraph of the article.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  /* Each article: hook bar, text bars (16 steps each, word syllables placed on the grid), breathing bar. */
+  const ARTS = [{"n":1,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"One","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"One","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"is","p":"","s":[4]},{"t":"a","p":"","s":[6]},{"t":"democratic","p":"","s":[7,8,9,10],"k":1},{"t":"Republic","p":"","s":[11,12,14]}]},{"kind":"text","chord":"F","words":[{"t":"founded","p":"","s":[0,2]},{"t":"on","p":"","s":[3]},{"t":"labour","p":".","s":[4,6],"k":1},{"t":"labour","p":"!","s":[8,10],"k":1,"echo":1}]},{"kind":"text","chord":"C","para":1,"words":[{"t":"Sovereignty","p":"","s":[0,1,2],"k":1},{"t":"shall","p":"","s":[4],"k":1},{"t":"belong","p":"","s":[6,8],"k":1},{"t":"to","p":"","s":[10]},{"t":"the","p":"","s":[11]},{"t":"people","p":"","s":[12,14]}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"exercised","p":"","s":[4,5,6],"k":1},{"t":"by","p":"","s":[10]},{"t":"the","p":"","s":[11]},{"t":"people","p":"","s":[12,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"forms","p":"","s":[4],"k":1},{"t":"and","p":"","s":[6]},{"t":"within","p":"","s":[7,8]},{"t":"the","p":"","s":[11]},{"t":"limits","p":"","s":[12,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"this","p":"","s":[4],"k":1},{"t":"Constitution","p":".","s":[6,7,8,10]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":2,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Two","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Two","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"recognise","p":"","s":[8,10,12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"protect","p":"","s":[2,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"inviolable","p":"","s":[7,8,9,10,11],"k":1},{"t":"rights","p":"","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[1]},{"t":"person","p":",","s":[2,3],"k":1},{"t":"both","p":"","s":[4]},{"t":"as","p":"","s":[6]},{"t":"an","p":"","s":[7]},{"t":"individual","p":"","s":[8,10,12,13,14],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[2]},{"t":"in","p":"","s":[4]},{"t":"the","p":"","s":[6]},{"t":"social","p":"","s":[8,10],"k":1},{"t":"groups","p":"","s":[12],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"where","p":"","s":[0]},{"t":"human","p":"","s":[2,3]},{"t":"personality","p":"","s":[4,5,6,7,9],"k":1},{"t":"is","p":"","s":[10]},{"t":"expressed","p":".","s":[11,12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"expects","p":"","s":[6,8],"k":1}],"para":1},{"kind":"text","chord":"C","words":[{"t":"that","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"fundamental","p":"","s":[4,6,8,10],"k":1},{"t":"duties","p":"","s":[12,13]}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"political","p":",","s":[2,4,5,6],"k":1},{"t":"economic","p":"","s":[8,10,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[2]},{"t":"social","p":"","s":[4,5]},{"t":"solidarity","p":"","s":[6,7,8,9,10],"k":1},{"t":"be","p":"","s":[11]},{"t":"fulfilled","p":".","s":[13,14],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":3,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Three","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Three","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"All","p":"","s":[0]},{"t":"citizens","p":"","s":[2,3,4],"k":1},{"t":"shall","p":"","s":[5]},{"t":"have","p":"","s":[6]},{"t":"equal","p":"","s":[8,9]},{"t":"social","p":"","s":[10,11]},{"t":"dignity","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"be","p":"","s":[3]},{"t":"equal","p":"","s":[4,5],"k":1},{"t":"before","p":"","s":[6,8],"k":1},{"t":"the","p":"","s":[10]},{"t":"law","p":",","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"without","p":"","s":[2,4],"k":1},{"t":"distinction","p":"","s":[6,8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"gender","p":",","s":[12,13]},{"t":"race","p":",","s":[14]}]},{"kind":"text","chord":"G","words":[{"t":"language","p":",","s":[0,1]},{"t":"religion","p":",","s":[2,4,5]},{"t":"political","p":"","s":[6,8,9,10],"k":1},{"t":"opinion","p":",","s":[11,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"personal","p":"","s":[0,2,4]},{"t":"and","p":"","s":[6]},{"t":"social","p":"","s":[8,9]},{"t":"conditions","p":".","s":[10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[1]},{"t":"be","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"duty","p":"","s":[4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"Republic","p":"","s":[10,12,13],"k":1}],"para":1},{"kind":"text","chord":"C","words":[{"t":"to","p":"","s":[0]},{"t":"remove","p":"","s":[2,4]},{"t":"those","p":"","s":[6]},{"t":"obstacles","p":"","s":[8,9,10],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"an","p":"","s":[1]},{"t":"economic","p":"","s":[2,3,4,5],"k":1},{"t":"or","p":"","s":[6]},{"t":"social","p":"","s":[8,10]},{"t":"nature","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"which","p":"","s":[0]},{"t":"constrain","p":"","s":[2,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"freedom","p":"","s":[8,9]}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"equality","p":"","s":[2,4,6,8],"k":1},{"t":"of","p":"","s":[10]},{"t":"citizens","p":",","s":[12,13,14]}]},{"kind":"text","chord":"C","words":[{"t":"thereby","p":"","s":[0,2]},{"t":"impeding","p":"","s":[3,4,5],"k":1},{"t":"the","p":"","s":[6]},{"t":"full","p":"","s":[8]},{"t":"development","p":"","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"human","p":"","s":[4,6]},{"t":"person","p":"","s":[8,9],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"effective","p":"","s":[3,4,5]},{"t":"participation","p":"","s":[6,8,10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[0]},{"t":"all","p":"","s":[2]},{"t":"workers","p":"","s":[4,5],"k":1},{"t":"in","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"political","p":",","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"economic","p":"","s":[0,1,2,3]},{"t":"and","p":"","s":[5]},{"t":"social","p":"","s":[6,7]},{"t":"organisation","p":"","s":[8,10,11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"country","p":".","s":[4,5],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":4,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Four","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Four","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"recognise","p":"","s":[8,9,10],"k":1},{"t":"the","p":"","s":[11]},{"t":"right","p":"","s":[12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"all","p":"","s":[4]},{"t":"citizens","p":"","s":[6,7,9],"k":1},{"t":"to","p":"","s":[10]},{"t":"work","p":"","s":[12],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"promote","p":"","s":[3,4],"k":1},{"t":"such","p":"","s":[6]},{"t":"conditions","p":"","s":[7,8,9],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"as","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"render","p":"","s":[4,5],"k":1},{"t":"this","p":"","s":[6]},{"t":"right","p":"","s":[8]},{"t":"effective","p":".","s":[10,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"Every","p":"","s":[0,2],"k":1},{"t":"citizen","p":"","s":[4,5,6],"k":1},{"t":"shall","p":"","s":[7]},{"t":"have","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"duty","p":",","s":[12,13]}],"para":1},{"kind":"text","chord":"F","words":[{"t":"according","p":"","s":[2,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"personal","p":"","s":[8,9,10]},{"t":"potential","p":"","s":[11,12,13]}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[2]},{"t":"individual","p":"","s":[4,6,8,9,10],"k":1},{"t":"choice","p":",","s":[12]}]},{"kind":"text","chord":"G","words":[{"t":"to","p":"","s":[0]},{"t":"perform","p":"","s":[1,2]},{"t":"any","p":"","s":[4,5]},{"t":"activity","p":"","s":[6,8,9,10],"k":1},{"t":"or","p":"","s":[11]},{"t":"function","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"contributing","p":"","s":[2,4,5,6],"k":1},{"t":"to","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"material","p":"","s":[11,12,13,14]}]},{"kind":"text","chord":"F","words":[{"t":"or","p":"","s":[2]},{"t":"spiritual","p":"","s":[4,5,6,7],"k":1},{"t":"progress","p":"","s":[8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"society","p":".","s":[11,12,13,14]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":5,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Five","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Five","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5],"k":1},{"t":"shall","p":"","s":[6]},{"t":"be","p":"","s":[7]},{"t":"one","p":"","s":[8]},{"t":"and","p":"","s":[9]},{"t":"indivisible","p":";","s":[10,11,12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"it","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"recognise","p":"","s":[4,6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"promote","p":"","s":[11,12],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"local","p":"","s":[0,1]},{"t":"autonomies","p":"","s":[2,4,6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"implement","p":"","s":[12,13,14]}]},{"kind":"text","chord":"G","words":[{"t":"the","p":"","s":[2]},{"t":"fullest","p":"","s":[4,6],"k":1},{"t":"measure","p":"","s":[8,9]}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[0]},{"t":"administrative","p":"","s":[1,2,3,4,5]},{"t":"decentralisation","p":"","s":[6,8,10,11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[0]},{"t":"those","p":"","s":[2]},{"t":"services","p":"","s":[4,6,7],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"which","p":"","s":[0]},{"t":"are","p":"","s":[2]},{"t":"provided","p":"","s":[3,4,6],"k":1},{"t":"by","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"State","p":";","s":[12],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"it","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"adapt","p":"","s":[3,4]},{"t":"the","p":"","s":[6]},{"t":"principles","p":"","s":[8,9,10],"k":1},{"t":"and","p":"","s":[11]},{"t":"methods","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[0]},{"t":"its","p":"","s":[2]},{"t":"legislation","p":"","s":[4,6,8,9],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"to","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"requirements","p":"","s":[3,4,6],"k":1},{"t":"of","p":"","s":[8]},{"t":"autonomy","p":"","s":[10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[0]},{"t":"decentralisation","p":".","s":[2,4,6,7,8,9],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":6,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Six","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Six","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"safeguard","p":"","s":[8,10],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"language","p":"","s":[0,1]},{"t":"minorities","p":"","s":[2,4,6,7],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"by","p":"","s":[2]},{"t":"means","p":"","s":[4]},{"t":"of","p":"","s":[6]},{"t":"appropriate","p":"","s":[7,8,9,10],"k":1},{"t":"measures","p":".","s":[12,13],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":7,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Seven","p":"!","s":[4,5],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Seven","p":"!","s":[12,13],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[2]},{"t":"State","p":"","s":[4]},{"t":"and","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"Catholic","p":"","s":[8,9,10],"k":1},{"t":"Church","p":"","s":[12],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"independent","p":"","s":[4,6,8,9],"k":1},{"t":"and","p":"","s":[10]},{"t":"sovereign","p":",","s":[12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"each","p":"","s":[0]},{"t":"within","p":"","s":[2,4],"k":1},{"t":"its","p":"","s":[6]},{"t":"own","p":"","s":[8]},{"t":"sphere","p":".","s":[10],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"Their","p":"","s":[0]},{"t":"relations","p":"","s":[2,4,5],"k":1},{"t":"shall","p":"","s":[6]},{"t":"be","p":"","s":[7]},{"t":"regulated","p":"","s":[8,10,12,13],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"by","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Lateran","p":"","s":[4,5,6],"k":1},{"t":"Pacts","p":".","s":[8]}]},{"kind":"text","chord":"F","words":[{"t":"Amendments","p":"","s":[2,4,6],"k":1},{"t":"to","p":"","s":[8]},{"t":"such","p":"","s":[10]},{"t":"Pacts","p":"","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"which","p":"","s":[0]},{"t":"are","p":"","s":[2]},{"t":"accepted","p":"","s":[3,4,5],"k":1},{"t":"by","p":"","s":[6]},{"t":"both","p":"","s":[8]},{"t":"parties","p":"","s":[10,11],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"shall","p":"","s":[2]},{"t":"not","p":"","s":[4]},{"t":"require","p":"","s":[6,8,9],"k":1},{"t":"the","p":"","s":[10]},{"t":"procedure","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[2]},{"t":"constitutional","p":"","s":[4,6,8,9,10],"k":1},{"t":"amendments","p":".","s":[11,12,13]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":8,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Eight","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Eight","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"All","p":"","s":[0]},{"t":"religious","p":"","s":[2,4,5]},{"t":"denominations","p":"","s":[6,8,10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"equally","p":"","s":[4,5,6],"k":1},{"t":"free","p":"","s":[8]},{"t":"before","p":"","s":[10,12],"k":1},{"t":"the","p":"","s":[13]},{"t":"law","p":".","s":[14]}]},{"kind":"text","chord":"C","words":[{"t":"Religious","p":"","s":[2,4,5]},{"t":"denominations","p":"","s":[6,8,10,12,13],"k":1}],"para":1},{"kind":"text","chord":"G","words":[{"t":"other","p":"","s":[0,2]},{"t":"than","p":"","s":[4]},{"t":"Catholicism","p":"","s":[6,8,9,10,11],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"shall","p":"","s":[0]},{"t":"have","p":"","s":[2]},{"t":"the","p":"","s":[3]},{"t":"right","p":"","s":[4],"k":1},{"t":"to","p":"","s":[6]},{"t":"self-organisation","p":"","s":[8,9,10,11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"according","p":"","s":[2,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"their","p":"","s":[8]},{"t":"own","p":"","s":[10]},{"t":"statutes","p":",","s":[12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"provided","p":"","s":[2,4,5],"k":1},{"t":"these","p":"","s":[6]},{"t":"do","p":"","s":[8]},{"t":"not","p":"","s":[10]},{"t":"conflict","p":"","s":[12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"with","p":"","s":[0]},{"t":"Italian","p":"","s":[2,4,6],"k":1},{"t":"law","p":".","s":[8]}]},{"kind":"text","chord":"Am","words":[{"t":"Their","p":"","s":[0]},{"t":"relations","p":"","s":[2,4,6],"k":1},{"t":"with","p":"","s":[8]},{"t":"the","p":"","s":[10]},{"t":"State","p":"","s":[12],"k":1}],"para":1},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"regulated","p":"","s":[4,6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":",","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"based","p":"","s":[0]},{"t":"on","p":"","s":[2]},{"t":"agreements","p":"","s":[3,4,6],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"with","p":"","s":[0]},{"t":"their","p":"","s":[2]},{"t":"respective","p":"","s":[3,4,6]},{"t":"representatives","p":".","s":[8,10,12,13,14],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":9,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Nine","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Nine","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Republic","p":"","s":[2,4,5]},{"t":"shall","p":"","s":[6]},{"t":"promote","p":"","s":[7,8],"k":1},{"t":"the","p":"","s":[10]},{"t":"development","p":"","s":[11,12,13,14],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"of","p":"","s":[2]},{"t":"culture","p":"","s":[4,5]},{"t":"and","p":"","s":[6]},{"t":"scientific","p":"","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"and","p":"","s":[2]},{"t":"technical","p":"","s":[4,6,8],"k":1},{"t":"research","p":".","s":[10,12]}]},{"kind":"text","chord":"G","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"safeguard","p":"","s":[4,6],"k":1},{"t":"natural","p":"","s":[8,9,10]},{"t":"landscape","p":"","s":[12,14],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"and","p":"","s":[2]},{"t":"the","p":"","s":[4]},{"t":"historical","p":"","s":[6,8,9,10],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[0]},{"t":"artistic","p":"","s":[2,4,6],"k":1},{"t":"heritage","p":"","s":[8,9,10]}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Nation","p":".","s":[4,5],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"It","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"protect","p":"","s":[3,4],"k":1},{"t":"the","p":"","s":[6]},{"t":"environment","p":",","s":[7,8,9,10],"k":1}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"biodiversity","p":"","s":[0,2,3,4,5,6],"k":1},{"t":"and","p":"","s":[7]},{"t":"ecosystems","p":",","s":[8,10,12,13]}]},{"kind":"text","chord":"F","words":[{"t":"also","p":"","s":[0,2]},{"t":"in","p":"","s":[4]},{"t":"the","p":"","s":[6]},{"t":"interest","p":"","s":[8,9],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[2]},{"t":"future","p":"","s":[4,6]},{"t":"generations","p":".","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"The","p":"","s":[2]},{"t":"law","p":"","s":[4]},{"t":"shall","p":"","s":[6]},{"t":"regulate","p":"","s":[8,10,12],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"the","p":"","s":[0]},{"t":"ways","p":"","s":[2]},{"t":"and","p":"","s":[3]},{"t":"forms","p":"","s":[4]},{"t":"of","p":"","s":[6]},{"t":"animal","p":"","s":[8,9,10],"k":1},{"t":"protection","p":".","s":[11,12,13],"k":1}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":10,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Ten","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Ten","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[0]},{"t":"Italian","p":"","s":[2,4,6],"k":1},{"t":"legal","p":"","s":[8,10]},{"t":"system","p":"","s":[12,13]}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"conform","p":"","s":[2,4]},{"t":"to","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"generally","p":"","s":[8,9,10,11],"k":1},{"t":"recognised","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"principles","p":"","s":[0,1,2]},{"t":"of","p":"","s":[3]},{"t":"international","p":"","s":[4,6,8,9,10],"k":1},{"t":"law","p":".","s":[12]}]},{"kind":"text","chord":"G","words":[{"t":"The","p":"","s":[2]},{"t":"legal","p":"","s":[4,6]},{"t":"status","p":"","s":[8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"foreigners","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"regulated","p":"","s":[4,6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":"","s":[12]}]},{"kind":"text","chord":"F","words":[{"t":"in","p":"","s":[0]},{"t":"compliance","p":"","s":[2,4,5]},{"t":"with","p":"","s":[6]},{"t":"international","p":"","s":[8,10,12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"provisions","p":"","s":[2,4,5],"k":1},{"t":"and","p":"","s":[6]},{"t":"treaties","p":".","s":[8,9]}]},{"kind":"text","chord":"G","words":[{"t":"A","p":"","s":[0]},{"t":"foreign","p":"","s":[2,3],"k":1},{"t":"national","p":",","s":[4,5,6],"k":1},{"t":"who","p":"","s":[8]},{"t":"is","p":"","s":[10]},{"t":"denied","p":" \u2013","s":[11,12]}],"para":1},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[0]},{"t":"his","p":"","s":[2]},{"t":"or","p":"","s":[4]},{"t":"her","p":"","s":[6]},{"t":"country","p":" \u2013","s":[8,9],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"the","p":"","s":[0]},{"t":"enjoyment","p":"","s":[2,4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"democratic","p":"","s":[8,9,10,11],"k":1},{"t":"freedoms","p":"","s":[12,13]}]},{"kind":"text","chord":"C","words":[{"t":"established","p":"","s":[2,4,5]},{"t":"by","p":"","s":[6]},{"t":"this","p":"","s":[8]},{"t":"Constitution","p":",","s":[10,11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"entitled","p":"","s":[3,4,5],"k":1},{"t":"to","p":"","s":[6]},{"t":"the","p":"","s":[7]},{"t":"right","p":"","s":[8]},{"t":"of","p":"","s":[10]},{"t":"asylum","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"in","p":"","s":[0]},{"t":"the","p":"","s":[2]},{"t":"Republic","p":"","s":[3,4,6]},{"t":"under","p":"","s":[8,9],"k":1},{"t":"such","p":"","s":[10]},{"t":"conditions","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"as","p":"","s":[0]},{"t":"shall","p":"","s":[2]},{"t":"be","p":"","s":[4]},{"t":"established","p":"","s":[6,8,9],"k":1},{"t":"by","p":"","s":[10]},{"t":"law","p":".","s":[12]}]},{"kind":"text","chord":"C","words":[{"t":"A","p":"","s":[2]},{"t":"foreign","p":"","s":[4,6]},{"t":"national","p":"","s":[8,9,10],"k":1}],"para":1},{"kind":"text","chord":"G","words":[{"t":"may","p":"","s":[2]},{"t":"not","p":"","s":[4]},{"t":"be","p":"","s":[6]},{"t":"extradited","p":"","s":[8,10,12,13],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"for","p":"","s":[0]},{"t":"a","p":"","s":[2]},{"t":"political","p":"","s":[3,4,6,8],"k":1},{"t":"offence","p":".","s":[10,12]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":11,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Eleven","p":"!","s":[4,5,6],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Eleven","p":"!","s":[12,13,14],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"shall","p":"","s":[4]},{"t":"reject","p":"","s":[6,8],"k":1},{"t":"war","p":"","s":[10]}]},{"kind":"text","chord":"F","words":[{"t":"as","p":"","s":[0]},{"t":"an","p":"","s":[2]},{"t":"instrument","p":"","s":[4,5,6],"k":1},{"t":"of","p":"","s":[8]},{"t":"aggression","p":"","s":[10,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"against","p":"","s":[0,2],"k":1},{"t":"the","p":"","s":[3]},{"t":"freedom","p":"","s":[4,5],"k":1},{"t":"of","p":"","s":[6]},{"t":"other","p":"","s":[8,10]},{"t":"peoples","p":"","s":[12,13]}]},{"kind":"text","chord":"G","words":[{"t":"and","p":"","s":[2]},{"t":"as","p":"","s":[4]},{"t":"a","p":"","s":[6]},{"t":"means","p":"","s":[8],"k":1},{"t":"for","p":"","s":[9]},{"t":"the","p":"","s":[10]},{"t":"settlement","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"of","p":"","s":[2]},{"t":"international","p":"","s":[4,6,8,9,10],"k":1},{"t":"disputes","p":";","s":[11,12]}]},{"kind":"text","chord":"F","words":[{"t":"Italy","p":"","s":[0,1,2],"k":1},{"t":"shall","p":"","s":[4]},{"t":"agree","p":",","s":[6,8]},{"t":"on","p":"","s":[10]},{"t":"conditions","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"of","p":"","s":[0]},{"t":"equality","p":"","s":[2,4,5,6],"k":1},{"t":"with","p":"","s":[7]},{"t":"other","p":"","s":[8,10]},{"t":"States","p":",","s":[12],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"to","p":"","s":[0]},{"t":"such","p":"","s":[2]},{"t":"limitations","p":"","s":[4,6,8,9],"k":1},{"t":"of","p":"","s":[10]},{"t":"sovereignty","p":"","s":[12,13,14],"k":1}]},{"kind":"text","chord":"Am","words":[{"t":"as","p":"","s":[0]},{"t":"may","p":"","s":[2]},{"t":"be","p":"","s":[3]},{"t":"necessary","p":"","s":[4,6,8,9],"k":1},{"t":"to","p":"","s":[10]},{"t":"ensure","p":"","s":[11,12],"k":1},{"t":"peace","p":"","s":[14]}]},{"kind":"text","chord":"F","words":[{"t":"and","p":"","s":[2]},{"t":"justice","p":"","s":[4,5],"k":1},{"t":"among","p":"","s":[6,8]},{"t":"Nations","p":";","s":[10,11]}]},{"kind":"text","chord":"C","words":[{"t":"Italy","p":"","s":[0,1,2]},{"t":"shall","p":"","s":[4]},{"t":"promote","p":"","s":[6,8],"k":1},{"t":"and","p":"","s":[10]},{"t":"encourage","p":"","s":[11,12,13],"k":1}]},{"kind":"text","chord":"G","words":[{"t":"international","p":"","s":[0,2,4,5,6],"k":1},{"t":"organisations","p":"","s":[8,10,11,12,13]}]},{"kind":"text","chord":"Am","words":[{"t":"pursuing","p":"","s":[2,4,5],"k":1},{"t":"such","p":"","s":[6]},{"t":"goals","p":".","s":[8]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]},{"n":12,"lines":[{"kind":"hook","chord":"Am","words":[{"t":"Article","p":"","s":[0,1,2],"hook":1},{"t":"Twelve","p":"!","s":[4],"hook":1},{"t":"Article","p":"","s":[8,9,10],"hook":1,"echo":1},{"t":"Twelve","p":"!","s":[12],"hook":1,"echo":1}]},{"kind":"text","chord":"Am","words":[{"t":"The","p":"","s":[2]},{"t":"flag","p":"","s":[4],"k":1},{"t":"of","p":"","s":[6]},{"t":"the","p":"","s":[8]},{"t":"Republic","p":"","s":[10,12,13],"k":1}]},{"kind":"text","chord":"F","words":[{"t":"shall","p":"","s":[0]},{"t":"be","p":"","s":[2]},{"t":"the","p":"","s":[4]},{"t":"Italian","p":"","s":[6,8,10],"k":1},{"t":"tricolour","p":";","s":[12,13,14],"k":1}]},{"kind":"text","chord":"C","words":[{"t":"green","p":",","s":[2],"k":1},{"t":"white","p":"","s":[4]},{"t":"and","p":"","s":[6]},{"t":"red","p":"","s":[8]}]},{"kind":"text","chord":"G","words":[{"t":"in","p":"","s":[0]},{"t":"three","p":"","s":[2],"k":1},{"t":"vertical","p":"","s":[4,5,6],"k":1},{"t":"bands","p":"","s":[8]},{"t":"of","p":"","s":[10]},{"t":"equal","p":"","s":[12,13]},{"t":"size","p":".","s":[14]}]},{"kind":"fill","chord":"E","words":[],"label":"Breathe \u00b7 and round again"}]}];
+  const CH = {
+    Am: { root: 45, keys: [57, 60, 64, 67] },
+    F:  { root: 41, keys: [53, 57, 60, 64] },
+    C:  { root: 48, keys: [55, 60, 64, 67] },
+    G:  { root: 43, keys: [55, 59, 62, 65] },
+    E:  { root: 40, keys: [56, 59, 62, 64] }
+  };
+  ARTS.forEach(A => {
+    A.syl = A.lines.map(L => {
+      const m = new Map();
+      L.words.forEach(w => w.s.forEach(st => m.set(st, { stress: st % 4 === 0, echo: !!w.echo, hook: !!w.hook })));
+      return m;
+    });
+  });
+  const HINTS = {
+    read: 'All the words. Rap along and follow the red highlight.',
+    gaps: 'Key words go blank. Say each one before it turns green.',
+    initials: 'Only first letters. Fill in the rest from memory.',
+    solo: 'Just the beat. Words turn green after you have said them.'
+  };
+
+  /* ---------- State ---------- */
+  let mode = 'read', bpm = 88, guide = true, artSel = 0;
+  try {
+    const m = localStorage.getItem('a1flow-mode'); if (m && HINTS[m]) mode = m;
+    const b = parseInt(localStorage.getItem('a1flow-bpm'), 10); if ([76, 88, 98].includes(b)) bpm = b;
+    const a = localStorage.getItem('cflow-art'); if (a === 'all') artSel = 'all'; else if (a !== null && +a >= 0 && +a < 12) artSel = +a;
+  } catch (e) {}
+  const playlist = () => (artSel === 'all' ? ARTS.map((_, i) => i) : [artSel]);
+
+  /* ---------- Picker ---------- */
+  const picker = document.getElementById('picker');
+  ARTS.forEach((A, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'radio'); b.id = 'art-' + A.n; b.dataset.art = String(i);
+    b.textContent = A.n; b.setAttribute('aria-label', 'Article ' + A.n);
+    picker.append(b);
+  });
+  const allBtn = document.createElement('button');
+  allBtn.type = 'button'; allBtn.setAttribute('role', 'radio'); allBtn.id = 'art-all'; allBtn.dataset.art = 'all';
+  allBtn.className = 'all'; allBtn.textContent = 'All 12';
+  picker.append(allBtn);
+  const pickBtns = [...picker.querySelectorAll('button')];
+
+  /* ---------- Lyric sheet ---------- */
+  const lyricsEl = document.getElementById('lyrics');
+  const stampEl = document.getElementById('stamp');
+  let shownArt = -1, lineEls = [], wordEls = [];
+  const span = (cls, text) => { const s = document.createElement('span'); s.className = cls; s.textContent = text; return s; };
+  function buildSheet(ai) {
+    shownArt = ai; lineEls = []; wordEls = [];
+    lyricsEl.textContent = '';
+    ARTS[ai].lines.forEach((L, li) => {
+      const row = document.createElement('div');
+      row.className = 'line ' + L.kind + (L.para ? ' para' : '');
+      row.append(span('bar', String(li + 1)));
+      const txt = document.createElement('span'); txt.className = 'txt';
+      const els = [];
+      if (L.kind === 'fill') txt.textContent = L.label;
+      L.words.forEach((w, wi) => {
+        const prev = L.words[wi - 1], next = L.words[wi + 1];
+        if (wi > 0) txt.append(' ');
+        if (w.echo && !(prev && prev.echo)) txt.append(span('paren', '('));
+        const el = document.createElement('span');
+        el.append(span('c0', w.t[0]), span('cr', w.t.slice(1)));
+        if (w.p) el.append(span('p', w.p));
+        el._base = 'w' + (w.echo ? ' echo' : '');
+        el.className = el._base;
+        txt.append(el); els.push(el);
+        if (w.echo && !(next && next.echo)) txt.append(span('paren', ')'));
+      });
+      row.append(txt); lyricsEl.append(row);
+      lineEls.push(row); wordEls.push(els);
+    });
+    lyricsEl.scrollTop = 0; lastActive = -1;
+    stampEl.textContent = 'ART. ' + ARTS[ai].n;
+    pickBtns.forEach(b => b.classList.toggle('playing', playing && artSel === 'all' && b.dataset.art === String(ai)));
+  }
+
+  /* ---------- Rendering ---------- */
+  const beatEls = [...document.querySelectorAll('#beats i')];
+  const statusEl = document.getElementById('status');
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let pos = null, playing = false, lastActive = -1;
+
+  function stateFor(li, wi) {
+    if (!pos || pos.bar < 0 || pos.art !== shownArt || li > pos.bar) return 'future';
+    if (li < pos.bar) return 'past';
+    const ws = ARTS[shownArt].lines[li].words, w = ws[wi], next = ws[wi + 1];
+    if (w.s[0] > pos.step) return 'future';
+    const last = w.s[w.s.length - 1];
+    if ((next && next.s[0] <= pos.step) || pos.step > last + 3) return 'past';
+    return 'now';
+  }
+  function hideFor(w) {
+    if (w.hook) return '';
+    if (mode === 'gaps') return w.k ? 'hideAll' : '';
+    if (mode === 'initials') return 'hideRest';
+    if (mode === 'solo') return 'hideAll';
+    return '';
+  }
+  function scrollToLine(li) {
+    const el = lineEls[li];
+    if (!el || lyricsEl.scrollHeight <= lyricsEl.clientHeight + 4) return;
+    const top = Math.max(0, el.offsetTop - lyricsEl.clientHeight * 0.3);
+    try { lyricsEl.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' }); } catch (e) { lyricsEl.scrollTop = top; }
+  }
+  function render() {
+    const A = ARTS[shownArt];
+    const activeLine = pos && pos.bar >= 0 && pos.art === shownArt ? pos.bar : -1;
+    A.lines.forEach((L, li) => {
+      const active = li === activeLine;
+      if (lineEls[li]._a !== active) { lineEls[li].classList.toggle('active', active); lineEls[li]._a = active; }
+      L.words.forEach((w, wi) => {
+        const el = wordEls[li][wi], st = stateFor(li, wi), hide = hideFor(w);
+        let cls = el._base;
+        if (st === 'now') cls += ' now';
+        if (hide) cls += st === 'past' ? ' rev' : ' ' + hide;
+        if (el.className !== cls) el.className = cls;
+      });
+    });
+    if (activeLine !== lastActive) { if (activeLine >= 0) scrollToLine(activeLine); lastActive = activeLine; }
+    const beat = pos ? Math.floor(pos.step / 4) : -1;
+    beatEls.forEach((b, i) => b.classList.toggle('on', i === beat));
+    if (!playing) statusEl.textContent = A.lines.length + ' bars · ' + bpm + ' BPM';
+    else if (!pos || pos.bar < 0) statusEl.textContent = 'Count in…';
+    else statusEl.textContent = 'Round ' + pos.round + ' · Bar ' + (pos.bar + 1) + '/' + A.lines.length;
+  }
+
+  /* ---------- Audio ---------- */
+  let ctx = null, comp = null, bus = null, noise = null;
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  function initAudio() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = 0.003; comp.release.value = 0.2;
+    comp.connect(ctx.destination);
+    noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    const d = noise.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  function newBus() { bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(comp); }
+  function vca(t, peak, a, d) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t + a);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
+    g.connect(bus); return g;
+  }
+  function osc(type, f, t, end, dest) { const o = ctx.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.connect(dest); o.start(t); o.stop(end); return o; }
+  function noiseSrc(t, dur, dest, filterType, freq) {
+    const n = ctx.createBufferSource(); n.buffer = noise;
+    const f = ctx.createBiquadFilter(); f.type = filterType; f.frequency.value = freq;
+    n.connect(f); f.connect(dest); n.start(t, Math.random() * 0.5, dur);
+  }
+  function kick(t, v) {
+    const o = osc('sine', 155, t, t + 0.42, vca(t, 0.95 * v, 0.003, 0.36));
+    o.frequency.exponentialRampToValueAtTime(48, t + 0.11);
+    const k = osc('triangle', 320, t, t + 0.08, vca(t, 0.35 * v, 0.001, 0.05));
+    k.frequency.exponentialRampToValueAtTime(110, t + 0.05);
+  }
+  function snare(t, v) {
+    noiseSrc(t, 0.25, vca(t, 0.42 * v, 0.002, 0.17), 'highpass', 1400);
+    const o = osc('triangle', 200, t, t + 0.14, vca(t, 0.26 * v, 0.002, 0.09));
+    o.frequency.exponentialRampToValueAtTime(150, t + 0.08);
+  }
+  function hat(t, v) { noiseSrc(t, 0.06, vca(t, 0.12 * v, 0.001, 0.035), 'highpass', 7200); }
+  function click(t, v) { osc('sine', v > 0.9 ? 2000 : 1500, t, t + 0.06, vca(t, 0.14 * v, 0.001, 0.04)); }
+  function bass(t, m, len) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.26, t + 0.008);
+    g.gain.setTargetAtTime(0.0001, t + len * 0.85, 0.03);
+    g.connect(bus);
+    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = 2;
+    f.frequency.setValueAtTime(1100, t); f.frequency.exponentialRampToValueAtTime(260, t + 0.18);
+    f.connect(g);
+    osc('sawtooth', mtof(m), t, t + len + 0.2, f);
+  }
+  function keys(t, notes, len) {
+    notes.forEach((m, i) => {
+      const o = osc('triangle', mtof(m), t, t + len + 0.3, vca(t + i * 0.012, 0.045, 0.012, Math.min(len, 2.2)));
+      o.detune.value = i % 2 ? 4 : -4;
+    });
+  }
+  function blip(t, m, v) { osc('triangle', mtof(m), t, t + 0.16, vca(t, 0.17 * v, 0.004, 0.12)); }
+
+  function playStep(ai, li, step, t, sd) {
+    if (li < 0) {
+      if (step % 2 === 0) hat(t, step % 4 === 0 ? 0.8 : 0.5);
+      if (step % 4 === 0) click(t, step === 0 ? 1 : 0.75);
+      return;
+    }
+    const A = ARTS[ai], L = A.lines[li], c = CH[L.chord], fill = L.kind === 'fill';
+    if (step === 0) kick(t, 1);
+    if (step === 7 && !fill) kick(t, 0.65);
+    if (step === 10) kick(t, 0.85);
+    if (step === 4) snare(t, 1);
+    if (step === 12 && !fill) snare(t, 1);
+    if (fill && step >= 12) snare(t, 0.35 + (step - 12) * 0.2);
+    if (!(fill && step >= 12)) {
+      if (step % 2 === 0) hat(t, step % 4 === 2 ? 1 : 0.6);
+      else if (step === 15) hat(t, 0.35);
+    }
+    if (step === 0) bass(t, c.root, sd * 5.5);
+    if (step === 7) bass(t, c.root, sd * 2.5);
+    if (step === 10) bass(t, c.root + 7, sd * 3.5);
+    if (step === 14 && !fill) bass(t, c.root + 12, sd * 1.6);
+    if (step === 0) keys(t, c.keys, sd * 15);
+    if (guide) {
+      const s = A.syl[li].get(step);
+      if (s) {
+        let m = s.hook ? (s.stress ? c.keys[3] : c.keys[2]) + 12 : (s.stress ? c.keys[2] : c.keys[1]) + 12;
+        if (s.echo) m -= 12;
+        blip(t, m, s.stress ? 1 : 0.7);
+      }
+    }
+  }
+
+  /* ---------- Scheduler ---------- */
+  let timer = 0, raf = 0, seq = null;
+  const queue = [];
+  function schedule() {
+    const sd = 60 / bpm / 4, list = playlist();
+    if (seq.next < ctx.currentTime - 0.05) seq.next = ctx.currentTime + 0.03;
+    while (seq.next < ctx.currentTime + 0.12) {
+      const ai = list[seq.pi];
+      const t = seq.next + (seq.step % 2 === 1 ? sd * 0.16 : 0);
+      playStep(ai, seq.bar, seq.step, t, sd);
+      queue.push({ t, art: ai, bar: seq.bar, step: seq.step, round: seq.round });
+      seq.next += sd;
+      if (++seq.step === 16) {
+        seq.step = 0;
+        if (++seq.bar >= ARTS[ai].lines.length) {
+          seq.bar = 0;
+          if (++seq.pi >= list.length) { seq.pi = 0; seq.round++; }
+        }
+      }
+    }
+  }
+  function frame() {
+    raf = requestAnimationFrame(frame);
+    let changed = false;
+    const now = ctx.currentTime;
+    while (queue.length && queue[0].t <= now) { pos = queue.shift(); changed = true; }
+    if (changed) {
+      if (pos.art !== shownArt) buildSheet(pos.art);
+      render();
+    }
+  }
+
+  let lock = null;
+  async function wake() { try { if (navigator.wakeLock) lock = await navigator.wakeLock.request('screen'); } catch (e) { lock = null; } }
+  function unwake() { try { if (lock) lock.release(); } catch (e) {} lock = null; }
+  document.addEventListener('visibilitychange', () => { if (playing && document.visibilityState === 'visible') wake(); });
+
+  const playBtn = document.getElementById('play'), playLbl = document.getElementById('playLbl');
+  function start() {
+    if (!ctx) initAudio();
+    if (ctx.resume) ctx.resume();
+    newBus();
+    seq = { pi: 0, bar: -1, step: 0, round: 1, next: ctx.currentTime + 0.08 };
+    queue.length = 0; playing = true;
+    const first = playlist()[0];
+    pos = { art: first, bar: -1, step: -1, round: 1 };
+    buildSheet(first);
+    schedule(); timer = setInterval(schedule, 25);
+    cancelAnimationFrame(raf); frame();
+    playBtn.setAttribute('aria-pressed', 'true'); playLbl.textContent = 'Stop';
+    wake(); render();
+  }
+  function stop() {
+    playing = false; clearInterval(timer); cancelAnimationFrame(raf);
+    queue.length = 0; pos = null;
+    if (bus) { const old = bus; old.gain.setTargetAtTime(0, ctx.currentTime, 0.02); setTimeout(() => old.disconnect(), 400); bus = null; }
+    playBtn.setAttribute('aria-pressed', 'false'); playLbl.textContent = 'Play';
+    pickBtns.forEach(b => b.classList.remove('playing'));
+    unwake(); render();
+  }
+  playBtn.addEventListener('click', () => (playing ? stop() : start()));
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && !e.target.closest('button, input, summary, a')) { e.preventDefault(); playing ? stop() : start(); }
+  });
+
+  /* ---------- Controls ---------- */
+  const hintEl = document.getElementById('modeHint');
+  function syncControls() {
+    pickBtns.forEach(b => b.setAttribute('aria-checked', String(b.dataset.art === String(artSel))));
+    document.querySelectorAll('#modes button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === mode)));
+    document.querySelectorAll('#speeds button').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.bpm === bpm)));
+    hintEl.textContent = HINTS[mode];
+  }
+  picker.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const was = playing;
+    if (playing) stop();
+    artSel = b.dataset.art === 'all' ? 'all' : +b.dataset.art;
+    try { localStorage.setItem('cflow-art', String(artSel)); } catch (err) {}
+    syncControls(); buildSheet(playlist()[0]); render();
+    if (was) start();
+  });
+  document.getElementById('modes').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    mode = b.dataset.mode; try { localStorage.setItem('a1flow-mode', mode); } catch (err) {}
+    syncControls(); render();
+  });
+  document.getElementById('speeds').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    bpm = +b.dataset.bpm; try { localStorage.setItem('a1flow-bpm', String(bpm)); } catch (err) {}
+    syncControls(); render();
+  });
+  document.getElementById('guide').addEventListener('change', e => { guide = e.target.checked; });
+
+  syncControls(); buildSheet(playlist()[0]); render();
+})();
+</script>
+
+</body>
+</html>
