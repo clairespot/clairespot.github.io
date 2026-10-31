@@ -1,0 +1,1208 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Misure e Miscugli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top, 0px);padding-bottom:env(safe-area-inset-bottom, 0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: graph-paper lab bench, one centred column; in play the question card sits beside a graduated cylinder that fills 10 mL per right answer */
+:root{
+  --paper:#F4F7F6;
+  --grid:rgba(20,100,100,.06);
+  --grid-major:rgba(20,100,100,.11);
+  --ink:#15202A;
+  --muted:#53626D;
+  --line:#D2DCDA;
+  --card:#FFFFFF;
+  --well:#EEF3F2;
+  --accent:#8B1C7F;
+  --accent-ink:#FFFFFF;
+  --accent-soft:#F6E5F3;
+  --liquid:#A2238E;
+  --liquid-top:#C24FAF;
+  --glass:rgba(255,255,255,.8);
+  --glass-line:#7D8D96;
+  --ok:#1C7444;
+  --ok-soft:#DFF1E6;
+  --bad:#B3261E;
+  --bad-soft:#FBE3E0;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F151A; --grid:rgba(120,210,210,.045); --grid-major:rgba(120,210,210,.085);
+    --ink:#E6EDF0; --muted:#97A6AE; --line:#29343C; --card:#161F26; --well:#1D2830;
+    --accent:#E27BD5; --accent-ink:#1A0B18; --accent-soft:#3A1D36; --liquid:#C04DAE; --liquid-top:#DE84CF;
+    --glass:rgba(255,255,255,.04); --glass-line:#7F909A;
+    --ok:#62CE91; --ok-soft:#14301F; --bad:#FF8F85; --bad-soft:#3B1C1A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F151A; --grid:rgba(120,210,210,.045); --grid-major:rgba(120,210,210,.085);
+  --ink:#E6EDF0; --muted:#97A6AE; --line:#29343C; --card:#161F26; --well:#1D2830;
+  --accent:#E27BD5; --accent-ink:#1A0B18; --accent-soft:#3A1D36; --liquid:#C04DAE; --liquid-top:#DE84CF;
+  --glass:rgba(255,255,255,.04); --glass-line:#7F909A;
+  --ok:#62CE91; --ok-soft:#14301F; --bad:#FF8F85; --bad-soft:#3B1C1A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px;
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.5;
+}
+.wrap{
+  max-width:900px;margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:28px 56px;
+}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+p{margin:0}
+sup,sub{line-height:0}
+.mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-weight:700;white-space:nowrap}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit;color:inherit}
+button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.primary{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer}
+.primary:hover{filter:brightness(1.08)}
+.secondary{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer}
+.secondary:hover{border-color:var(--accent)}
+.ghost{background:none;border:0;color:var(--muted);padding:8px 4px;cursor:pointer;font-weight:700}
+.ghost:hover{color:var(--accent)}
+.link{background:none;border:0;padding:0;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- Home ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 28px;align-items:end;padding-block:8px 26px}
+.hero h1{font-size:clamp(50px,11vw,96px);font-weight:800;letter-spacing:-.025em;line-height:.9;margin-top:10px}
+.hero h1 span{color:var(--accent)}
+.lede{max-width:54ch;color:var(--muted);margin-top:16px;font-size:18px}
+.home-cyl{display:flex;flex-direction:column;align-items:center;gap:4px;width:104px}
+.home-cyl svg{width:84px;height:auto}
+.cap{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;line-height:1.35}
+.cap b{color:var(--ink);font-size:13px}
+@media (max-width:520px){.hero{grid-template-columns:1fr}.home-cyl{display:none}}
+
+.chapters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chip{display:flex;gap:8px;align-items:baseline;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:15px;text-align:left}
+.chip .k{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chip[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip[aria-checked="true"] .k{color:var(--accent)}
+
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.modes{grid-template-columns:1fr}}
+.mode{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mode-head{display:flex;gap:12px;align-items:center}
+.ico{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.ico svg{width:24px;height:24px}
+.mode h2{font-size:27px;font-weight:800}
+.mode p{color:var(--muted)}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:6px 12px;flex-wrap:wrap}
+.meta .best{color:var(--accent);font-weight:700}
+.mode .row{display:flex;gap:10px;align-items:center;margin-top:auto;flex-wrap:wrap}
+select{font:inherit;font-size:15px;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);min-width:0;flex:1 1 160px}
+.foot{margin-top:22px;color:var(--muted);font-size:14px;max-width:70ch}
+
+/* ---------- Play ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.progress{font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;gap:14px;align-items:center}
+.progress b{color:var(--ink)}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:18px;align-items:start}
+.side{display:flex;flex-direction:column;align-items:center;gap:6px;position:sticky;top:calc(env(safe-area-inset-top, 0px) + 12px)}
+.side svg{width:84px;height:auto}
+@media (max-width:560px){
+  .stage{grid-template-columns:minmax(0,1fr) 58px;gap:10px}
+  .side svg{width:56px}
+  .side .cap{font-size:10px}
+}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3.6vw,28px);min-width:0}
+.tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.02em}
+.prompt{font-family:var(--display);font-weight:700;font-size:clamp(21px,3.4vw,27px);line-height:1.22;margin:8px 0 18px;outline:none}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--well);border:1.5px solid transparent;border-radius:12px;padding:12px 14px;cursor:pointer;font-size:17px}
+.opt .key{font-family:var(--mono);font-size:12px;width:24px;height:24px;border-radius:7px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--muted);flex:none;margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad)}
+.opt.ok .key{border-color:var(--ok);color:var(--ok)}
+.opt.bad .key{border-color:var(--bad);color:var(--bad)}
+
+.sample{border:2px dashed var(--line);border-radius:14px;padding:22px 16px;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(25px,5vw,36px);line-height:1.15;margin:2px 0 18px;background:var(--well)}
+.sample.long{font-family:var(--body);font-weight:700;font-size:clamp(19px,3.2vw,23px)}
+.bins{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:10px}
+.bin{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:700;text-align:center}
+.bin .key{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:500}
+.bin:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.bin:disabled{cursor:default}
+.bin.ok{background:var(--ok-soft);border-color:var(--ok)}
+.bin.bad{background:var(--bad-soft);border-color:var(--bad)}
+@media (max-width:460px){.bins{grid-template-columns:1fr}.bin{flex-direction:row;justify-content:center}}
+
+.howto{color:var(--muted);font-size:15px;margin:-8px 0 14px}
+.board{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.col{display:grid;gap:8px;align-content:start;min-width:0}
+.mt{font-size:15px;line-height:1.3;text-align:left;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--well);cursor:pointer;min-height:48px;overflow-wrap:anywhere}
+.mt.left{font-weight:700}
+.mt:hover:not(:disabled){border-color:var(--accent)}
+.mt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.mt.done{border-color:var(--ok);background:var(--ok-soft);cursor:default}
+.mt.done.slip{border-style:dashed}
+.mt.shake{animation:shake .35s;border-color:var(--bad);background:var(--bad-soft)}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+.problem{font-size:19px;margin:6px 0 18px}
+.inputs{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.field{display:inline-flex;align-items:center;gap:8px;background:var(--well);border:1.5px solid var(--line);border-radius:10px;padding:7px 12px;max-width:100%}
+.field:focus-within{border-color:var(--accent)}
+.field input{font-family:var(--mono);font-size:19px;border:0;background:transparent;color:var(--ink);outline:none;min-width:0;padding:2px 0}
+.field input:disabled{color:var(--muted)}
+.unit{font-family:var(--mono);color:var(--muted);font-size:15px;white-space:nowrap}
+.sci{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:19px}
+.sci .ten{display:inline-flex;align-items:flex-start}
+.sci .ten .field{padding:2px 8px;margin-left:2px;transform:translateY(-10px)}
+.sci .ten input{font-size:15px}
+.hintrow{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hint{margin-top:10px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);font-size:15px}
+.formhint{color:var(--bad);font-size:14px;margin-top:8px}
+
+.feedback{margin-top:18px;border-radius:12px;padding:14px 16px;background:var(--well);font-size:16px}
+.feedback p+p{margin-top:6px}
+.feedback.ok{background:var(--ok-soft)}
+.feedback.bad{background:var(--bad-soft)}
+.verdict{display:block;font-weight:700;margin-bottom:4px}
+.feedback.ok .verdict{color:var(--ok)}
+.feedback.bad .verdict{color:var(--bad)}
+.next-row{display:flex;justify-content:flex-end;margin-top:14px}
+
+/* ---------- Results ---------- */
+.res{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,4vw,30px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.res svg{width:84px;height:auto}
+.res h2{font-size:clamp(30px,6vw,46px);font-weight:800;letter-spacing:-.01em;margin-top:6px}
+.score{font-family:var(--mono);font-size:18px;margin-top:8px}
+.score b{color:var(--accent);font-size:24px}
+.res-msg{color:var(--muted);margin-top:8px;max-width:58ch}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+@media (max-width:480px){.res{grid-template-columns:1fr}.res svg{width:64px}}
+.review{margin-top:22px}
+.review h3{font-size:24px;font-weight:800;margin-bottom:12px}
+.review ol{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.review li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.review .q{font-weight:700}
+.review .a{margin-top:6px}
+.review .a b{color:var(--ok)}
+.review .why{margin-top:6px;color:var(--muted);font-size:15px}
+
+/* ---------- Cylinder ---------- */
+.cyl-glass{fill:var(--glass);stroke:var(--glass-line);stroke-width:1.5}
+.cyl-foot{fill:var(--glass-line)}
+.cyl-liq{fill:var(--liquid)}
+.cyl-men{fill:none;stroke:var(--liquid-top);stroke-width:2}
+.cyl-tick{stroke:var(--glass-line);stroke-width:1}
+.cyl-lab{fill:var(--muted);font-family:var(--mono);font-size:9px}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section id="home">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Chimica · ripasso dei capitoli 1 e 2</p>
+        <h1>Misure<br>e <span>Miscugli</span></h1>
+        <p class="lede">Quiz, giochi di smistamento, abbinamenti ed esercizi di calcolo sulle slide del corso. Ogni risposta giusta aggiunge 10 mL al cilindro graduato.</p>
+      </div>
+      <div class="home-cyl">
+        <svg id="homeCyl" viewBox="0 0 80 300" role="img" aria-label="Cilindro dei mL raccolti"></svg>
+        <p class="cap" id="homeCap"><b>0 mL</b><br>raccolti</p>
+      </div>
+    </header>
+
+    <div class="chapters" role="radiogroup" aria-label="Capitolo da ripassare">
+      <button class="chip" role="radio" data-ch="1" aria-checked="false"><span class="k">Cap. 1</span>Le misure e le grandezze</button>
+      <button class="chip" role="radio" data-ch="2" aria-checked="false"><span class="k">Cap. 2</span>Le trasformazioni fisiche della materia</button>
+      <button class="chip" role="radio" data-ch="all" aria-checked="true"><span class="k">1 + 2</span>Entrambi</button>
+    </div>
+
+    <div class="modes">
+      <article class="mode">
+        <div class="mode-head">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6.5L4.6 18.4A1.8 1.8 0 0 0 6.1 21h11.8a1.8 1.8 0 0 0 1.5-2.6L14 9.5V3"/><path d="M7.5 15h9"/></svg></div>
+          <h2>Quiz</h2>
+        </div>
+        <p>Domande a risposta multipla su definizioni, unità di misura, stati della materia e miscugli.</p>
+        <div class="meta"><span id="metaQuiz">10 domande</span><span class="best" id="bestQuiz"></span></div>
+        <div class="row"><button class="primary" data-start="quiz">Inizia il quiz</button></div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-head">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM14 10h7v9a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2z"/><path d="M12 3v4M10 5l2 2 2-2"/></svg></div>
+          <h2>Smista</h2>
+        </div>
+        <p>Un campione alla volta: estensiva o intensiva? Fondamentale o derivata? Sostanza pura o miscuglio?</p>
+        <div class="meta"><span id="metaSort">10 campioni</span><span class="best" id="bestSort"></span></div>
+        <div class="row"><button class="primary" data-start="sort">Inizia a smistare</button></div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-head">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6.5 17 17.5M7 17.5 17 6.5"/></svg></div>
+          <h2>Abbina</h2>
+        </div>
+        <p>Collega termini e definizioni: passaggi di stato, prefissi, unità SI, tecniche di separazione.</p>
+        <div class="meta"><span id="metaMatch">3 tabelle</span><span class="best" id="bestMatch"></span></div>
+        <div class="row"><button class="primary" data-start="match">Inizia ad abbinare</button></div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-head">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6 8v3M9.5 8v4.5M13 8v3M16.5 8v4.5"/></svg></div>
+          <h2>Calcola</h2>
+        </div>
+        <p>Esercizi sempre nuovi: equivalenze, notazione scientifica, cifre significative, densità, concentrazioni.</p>
+        <div class="meta"><span>8 esercizi per round</span><span class="best" id="bestCalc"></span></div>
+        <div class="row">
+          <label class="sr" for="calcTopic">Tipo di esercizio</label>
+          <select id="calcTopic"></select>
+          <button class="primary" data-start="calc">Inizia</button>
+        </div>
+      </article>
+    </div>
+    <p class="foot">I contenuti vengono dalle slide visibili dei due capitoli. Le slide nascoste (colloidi, cromatografia, strumenti graduati e tarati) non sono incluse.</p>
+  </section>
+
+  <section id="play" hidden>
+    <div class="topbar">
+      <button class="ghost" id="quit">← Menu</button>
+      <div class="progress"><span id="pMode"></span><span id="pCount"></span></div>
+    </div>
+    <div class="stage">
+      <article class="qcard" id="qcard"></article>
+      <aside class="side">
+        <svg id="playCyl" viewBox="0 0 80 300" role="img" aria-label="Cilindro graduato"></svg>
+        <p class="cap" id="playCap"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="results" hidden>
+    <div class="res">
+      <svg id="resCyl" viewBox="0 0 80 300" role="img" aria-label="Cilindro finale"></svg>
+      <div>
+        <p class="eyebrow" id="rMode"></p>
+        <h2 id="rTitle"></h2>
+        <p class="score" id="rScore"></p>
+        <p class="res-msg" id="rMsg"></p>
+        <div class="actions">
+          <button class="primary" id="again">Nuovo round</button>
+          <button class="secondary" id="retry">Ripassa gli errori</button>
+          <button class="ghost" id="toMenu">Menu</button>
+        </div>
+      </div>
+    </div>
+    <div class="review" id="review"></div>
+  </section>
+</main>
+
+<script>
+(() => {
+/* ================= Utilities ================= */
+const $ = s => document.querySelector(s);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const close = (v, t, rel, abs) => Math.abs(v - t) <= Math.max(abs || 0, (rel || 0) * Math.abs(t));
+const p10 = n => `10<sup>${n < 0 ? "−" + (-n) : n}</sup>`;
+const reduced = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function group(intStr){ return intStr.length > 4 ? intStr.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : intStr; }
+function fmt(x, sig){
+  if (!isFinite(x)) return "—";
+  const r = Number(Number(x).toPrecision(sig || 12));
+  let s = r.toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: 20 });
+  let neg = s.startsWith("-"); if (neg) s = s.slice(1);
+  let [i, d] = s.split(".");
+  return (neg ? "−" : "") + group(i) + (d ? "," + d : "");
+}
+function parseNum(raw){
+  if (raw == null) return NaN;
+  let s = String(raw).trim().replace(/[\s  ']/g, "").replace(/[−–]/g, "-");
+  if (!s) return NaN;
+  const m = s.match(/^([+-]?[\d.,]+)(?:(?:[x×*·]10\^?|e)([+-]?\d+))?$/i);
+  if (!m) return NaN;
+  let a = m[1];
+  const commas = (a.match(/,/g) || []).length, dots = (a.match(/\./g) || []).length;
+  if (commas && dots) a = a.replace(/\./g, "").replace(",", ".");
+  else if (commas > 1) return NaN;
+  else if (commas === 1) a = a.replace(",", ".");
+  else if (dots > 1) a = a.replace(/\./g, "");
+  if (!/\d/.test(a)) return NaN;
+  const v = Number(a) * (m[2] ? Math.pow(10, Number(m[2])) : 1);
+  return isFinite(v) ? v : NaN;
+}
+function sigCount(str){
+  let s = String(str).trim().replace(/^[+-]/, "").replace(/[\s ]/g, "");
+  const hasDec = /[.,]/.test(s);
+  let d = s.replace(/[.,]/g, "").replace(/^0+/, "");
+  if (!hasDec) d = d.replace(/0+$/, "");
+  return d.length;
+}
+
+/* ================= Content ================= */
+const SEC = {
+  1: {1:"La chimica: dal macroscopico al microscopico",2:"Il Sistema Internazionale di unità di misura",3:"Esiste il valore «vero» di una misura?",4:"Le cifre significative",5:"Volume e capacità",6:"Massa e peso",7:"Temperatura e termometri",8:"La densità"},
+  2: {1:"Gli stati fisici della materia",2:"Da uno stato di aggregazione all'altro",3:"I sistemi omogenei ed eterogenei",4:"Le sostanze e i miscugli",5:"La solubilità",6:"La concentrazione delle soluzioni",7:"Le concentrazioni percentuali",8:"La separazione dei miscugli"}
+};
+const tagOf = (ch, s) => `Cap. ${ch} · ${s}. ${SEC[ch][s]}`;
+
+// [capitolo, sezione, domanda, risposta giusta, [sbagliate], spiegazione]
+const QUIZ_RAW = [
+[1,1,"La chimica è la scienza che studia…","composizione, struttura e trasformazioni della materia",["solo le reazioni che producono energia","il movimento dei pianeti e delle stelle","solo gli esseri viventi"],"La chimica studia composizione, struttura e trasformazioni della materia."],
+[1,1,"Che cos'è la materia?","Tutto ciò che occupa uno spazio e possiede una massa",["Tutto ciò che si può vedere a occhio nudo","Solo ciò che si trova allo stato solido","Tutto ciò che si può misurare con un termometro"],"La materia è tutto ciò che occupa uno spazio e possiede una massa."],
+[1,1,"Su quali tre livelli si muove la chimica?","Macroscopico, microscopico e simbolico",["Solido, liquido e aeriforme","Teorico, pratico e storico","Atomico, nucleare e cosmico"],"Osservazione a livello macroscopico, interpretazione a livello microscopico e uso di un linguaggio simbolico (le formule)."],
+[1,2,"Come si chiamano le proprietà che si possono misurare?","Grandezze fisiche",["Unità di misura","Prefissi","Fasi"],"Le proprietà misurabili si chiamano grandezze fisiche; il metro, il kilogrammo ecc. sono le loro unità di misura."],
+[1,2,"Su quante grandezze fondamentali si basa il Sistema Internazionale (SI)?","7",["3","5","12"],"Lunghezza, massa, tempo, intensità di corrente elettrica, temperatura, quantità di sostanza, intensità luminosa."],
+[1,2,"Qual è l'unità di misura SI della massa?","Il kilogrammo (kg)",["Il grammo (g)","Il newton (N)","Il litro (L)"],"Nel SI la massa si misura in kilogrammi. Il newton è l'unità della forza (e quindi del peso)."],
+[1,2,"Qual è l'unità di misura SI della temperatura?","Il kelvin (K)",["Il grado Celsius (°C)","Il joule (J)","Il pascal (Pa)"],"La temperatura è una grandezza fondamentale e nel SI si misura in kelvin."],
+[1,2,"Qual è il simbolo della mole, unità della quantità di sostanza?","mol",["n","m","cd"],"n è il simbolo della grandezza (quantità di sostanza), mol è il simbolo dell'unità. cd è la candela."],
+[1,2,"Quale di queste è una grandezza derivata?","La densità",["La massa","Il tempo","La lunghezza"],"La densità (kg/m³) si ricava da massa e volume. Massa, tempo e lunghezza sono fondamentali."],
+[1,2,"A che cosa equivale 1 newton?","1 kg · m/s²",["1 kg · m","1 J/s","1 N/m²"],"Dalla tabella delle grandezze derivate: N = kg · m/s². J/s è il watt, N/m² è il pascal."],
+[1,2,"Una grandezza si dice estensiva quando…","dipende dalla dimensione del campione",["non dipende dalla dimensione del campione","si misura solo in laboratorio","è una grandezza fondamentale"],"Estensiva: dipende dalla dimensione del campione (es. massa, volume). Intensiva: non ne dipende (es. densità, temperatura)."],
+[1,2,"Se raddoppio la quantità di materia e la grandezza non cambia, la grandezza è…","intensiva",["estensiva","derivata","fondamentale"],"Se raddoppia la quantità di materia e la grandezza non varia, è una proprietà intensiva."],
+[1,2,"Quanto vale il prefisso «milli»?",`${p10(-3)} (un millesimo)`,[`${p10(3)} (mille)`,`${p10(-6)} (un milionesimo)`,`${p10(-2)} (un centesimo)`],"milli (m) = 0,001 = 10⁻³. Per esempio 1 mg = 0,001 g."],
+[1,2,`Qual è il simbolo del prefisso «micro» (${p10(-6)})?`,"µ",["m","M","mc"],"m è milli (10⁻³), M è mega (10⁶)."],
+[1,2,"Quanto vale il prefisso «mega» (M)?",`${p10(6)} (un milione)`,[`${p10(9)} (un miliardo)`,`${p10(3)} (mille)`,`${p10(-6)} (un milionesimo)`],"mega = 1 000 000 = 10⁶; giga = 10⁹; kilo = 10³."],
+[1,2,"Come si scrive 12 700 000 in notazione scientifica?",`1,27 · ${p10(7)}`,[`127 · ${p10(5)}`,`1,27 · ${p10(6)}`,`12,7 · ${p10(6)}`],"Il primo fattore deve essere compreso tra 1 e 10: la virgola si sposta di 7 posti verso sinistra, quindi l'esponente è 7."],
+[1,2,"Come si scrive 0,0000000005 in notazione scientifica?",`5 · ${p10(-10)}`,[`5 · ${p10(-9)}`,`5 · ${p10(10)}`,`0,5 · ${p10(-9)}`],"La virgola si sposta di 10 posti verso destra, quindi l'esponente è −10."],
+[1,2,"Che cos'è l'ordine di grandezza di una misura?","La potenza di dieci più vicina al suo valore",["Il numero di cifre significative","La prima cifra della misura","L'unità di misura usata"],"L'ordine di grandezza è la potenza di dieci più vicina al valore della misura."],
+[1,2,"Per passare da un multiplo (es. km) all'unità base (m) si…","moltiplica per il fattore di conversione",["divide per il fattore di conversione","somma il fattore di conversione","lascia il numero invariato"],"1 km = 10³ m, quindi si moltiplica per 1000. Dall'unità base a un multiplo o sottomultiplo, invece, si divide."],
+[1,3,"Che cos'è la portata di uno strumento?","Il valore massimo che lo strumento può misurare",["La minima differenza di valore che può misurare","La capacità di dare un valore vicino a quello reale","Il numero di misure che può fare"],"Portata = valore massimo misurabile. Sensibilità = minima differenza misurabile."],
+[1,3,"Che cos'è la sensibilità di uno strumento?","La minima differenza di valore che lo strumento può misurare",["Il valore massimo che lo strumento può misurare","La capacità di dare un valore vicino a quello reale","La velocità con cui misura"],"La sensibilità fornisce anche l'incertezza della misura, per esempio 10,0000 ± 0,0001 g."],
+[1,3,"Che cos'è l'accuratezza di uno strumento?","La capacità di fornire un valore vicino al valore ritenuto reale",["Il valore massimo che può misurare","La minima differenza di valore che può misurare","Il numero di cifre che mostra"],"Portata, sensibilità e accuratezza sono le tre caratteristiche di ogni strumento di misura."],
+[1,3,"Il «valore vero» di una misura…","non si può determinare: è un'astrazione matematica",["si ottiene con uno strumento molto sensibile","è sempre il primo valore misurato","coincide con la portata dello strumento"],"Il valore vero non si può determinare nella realtà fisica: ci si avvicina con misure ripetute."],
+[1,3,"L'errore di parallasse è un errore…","accidentale, dovuto alla posizione errata dell'osservatore",["sistematico, dovuto allo strumento difettoso","di arrotondamento","di calcolo"],"Si verifica quando l'occhio non è all'altezza del riferimento sullo strumento."],
+[1,3,"Gli errori sistematici diminuiscono…","l'accuratezza della misura",["la precisione della misura","la portata dello strumento","il numero di cifre significative"],"Errori sistematici → meno accuratezza. Errori accidentali → meno precisione."],
+[1,3,"Gli errori accidentali diminuiscono…","la precisione della misura",["l'accuratezza della misura","la sensibilità dello strumento","la massa del campione"],"Gli errori accidentali dipendono da piccoli cambiamenti delle condizioni di misura e diminuiscono la precisione."],
+[1,3,"Una misura è precisa quando…","non si discosta molto dal valore medio di una serie di misure ripetute",["la media è vicina al valore ritenuto vero","è fatta con uno strumento di grande portata","non ha cifre incerte"],"Precisa = valori vicini tra loro. Accurata = media vicina al valore ritenuto vero."],
+[1,3,"Come si riduce l'effetto degli errori accidentali?","Facendo molte misure e calcolando la media",["Usando uno strumento con portata maggiore","Facendo una sola misura molto attenta","Arrotondando il risultato"],"Un numero elevato di rilevamenti avvicina con maggiore probabilità a un valore attendibile."],
+[1,3,"Misure: 10,2 g; 10,4 g; 10,3 g. Qual è la media aritmetica?","10,3 g",["10,4 g","30,9 g","10,2 g"],"(10,2 + 10,4 + 10,3) ÷ 3 = 30,9 ÷ 3 = 10,3 g."],
+[1,4,"Le cifre significative sono…","tutte le cifre certe più la prima cifra incerta",["solo le cifre diverse da zero","tutte le cifre dopo la virgola","solo le cifre certe"],"Le cifre significative sono tutte le cifre certe di una misura più la prima cifra incerta."],
+[1,4,"Quante cifre significative ha 0,0708 g?","3",["2","4","5"],"Gli zeri iniziali non contano; lo zero tra 7 e 8 sì: 7, 0, 8."],
+[1,4,"Quante cifre significative ha 70,80 g?","4",["3","2","5"],"Conta lo zero tra 7 e 8, e conta anche lo zero finale dopo l'ultima cifra diversa da zero."],
+[1,4,"Arrotonda 74,581 a tre cifre significative.","74,6",["74,5","74,58","75"],"La cifra da eliminare è 8 (≥ 5), quindi la cifra precedente aumenta di 1."],
+[1,4,"Arrotonda 4,9936 a tre cifre significative.","4,99",["5,00","4,994","4,90"],"La cifra da eliminare è 3 (< 5), quindi la cifra precedente non cambia."],
+[1,4,"In un'addizione o sottrazione, il risultato deve avere…","tante cifre decimali quante il dato che ne ha di meno",["tante cifre significative quante il dato che ne ha di meno","tante cifre decimali quante il dato che ne ha di più","sempre due cifre decimali"],"Per + e − si contano le cifre decimali; per × e : si contano le cifre significative."],
+[1,4,"In una moltiplicazione o divisione, il risultato deve avere…","tante cifre significative quante il dato che ne ha di meno",["tante cifre decimali quante il dato che ne ha di meno","tante cifre significative quante il dato che ne ha di più","una sola cifra significativa"],"Per × e : si contano le cifre significative; per + e − le cifre decimali."],
+[1,4,"Quanto fa 12,52 g + 3,1 g, con il giusto numero di cifre?","15,6 g",["15,62 g","16 g","15,620 g"],"Addizione: conta le cifre decimali. 3,1 ne ha una sola, quindi 15,62 diventa 15,6."],
+[1,5,"A quanto corrisponde 1 litro?","1 dm³",["1 m³","1 cm³","10 cm³"],"1 L è la quantità di fluido che riempie un cubo di lato 1 dm."],
+[1,5,"Qual è l'unità SI del volume?","Il metro cubo (m³)",["Il litro (L)","Il metro quadrato (m²)","Il kilogrammo (kg)"],"Il volume è una grandezza derivata da una lunghezza. Il litro è l'unità della capacità."],
+[1,5,"La capacità di un recipiente è…","il volume di fluido che il recipiente può contenere",["la massa del recipiente vuoto","la densità del liquido contenuto","il peso del recipiente pieno"],"La capacità si esprime spesso in litri (L)."],
+[1,6,"Con quale strumento si misura il peso?","Il dinamometro",["La bilancia a due piatti","Il termometro","La bilancia elettronica"],"La bilancia misura la massa; il dinamometro misura il peso, che è una forza."],
+[1,6,"Che cos'è il peso?","La forza con cui la Terra (o un altro pianeta) attira la massa di un corpo",["La quantità di materia di un corpo","Lo spazio occupato da un corpo","Il rapporto tra massa e volume"],"Il peso è una grandezza derivata e si misura in newton (N)."],
+[1,6,"Un astronauta va sulla Luna. Che cosa cambia?","Il peso, non la massa",["La massa, non il peso","Sia la massa sia il peso","Né la massa né il peso"],"La massa è caratteristica del corpo; il peso cambia da un pianeta all'altro e anche con l'altitudine."],
+[1,7,"Il calore è…","un modo di trasferire energia da un corpo più caldo a uno più freddo",["la stessa cosa della temperatura","una grandezza intensiva misurata in kelvin","la quantità di materia di un corpo"],"Il calore è una grandezza estensiva e si misura in joule (J)."],
+[1,7,"Quale coppia è corretta?","Temperatura: intensiva · Calore: estensivo",["Temperatura: estensiva · Calore: intensivo","Entrambi intensivi","Entrambi estensivi"],"Temperatura e calore non sono la stessa grandezza: la prima è intensiva, il secondo estensivo."],
+[1,7,"Lo zero della scala Kelvin corrisponde a…","−273,15 °C",["0 °C","−100 °C","273,15 °C"],"È il valore di temperatura più basso raggiungibile."],
+[1,7,"A quale temperatura in kelvin bolle l'acqua (al livello del mare)?","373 K",["100 K","273 K","293 K"],"100 °C + 273 = 373 K. Il ghiaccio fonde a 273 K (0 °C)."],
+[1,7,"Un grado Kelvin e un grado Celsius…","hanno la stessa ampiezza: entrambe le scale sono centigrade",["sono diversi: 1 K vale 2 °C","non si possono confrontare","sono uguali solo a 0 °C"],"Le due scale differiscono solo per l'origine: T(K) = t(°C) + 273,15."],
+[1,8,"La densità di un materiale si calcola come…","massa ÷ volume",["volume ÷ massa","massa × volume","massa − volume"],"d = m / V. Si esprime in kg/m³ oppure in g/cm³."],
+[1,8,"La densità è una proprietà…","intensiva",["estensiva","fondamentale","che dipende dalla quantità di campione"],"Massa e volume sono estensive, ma il loro rapporto non cambia con la quantità di materiale."],
+[1,8,"Rispetto all'acqua, l'olio è…","più viscoso ma meno denso",["più viscoso e più denso","meno viscoso e meno denso","meno viscoso ma più denso"],"La viscosità è la resistenza di un fluido a scorrere; la densità è il rapporto massa/volume."],
+[1,8,"Calcolo dimensionale: g ÷ (g/mL) dà come unità…","mL",["g","g²/mL","g/mL"],"g ÷ (g/mL) = g · mL/g = mL. È il caso di V = m / d."],
+
+[2,1,"Come si chiamano le porzioni delimitate di materia su cui si fanno le indagini?","Sistemi",["Fasi","Soluti","Campioni puri"],"Per esempio, un bicchiere d'acqua è un sistema."],
+[2,1,"Quali sono i tre stati di aggregazione della materia?","Solido, liquido e aeriforme",["Solido, liquido e vapore","Omogeneo, eterogeneo e puro","Solido, gassoso e plasma"],"Lo stato aeriforme comprende sia i gas sia i vapori."],
+[2,1,"Da che cosa dipende lo stato fisico di un campione di materia?","Dalla composizione, dalla temperatura e dalla pressione",["Solo dalla temperatura","Solo dal recipiente in cui si trova","Dalla massa e dal colore"],"Lo stato fisico dipende da composizione, temperatura e pressione."],
+[2,1,"Lo stato aeriforme comprende…","sia i gas sia i vapori",["solo i gas","solo i vapori","gas e liquidi"],"Gas e vapori sono entrambi aeriformi."],
+[2,1,"Quale stato ha volume proprio ma assume la forma del recipiente?","Liquido",["Solido","Aeriforme","Nessuno"],"Solido: volume e forma propri. Liquido: volume proprio, forma del recipiente. Aeriforme: occupa tutto il volume disponibile."],
+[2,1,"Quale stato è comprimibile?","Aeriforme",["Solido","Liquido","Tutti e tre allo stesso modo"],"Solidi e liquidi sono incomprimibili a pressioni non elevate."],
+[2,1,"Come sono le particelle di un solido?","In stretto contatto, in posizioni quasi fisse",["Lontane tra loro e in continuo movimento","Abbastanza vicine e in continuo movimento","Ferme e lontane tra loro"],"Liquido: particelle abbastanza vicine che si muovono. Gas: particelle lontane in continuo movimento."],
+[2,2,"Che cosa può provocare un passaggio di stato?","Una variazione di temperatura o di pressione",["Solo un cambiamento di colore","Una variazione della massa","Il cambio di recipiente"],"Variazioni di temperatura (o di pressione) provocano i passaggi di stato."],
+[2,2,"Quale sostanza sulla Terra esiste in natura in tutti e tre gli stati fisici?","L'acqua",["Il ferro","L'aria","Il sale da cucina"],"Ghiaccio, acqua liquida e vapore acqueo esistono tutti in natura."],
+[2,2,"Come si chiama il passaggio da solido a liquido?","Fusione",["Solidificazione","Sublimazione","Condensazione"],"Il passaggio inverso, da liquido a solido, è la solidificazione."],
+[2,2,"Come si chiama il passaggio diretto da solido ad aeriforme?","Sublimazione",["Brinamento","Fusione","Vaporizzazione"],"Il passaggio inverso, da aeriforme a solido, è il brinamento."],
+[2,2,"Come si chiama il passaggio diretto da aeriforme a solido?","Brinamento",["Sublimazione","Solidificazione","Condensazione"],"Il passaggio inverso, da solido ad aeriforme, è la sublimazione."],
+[2,2,"Come si chiama il passaggio da aeriforme a liquido?","Condensazione",["Vaporizzazione","Brinamento","Fusione"],"Il passaggio inverso, da liquido ad aeriforme, è la vaporizzazione."],
+[2,2,"Che differenza c'è tra evaporazione ed ebollizione?","L'evaporazione riguarda solo la superficie; nell'ebollizione si formano bolle in tutto il liquido",["Sono la stessa cosa","L'evaporazione avviene solo nei solidi","Nell'ebollizione il gas diventa liquido"],"Sono i due modi della vaporizzazione (nelle slide: «vaporazione»)."],
+[2,2,"La liquefazione è il passaggio da aeriforme a liquido dovuto…","solo all'aumento di pressione",["solo al raffreddamento","all'aumento di temperatura","alla diminuzione di pressione"],"Quando il passaggio avviene solo per aumento di pressione si parla di liquefazione."],
+[2,2,"Passando da liquido ad aeriforme, la densità del sistema…","diminuisce",["aumenta","resta uguale","raddoppia"],"Il gas occupa tutto lo spazio disponibile mentre la massa resta costante."],
+[2,2,"Perché un cubetto di ghiaccio galleggia sull'acqua?","Perché la densità del ghiaccio (0,917 g/cm³) è minore di quella dell'acqua (0,998 g/cm³)",["Perché il ghiaccio ha più massa dell'acqua","Perché il ghiaccio è più denso dell'acqua","Perché il ghiaccio è un aeriforme"],"L'acqua è un'eccezione: solidificando aumenta di volume, quindi la densità diminuisce."],
+[2,3,"Che cos'è una fase?","Una porzione di materia fisicamente distinguibile e delimitata, con proprietà intensive uniformi",["Un passaggio di stato","Una singola sostanza pura","Il componente più abbondante di una soluzione"],"Un sistema con una sola fase è omogeneo; con due o più fasi è eterogeneo."],
+[2,3,"Un bicchiere con acqua e olio è un sistema…","eterogeneo (due fasi)",["omogeneo (una fase)","puro","saturo"],"Acqua e olio formano due fasi distinguibili."],
+[2,3,"Quando un sistema è puro?","Quando è formato da una sola sostanza, con particelle tutte uguali",["Quando ha una sola fase","Quando è trasparente","Quando è liquido"],"Il numero di fasi non dice nulla sulla composizione chimica del sistema."],
+[2,3,"L'acqua del rubinetto è…","un miscuglio omogeneo, non una sostanza pura",["una sostanza pura","un miscuglio eterogeneo","una sospensione"],"A differenza dell'acqua distillata, contiene sali disciolti."],
+[2,3,"Acqua distillata con cubetti di ghiaccio è…","un sistema eterogeneo formato da una sostanza pura",["un miscuglio omogeneo","un miscuglio eterogeneo","una soluzione"],"Due fasi (solida e liquida) ma un solo tipo di particelle: è una sostanza pura."],
+[2,3,"Nel modello particellare, come si rappresenta un miscuglio?","Con sfere diverse",["Con sfere tutte uguali","Con una sola sfera","Con quadrati"],"Una sostanza si rappresenta con sfere uguali; le sostanze di un miscuglio con sfere diverse."],
+[2,4,"Che cos'è una soluzione?","Un miscuglio omogeneo di due o più sostanze",["Un miscuglio eterogeneo di due liquidi","Una sostanza pura liquida","Un solido disperso in un liquido"],"Esempio: acqua e sale completamente disciolto."],
+[2,4,"In una soluzione, il solvente è…","il componente più abbondante",["il componente meno abbondante","sempre l'acqua","il solido che si deposita sul fondo"],"I componenti meno abbondanti sono i soluti."],
+[2,4,"Le particelle dei componenti di una soluzione hanno un diametro…",`inferiore a 1 nm (${p10(-9)} m)`,["maggiore di 1 nm","maggiore di 1 mm","di circa 1 cm"],"Nei miscugli eterogenei, invece, le particelle hanno un diametro maggiore di 1 nm."],
+[2,4,"L'acciaio è…","una soluzione solida (una lega metallica)",["una sostanza pura","un miscuglio eterogeneo","una sospensione"],"Le soluzioni possono essere liquide (acqua e sale), gassose (aria) o solide (acciaio)."],
+[2,4,"L'aria è un esempio di…","soluzione gassosa",["sostanza pura","miscuglio eterogeneo","sospensione"],"Le soluzioni possono essere liquide, gassose o solide."],
+[2,4,"Una bevanda alcolica è una soluzione…","liquido in liquido",["solido in liquido","gas in solido","solido in solido"],"Soluto e solvente sono entrambi liquidi, come nella benzina. Sale in acqua è invece solido in liquido."],
+[2,4,"La maionese è…","un'emulsione",["una sospensione","una soluzione","una sostanza pura"],"Emulsione: miscuglio eterogeneo di liquidi immiscibili tra loro."],
+[2,4,"Un succo di frutta con la polpa è…","una sospensione",["un'emulsione","una soluzione","una schiuma"],"Sospensione: un solido disperso in un liquido."],
+[2,4,"Il fumo è…","un miscuglio eterogeneo di un solido in un gas",["un miscuglio eterogeneo di un liquido in un gas","una soluzione gassosa","una sostanza pura"],"La nebbia, invece, è un miscuglio eterogeneo acqua-aria."],
+[2,4,"La schiuma è…","la dispersione di un gas in un liquido",["la dispersione di un solido in un gas","un liquido sciolto in un altro liquido","una soluzione solida"],"Esempio: la schiuma del cappuccino."],
+[2,5,"Una soluzione è satura quando…","contiene la quantità massima possibile di soluto",["contiene pochissimo soluto","il solvente è evaporato","è molto calda"],"Se si aggiunge altro soluto, si forma il corpo di fondo."],
+[2,5,"Da che cosa dipende la solubilità?","Dalle proprietà di soluto e solvente e dalla temperatura",["Solo dalla quantità di solvente","Solo dal recipiente","Dal colore del soluto"],"La solubilità è la quantità massima di soluto che si scioglie in una certa quantità di solvente a una certa temperatura."],
+[2,5,"Nel grafico della solubilità, quale sostanza cambia poco con la temperatura?","Il cloruro di sodio (NaCl)",["Il nitrato di potassio (KNO<sub>3</sub>)","Il solfato di rame (CuSO<sub>4</sub>)","Tutte cambiano allo stesso modo"],"La curva di NaCl è quasi piatta; quella di KNO₃ sale molto rapidamente con la temperatura."],
+[2,6,"Una soluzione diluita contiene…","una piccola quantità di soluto",["una grande quantità di soluto","solo solvente","più soluto che solvente"],"Concentrata = elevata quantità di soluto."],
+[2,6,"La concentrazione di una soluzione è il rapporto tra…","la quantità di soluto e la quantità di soluzione (o di solvente)",["la massa e il volume della soluzione","il solvente e il recipiente","la temperatura e la pressione"],"Più soluto per la stessa quantità di soluzione significa una soluzione più concentrata."],
+[2,7,"Che cosa indica sempre una concentrazione percentuale?","Le parti di soluto in 100 parti di soluzione",["Le parti di solvente in 100 parti di soluto","Le parti di soluto in 100 parti di solvente","La massa totale della soluzione"],"Che sia % m/m, % V/V o % m/V, si riferisce sempre a 100 parti di soluzione."],
+[2,7,"Un vino a 12° (gradi alcolici) contiene…","12 mL di alcol in 100 mL di vino",["12 g di alcol in 100 g di vino","12 mL di alcol in 1 L di vino","12 mL di alcol in 100 mL di acqua"],"12° significa 12% V/V."],
+[2,7,"Per passare da % m/V a % m/m serve conoscere…","la densità della soluzione",["la temperatura","il volume del recipiente","la solubilità"],"% m/V = % m/m · d"],
+[2,8,"Quale tecnica separa le polveri dall'aria?","La filtrazione",["La distillazione","La setacciatura","L'imbuto separatore"],"La filtrazione separa particelle solide da miscugli liquidi e gassosi."],
+[2,8,"Come si separano sabbia e acqua lasciando depositare la sabbia?","Per decantazione",["Per distillazione","Per estrazione","Per setacciatura"],"La decantazione separa i componenti di un miscuglio eterogeneo solido-liquido."],
+[2,8,"Nell'imbuto separatore con acqua e olio, quale liquido va in basso?","L'acqua, perché è più densa",["L'olio, perché è più viscoso","L'olio, perché è più denso","Nessuno: si mescolano"],"Il componente più denso si stratifica in basso."],
+[2,8,"A che cosa serve la centrifuga?","A far depositare più in fretta il componente più denso",["A far evaporare il solvente","A separare liquidi con diversa volatilità","A sciogliere il soluto"],"Raggiunge un'accelerazione maggiore di quella di gravità."],
+[2,8,"Tè e caffè si preparano mediante…","estrazione con acqua calda",["distillazione","centrifugazione","setacciatura"],"L'estrazione sfrutta la diversa solubilità dei componenti; il miscuglio ottenuto viene poi filtrato."],
+[2,8,"Su che cosa si basa la distillazione?","Sulla diversa volatilità dei componenti",["Sulla diversa densità dei componenti","Sulla diversa dimensione delle particelle","Sul diverso colore dei componenti"],"I vapori sono più ricchi del componente più volatile, che bolle a temperatura inferiore."],
+[2,8,"Come si ottiene l'acqua «distillata»?","Distillando acqua che contiene sali non volatili",["Per filtrazione","Per decantazione","Per setacciatura"],"Se i sali disciolti non sono volatili, la separazione è completa."],
+[2,8,"La setacciatura separa…","miscugli solido-solido con granulometria diversa",["miscugli liquido-liquido","soluzioni","gas da liquidi"],"Le maglie lasciano passare solo i componenti più piccoli dei pori."]
+];
+const QUIZ = QUIZ_RAW.map(([ch, s, q, a, w, why]) => ({ ch, s, q, a, w, why }));
+
+const SORTS = [
+  { ch:1, s:2, q:"Estensiva o intensiva?", bins:["Estensiva","Intensiva"], items:[
+    ["massa",0,"Se raddoppia la quantità di materia, raddoppia anche la massa."],
+    ["volume",0,"Più materia occupa più spazio: il volume dipende dalla dimensione del campione."],
+    ["peso",0,"Il peso dipende dalla massa, quindi dalla quantità di materia."],
+    ["calore",0,"Il calore è una grandezza estensiva (si misura in joule)."],
+    ["densità",1,"Il rapporto massa/volume è caratteristico del materiale e non cambia con la quantità."],
+    ["temperatura",1,"Mezzo bicchiere o un bicchiere intero d'acqua a 20 °C hanno la stessa temperatura."],
+    ["concentrazione di una soluzione",1,"Se prelevi una parte della soluzione, la concentrazione resta la stessa."]
+  ]},
+  { ch:1, s:2, q:"Grandezza fondamentale o derivata?", bins:["Fondamentale","Derivata"], items:[
+    ["lunghezza",0,"Fondamentale: si misura in metri (m)."],
+    ["massa",0,"Fondamentale: si misura in kilogrammi (kg)."],
+    ["tempo",0,"Fondamentale: si misura in secondi (s)."],
+    ["temperatura",0,"Fondamentale: si misura in kelvin (K)."],
+    ["quantità di sostanza",0,"Fondamentale: si misura in moli (mol)."],
+    ["intensità di corrente elettrica",0,"Fondamentale: si misura in ampere (A)."],
+    ["intensità luminosa",0,"Fondamentale: si misura in candele (cd)."],
+    ["area",1,"Si ricava dalla lunghezza: metro quadrato (m²)."],
+    ["volume",1,"Si ricava dalla lunghezza: metro cubo (m³)."],
+    ["densità",1,"Si ricava da massa e volume: kg/m³."],
+    ["forza",1,"Newton: N = kg · m/s²."],
+    ["pressione",1,"Pascal: Pa = N/m²."],
+    ["velocità",1,"Metro al secondo: m/s."],
+    ["peso",1,"Il peso è una forza: grandezza derivata, si misura in newton (N)."],
+    ["energia",1,"Joule: J = N · m."]
+  ]},
+  { ch:2, s:4, q:"Sostanza pura, miscuglio omogeneo o eterogeneo?", bins:["Sostanza pura","Miscuglio omogeneo","Miscuglio eterogeneo"], items:[
+    ["acqua distillata",0,"Contiene un solo tipo di particelle."],
+    ["ferro",0,"È una singola sostanza, con particelle tutte uguali."],
+    ["acqua e sale completamente disciolto",1,"Il sale non è più visibile: una sola fase. È una soluzione."],
+    ["aria",1,"È una soluzione gassosa."],
+    ["acciaio",1,"È una lega metallica, cioè una soluzione solida."],
+    ["acqua del rubinetto",1,"Non è pura (contiene sali disciolti), ma ha una sola fase."],
+    ["benzina",1,"È una soluzione liquido in liquido."],
+    ["acqua e olio",2,"Due liquidi immiscibili: due fasi ben distinguibili."],
+    ["maionese",2,"È un'emulsione: miscuglio eterogeneo di liquidi immiscibili."],
+    ["succo di frutta con polpa",2,"È una sospensione: un solido disperso in un liquido."],
+    ["nebbia",2,"Miscuglio eterogeneo acqua-aria."],
+    ["fumo",2,"Miscuglio eterogeneo di un solido in un gas."],
+    ["sabbia e acqua",2,"I componenti restano visibili: si separano per decantazione."]
+  ]},
+  { ch:2, s:1, q:"Solido, liquido o aeriforme?", bins:["Solido","Liquido","Aeriforme"], items:[
+    ["Ha volume proprio e forma propria",0,"I solidi hanno volume e forma propri."],
+    ["Ha volume proprio ma prende la forma del recipiente",1,"I liquidi hanno volume proprio ma non forma propria."],
+    ["Occupa tutto il volume disponibile",2,"Gli aeriformi si espandono in tutto lo spazio a disposizione."],
+    ["Si può comprimere",2,"Solidi e liquidi sono incomprimibili a pressioni non elevate; gli aeriformi no."],
+    ["Particelle in stretto contatto, in posizioni quasi fisse",0,"È il modello particellare dei solidi."],
+    ["Particelle abbastanza vicine che si muovono di continuo",1,"È il modello particellare dei liquidi."],
+    ["Particelle lontane tra loro, in continuo movimento",2,"È il modello particellare dei gas."],
+    ["Ha densità media",1,"Dalla tabella: solidi densità alta, liquidi media, aeriformi bassa."],
+    ["Ha densità bassa",2,"Dalla tabella: solidi densità alta, liquidi media, aeriformi bassa."]
+  ]}
+];
+
+const MATCHES = [
+  { ch:2, s:2, title:"Passaggi di stato", pairs:[
+    ["fusione","solido → liquido"],["solidificazione","liquido → solido"],["vaporizzazione","liquido → aeriforme"],
+    ["condensazione","aeriforme → liquido"],["sublimazione","solido → aeriforme"],["brinamento","aeriforme → solido"] ]},
+  { ch:1, s:2, title:"Grandezze e unità SI", pairs:[
+    ["lunghezza","metro (m)"],["massa","kilogrammo (kg)"],["tempo","secondo (s)"],["temperatura","kelvin (K)"],
+    ["quantità di sostanza","mole (mol)"],["intensità di corrente","ampere (A)"],["intensità luminosa","candela (cd)"],
+    ["forza","newton (N)"],["energia, lavoro, calore","joule (J)"],["pressione","pascal (Pa)"],["volume","metro cubo (m³)"],["densità","kg/m³"] ]},
+  { ch:1, s:2, title:"Prefissi", pairs:[
+    ["tera (T)",p10(12)],["giga (G)",p10(9)],["mega (M)",p10(6)],["kilo (k)",p10(3)],["etto (h)",p10(2)],["deca (da)",p10(1)],
+    ["deci (d)",p10(-1)],["centi (c)",p10(-2)],["milli (m)",p10(-3)],["micro (µ)",p10(-6)],["nano (n)",p10(-9)],["pico (p)",p10(-12)] ]},
+  { ch:1, s:2, title:"Unità derivate", pairs:[
+    ["newton (N)","kg · m/s²"],["pascal (Pa)","N/m²"],["joule (J)","N · m"],["watt (W)","J/s"],["hertz (Hz)","1/s"],["coulomb (C)","A · s"] ]},
+  { ch:1, s:3, title:"Strumenti e qualità di una misura", pairs:[
+    ["portata","valore massimo che lo strumento può misurare"],["sensibilità","minima differenza di valore misurabile"],
+    ["accuratezza","dare un valore vicino a quello ritenuto reale"],["bilancia","misura la massa"],
+    ["dinamometro","misura il peso"],["termometro","misura la temperatura"] ]},
+  { ch:2, s:8, title:"Tecniche di separazione", pairs:[
+    ["filtrazione","solidi da liquidi o gas (polveri dall'aria)"],["setacciatura","solido-solido con granulometria diversa"],
+    ["decantazione","solido-liquido che si deposita (sabbia e acqua)"],["imbuto separatore","liquidi immiscibili (acqua e olio)"],
+    ["centrifuga","accelerazione maggiore di quella di gravità"],["estrazione","un solvente scioglie alcuni componenti (tè, caffè)"],
+    ["distillazione","diversa volatilità dei componenti"] ]},
+  { ch:2, s:4, title:"Tipi di miscuglio", pairs:[
+    ["soluzione","miscuglio omogeneo (acqua e sale)"],["emulsione","liquidi immiscibili (maionese)"],
+    ["sospensione","solido disperso in un liquido (succo di frutta)"],["schiuma","gas disperso in un liquido"],
+    ["fumo","solido disperso in un gas"],["lega metallica","soluzione solida (acciaio)"] ]}
+];
+
+/* ================= Calculation generators ================= */
+const fieldHTML = (id, unit, opts) => {
+  opts = opts || {};
+  const w = opts.w || 9;
+  const im = opts.neg ? "" : ' inputmode="decimal"';
+  return `<label class="field"><span class="sr">${opts.label || "Risposta"}</span><input id="f_${id}" type="text"${im} autocomplete="off" spellcheck="false" style="width:${w}ch">${unit ? `<span class="unit">${unit}</span>` : ""}</label>`;
+};
+const single = (unit, opts) => ({ inputs: fieldHTML("x", unit, opts), fields: ["x"] });
+
+function digitsStr(n){ let s = String(rint(1, 9)); for (let i = 1; i < n; i++) s += rint(0, 9); return s; }
+function decFromDigits(ds, e){
+  const n = ds.length;
+  if (e >= 0) {
+    let ip, fp = "";
+    if (e + 1 >= n) ip = ds + "0".repeat(e + 1 - n); else { ip = ds.slice(0, e + 1); fp = ds.slice(e + 1); }
+    return group(ip) + (fp ? "," + fp : "");
+  }
+  return "0," + "0".repeat(-e - 1) + ds;
+}
+
+const SOLUTI = ["sale","zucchero","glucosio","bicarbonato","solfato di rame"];
+const MATS = [["acqua",1.00,1],["olio d'oliva",0.92,1],["alcol etilico",0.79,1],["ghiaccio",0.917,0],["alluminio",2.70,0],["ferro",7.87,0],["rame",8.96,0],["piombo",11.3,0],["oro",19.3,0]];
+
+const CALC = [
+  { id:"sci", ch:1, s:2, name:"Notazione scientifica",
+    hint:"Il primo fattore deve essere compreso tra 1 e 10. Conta di quanti posti sposti la virgola: verso sinistra l'esponente è positivo, verso destra è negativo.",
+    gen(){
+      let ds = digitsStr(rint(2, 4)); if (ds.endsWith("0")) ds = ds.slice(0, -1) + rint(1, 9);
+      const e = pick([-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8]);
+      const mant = Number(ds[0] + "." + ds.slice(1));
+      const mantTxt = ds[0] + (ds.length > 1 ? "," + ds.slice(1) : "");
+      const disp = decFromDigits(ds, e);
+      return {
+        text:`Scrivi <span class="num">${disp}</span> in notazione scientifica.`,
+        inputs:`<span class="sci">${fieldHTML("m","",{w:7,label:"Primo fattore"})}<span>·</span><span class="ten">10${fieldHTML("e","",{w:3,neg:true,label:"Esponente"})}</span></span>`,
+        fields:["m","e"],
+        check(v){
+          if (close(v.m, mant, 1e-9) && v.e === e) return { ok:true };
+          if (Number.isInteger(v.e) && close(v.m * Math.pow(10, v.e), mant * Math.pow(10, e), 1e-9))
+            return { ok:false, note:"Il valore è giusto, ma il primo fattore deve essere compreso tra 1 e 10." };
+          return { ok:false };
+        },
+        answerText:`${mantTxt} · ${p10(e)}`,
+        solution:`<p>${disp} = <b>${mantTxt} · ${p10(e)}</b></p><p>La virgola si sposta di ${Math.abs(e)} ${Math.abs(e) === 1 ? "posto" : "posti"} verso ${e > 0 ? "sinistra" : "destra"}, quindi l'esponente è ${e > 0 ? e : "−" + (-e)}.</p>`,
+        exp:{ m:mant, e:e }
+      };
+    }},
+  { id:"equiv", ch:1, s:2, name:"Equivalenze",
+    hint:"Da un multiplo o sottomultiplo all'unità base si moltiplica per il fattore di conversione (1 km = 10³ m). Dall'unità base a un multiplo o sottomultiplo si divide.",
+    gen(){
+      const fam = pick([
+        [["km",3],["m",0],["dm",-1],["cm",-2],["mm",-3]],
+        [["kg",3],["hg",2],["g",0],["mg",-3]],
+        [["hL",2],["L",0],["dL",-1],["cL",-2],["mL",-3]]
+      ]);
+      let a, b, v, ans, k;
+      do {
+        a = pick(fam); b = pick(fam);
+        k = a[1] - b[1];
+        v = Number((rint(1, 999) * Math.pow(10, rint(-3, 1))).toPrecision(3));
+        ans = Number((v * Math.pow(10, k)).toPrecision(12));
+      } while (a === b || v < 0.01 || v > 5000 || ans < 1e-4 || ans > 1e9);
+      const f = Math.abs(k);
+      return {
+        text:`Converti <span class="num">${fmt(v)} ${a[0]}</span> in <b>${b[0]}</b>.`,
+        ...single(b[0], { w:12 }),
+        check(x){ return { ok: close(x.x, ans, 1e-9) }; },
+        answerText:`${fmt(ans)} ${b[0]}`,
+        solution:`<p>Da ${a[0]} a ${b[0]} si ${k > 0 ? "moltiplica" : "divide"} per ${p10(f)} (${fmt(Math.pow(10, f))}).</p><p>${fmt(v)} ${a[0]} = <b>${fmt(ans)} ${b[0]}</b></p>`,
+        exp:{ x:ans }
+      };
+    }},
+  { id:"sigcount", ch:1, s:4, name:"Contare le cifre significative",
+    hint:"Sono significative: tutte le cifre diverse da zero; gli zeri tra due cifre significative; gli zeri a destra dell'ultima cifra diversa da zero. Non lo sono gli zeri iniziali.",
+    gen(){
+      const n = rint(2, 5);
+      const ds = [rint(1, 9)];
+      for (let i = 1; i < n; i++) ds.push(Math.random() < 0.35 ? 0 : rint(1, 9));
+      const type = pick(["int","dec","lead","lead"]);
+      let s;
+      if (type === "int") { if (ds[n - 1] === 0) ds[n - 1] = rint(1, 9); s = ds.join(""); }
+      else if (type === "dec") { const p = rint(1, n - 1); s = ds.slice(0, p).join("") + "," + ds.slice(p).join(""); }
+      else { s = "0," + "0".repeat(rint(0, 3)) + ds.join(""); }
+      let lastNZ = -1; ds.forEach((d, i) => { if (d) lastNZ = i; });
+      const inner = ds.some((d, i) => d === 0 && i < lastNZ);
+      const trail = lastNZ < n - 1;
+      const notes = [];
+      if (type === "lead") notes.push("Gli zeri iniziali, a sinistra della prima cifra diversa da zero, non sono significativi.");
+      if (inner) notes.push("Gli zeri tra due cifre significative sono significativi.");
+      if (trail) notes.push("Gli zeri a destra dell'ultima cifra diversa da zero sono significativi.");
+      return {
+        text:`Quante cifre significative ha <span class="num">${s}</span>?`,
+        ...single("", { w:4 }),
+        check(x){ return { ok: x.x === n }; },
+        answerText:String(n),
+        solution:`<p>Le cifre significative sono <b>${ds.join(" ")}</b>: in tutto <b>${n}</b>.</p>${notes.map(t => `<p>${t}</p>`).join("")}`,
+        exp:{ x:n }
+      };
+    }},
+  { id:"round", ch:1, s:4, name:"Arrotondare a 3 cifre significative",
+    hint:"Guarda la prima cifra da eliminare: se è minore di 5 la cifra precedente non cambia; se è maggiore o uguale a 5 la cifra precedente aumenta di 1.",
+    gen(){
+      let ds;
+      do { ds = [rint(1, 9)]; for (let i = 1; i < 5; i++) ds.push(rint(0, 9)); } while (ds[0] === 9 && ds[1] === 9 && ds[2] === 9);
+      const p = pick([-1, 0, 1, 1, 2, 2, 3]);
+      const place = arr => { const s = arr.join(""); if (p <= 0) return "0," + "0".repeat(-p) + s; if (p >= arr.length) return s + "0".repeat(p - arr.length); return s.slice(0, p) + "," + s.slice(p); };
+      const orig = place(ds);
+      const r3 = ds.slice(0, 3), drop = ds[3], up = drop >= 5;
+      if (up) { let k = 2; while (k >= 0) { if (r3[k] === 9) { r3[k] = 0; k--; } else { r3[k]++; break; } } }
+      const ans = place(r3);
+      const ansVal = parseNum(ans);
+      const hasDec = ans.includes(",");
+      return {
+        text:`Arrotonda <span class="num">${orig}</span> a tre cifre significative.`,
+        ...single("", { w:9 }),
+        raw:true,
+        check(x, raw){
+          if (!close(x.x, ansVal, 1e-9, 1e-12)) return { ok:false };
+          if (hasDec && sigCount(raw.x) !== 3) return { ok:false, note:`Il valore è giusto, ma devi scrivere tre cifre significative: ${ans}.` };
+          return { ok:true };
+        },
+        answerText:ans,
+        solution:`<p>La prima cifra da eliminare è <b>${drop}</b>: ${up ? "è maggiore o uguale a 5, quindi la cifra precedente aumenta di 1" : "è minore di 5, quindi la cifra precedente non cambia"}.</p><p>${orig} → <b>${ans}</b></p>`,
+        exp:{ x:ansVal }, expRaw:{ x:ans }
+      };
+    }},
+  { id:"kelvin", ch:1, s:7, name:"Celsius e kelvin",
+    hint:"T (K) = t (°C) + 273,15 · t (°C) = T (K) − 273,15",
+    gen(){
+      if (Math.random() < 0.5) {
+        const t = pick([rint(-80, 400), pick([-40, 0, 20, 25, 37, 100])]);
+        const ans = Number((t + 273.15).toFixed(2));
+        return {
+          text:`Converti <span class="num">${fmt(t)} °C</span> in kelvin.`,
+          ...single("K", { w:9, neg:true }),
+          check(x){
+            if (close(x.x, ans, 0, 0.006)) return { ok:true };
+            if (close(x.x, t + 273, 0, 0.006)) return { ok:true, note:"Corretto, arrotondando a 273. Con la formula delle slide: " + fmt(ans) + " K." };
+            return { ok:false };
+          },
+          answerText:`${fmt(ans)} K`,
+          solution:`<p>T (K) = t (°C) + 273,15 = ${fmt(t)} + 273,15 = <b>${fmt(ans)} K</b></p>`,
+          exp:{ x:ans }
+        };
+      }
+      const T = rint(150, 700);
+      const ans = Number((T - 273.15).toFixed(2));
+      return {
+        text:`Converti <span class="num">${T} K</span> in gradi Celsius.`,
+        ...single("°C", { w:9, neg:true }),
+        check(x){
+          if (close(x.x, ans, 0, 0.006)) return { ok:true };
+          if (close(x.x, T - 273, 0, 0.006)) return { ok:true, note:"Corretto, arrotondando a 273. Con la formula delle slide: " + fmt(ans) + " °C." };
+          return { ok:false };
+        },
+        answerText:`${fmt(ans)} °C`,
+        solution:`<p>t (°C) = T (K) − 273,15 = ${T} − 273,15 = <b>${fmt(ans)} °C</b></p>`,
+        exp:{ x:ans }
+      };
+    }},
+  { id:"density", ch:1, s:8, name:"Densità, massa e volume",
+    hint:"d = m / V · m = d · V · V = m / d. Controlla le unità con il calcolo dimensionale.",
+    gen(){
+      const [name, d, liquid] = pick(MATS);
+      const vu = liquid ? "mL" : "cm³", du = liquid ? "g/mL" : "g/cm³";
+      const kind = pick(["d","m","V"]);
+      const V = rint(5, 250);
+      const m = Number((d * V).toFixed(1));
+      if (kind === "d") {
+        const ans = m / V;
+        return {
+          text:`Un campione di ${name} ha massa <span class="num">${fmt(m)} g</span> e volume <span class="num">${V} ${vu}</span>. Qual è la sua densità?`,
+          ...single(du, { w:8 }),
+          check(x){ return { ok: close(x.x, ans, 0.01, 0.005) }; },
+          answerText:`${fmt(ans, 3)} ${du}`,
+          solution:`<p>d = m / V = ${fmt(m)} g ÷ ${V} ${vu} = <b>${fmt(ans, 3)} ${du}</b></p>`,
+          exp:{ x:ans }
+        };
+      }
+      if (kind === "m") {
+        const ans = d * V;
+        return {
+          text:`Un campione di ${name} ha densità <span class="num">${fmt(d)} ${du}</span>. Qual è la massa di <span class="num">${V} ${vu}</span> di ${name}?`,
+          ...single("g", { w:9 }),
+          check(x){ return { ok: close(x.x, ans, 0.01, 0.05) }; },
+          answerText:`${fmt(ans, 4)} g`,
+          solution:`<p>m = d · V = ${fmt(d)} ${du} · ${V} ${vu} = <b>${fmt(ans, 4)} g</b></p><p>Calcolo dimensionale: (g/${vu}) · ${vu} = g</p>`,
+          exp:{ x:ans }
+        };
+      }
+      const ans = m / d;
+      return {
+        text:`Un campione di ${name} ha massa <span class="num">${fmt(m)} g</span>. La densità è <span class="num">${fmt(d)} ${du}</span>. Qual è il suo volume?`,
+        ...single(vu, { w:9 }),
+        check(x){ return { ok: close(x.x, ans, 0.01, 0.05) }; },
+        answerText:`${fmt(ans, 4)} ${vu}`,
+        solution:`<p>V = m / d = ${fmt(m)} g ÷ ${fmt(d)} ${du} = <b>${fmt(ans, 4)} ${vu}</b></p><p>Calcolo dimensionale: g ÷ (g/${vu}) = ${vu}</p>`,
+        exp:{ x:ans }
+      };
+    }},
+  { id:"media", ch:1, s:3, name:"Media aritmetica",
+    hint:"Somma tutti i valori delle misure e dividi il risultato per il numero di misure effettuate.",
+    gen(){
+      const n = rint(3, 5), base = rint(50, 400), u = pick(["g","cm","s","mL"]);
+      const tenths = Array.from({ length:n }, () => base + rint(-4, 4));
+      const sum = tenths.reduce((a, b) => a + b, 0);
+      const ans = sum / 10 / n;
+      const one = t => (t / 10).toFixed(1).replace(".", ",");
+      return {
+        text:`Un gruppo misura ${n} volte la stessa grandezza: <span class="num">${tenths.map(one).join(" " + u + "; ")} ${u}</span>. Qual è la media aritmetica?`,
+        ...single(u, { w:8 }),
+        check(x){ return { ok: close(x.x, ans, 0, 0.006) }; },
+        answerText:`${fmt(Number(ans.toFixed(2)))} ${u}`,
+        solution:`<p>Somma: ${tenths.map(one).join(" + ")} = ${one(sum)} ${u}</p><p>Media: ${one(sum)} ÷ ${n} = <b>${fmt(Number(ans.toFixed(2)))} ${u}</b></p>`,
+        exp:{ x:ans }
+      };
+    }},
+  { id:"mm", ch:2, s:7, name:"Percentuale in massa (% m/m)",
+    hint:"% m/m = massa soluto (g) ÷ massa soluzione (g) · 100. La massa della soluzione è soluto + solvente.",
+    gen(){
+      const p = pick([2,4,5,8,10,12,15,20,25,30,40]), T = pick([50,100,150,200,250,400,500]);
+      const ms = T * p / 100, sol = pick(SOLUTI), kind = pick(["dir","solv","inv"]);
+      if (kind === "inv") return {
+        text:`Quanti grammi di ${sol} ci sono in <span class="num">${T} g</span> di soluzione al <span class="num">${p}% m/m</span>?`,
+        ...single("g", { w:8 }),
+        check(x){ return { ok: close(x.x, ms, 0.001, 0.01) }; },
+        answerText:`${fmt(ms)} g`,
+        solution:`<p>massa soluto = % m/m · massa soluzione ÷ 100 = ${p} · ${T} ÷ 100 = <b>${fmt(ms)} g</b></p>`,
+        exp:{ x:ms }
+      };
+      if (kind === "solv") return {
+        text:`Sciolgo <span class="num">${fmt(ms)} g</span> di ${sol} in <span class="num">${fmt(T - ms)} g</span> d'acqua. Qual è la % m/m della soluzione?`,
+        ...single("% m/m", { w:6 }),
+        check(x){ return { ok: close(x.x, p, 0.001, 0.01) }; },
+        answerText:`${p}% m/m`,
+        solution:`<p>Massa della soluzione = soluto + solvente = ${fmt(ms)} + ${fmt(T - ms)} = ${T} g</p><p>% m/m = ${fmt(ms)} ÷ ${T} · 100 = <b>${p}%</b></p>`,
+        exp:{ x:p }
+      };
+      return {
+        text:`In <span class="num">${T} g</span> di soluzione sono disciolti <span class="num">${fmt(ms)} g</span> di ${sol}. Qual è la % m/m?`,
+        ...single("% m/m", { w:6 }),
+        check(x){ return { ok: close(x.x, p, 0.001, 0.01) }; },
+        answerText:`${p}% m/m`,
+        solution:`<p>% m/m = ${fmt(ms)} g ÷ ${T} g · 100 = <b>${p}%</b></p>`,
+        exp:{ x:p }
+      };
+    }},
+  { id:"vv", ch:2, s:7, name:"Percentuale in volume e gradi alcolici",
+    hint:"% V/V = volume soluto (mL) ÷ volume soluzione (mL) · 100. 12° significa 12% V/V: 12 mL di alcol in 100 mL di bevanda.",
+    gen(){
+      if (Math.random() < 0.6) {
+        const [bev, vols, gradi] = pick([["una birra",[330,500,660],[4.5,5,6]],["un vino",[750,125,1000],[11,12,13,14]],["un liquore",[700,500,50],[30,35,40]]]);
+        const V = pick(vols), g = pick(gradi), ans = V * g / 100;
+        return {
+          text:`${bev[0].toUpperCase() + bev.slice(1)} da <span class="num">${V} mL</span> ha <span class="num">${fmt(g)}°</span>. Quanti mL di alcol contiene?`,
+          ...single("mL", { w:8 }),
+          check(x){ return { ok: close(x.x, ans, 0.001, 0.01) }; },
+          answerText:`${fmt(ans)} mL`,
+          solution:`<p>${fmt(g)}° = ${fmt(g)}% V/V: ${fmt(g)} mL di alcol ogni 100 mL.</p><p>V alcol = ${fmt(g)} · ${V} ÷ 100 = <b>${fmt(ans)} mL</b></p>`,
+          exp:{ x:ans }
+        };
+      }
+      const p = pick([5,10,12,15,20,25,40]), V = pick([100,200,250,500]), vs = V * p / 100;
+      return {
+        text:`In <span class="num">${V} mL</span> di soluzione ci sono <span class="num">${fmt(vs)} mL</span> di alcol. Qual è la % V/V?`,
+        ...single("% V/V", { w:6 }),
+        check(x){ return { ok: close(x.x, p, 0.001, 0.01) }; },
+        answerText:`${p}% V/V`,
+        solution:`<p>% V/V = ${fmt(vs)} mL ÷ ${V} mL · 100 = <b>${p}%</b></p>`,
+        exp:{ x:p }
+      };
+    }},
+  { id:"mv", ch:2, s:7, name:"Percentuale massa su volume (% m/V)",
+    hint:"% m/V = massa soluto (g) ÷ volume soluzione (mL) · 100. Per trovare il volume: V = massa soluto · 100 ÷ % m/V.",
+    gen(){
+      const sol = pick(SOLUTI), kind = pick(["vol","vol","dir","mass"]);
+      if (kind === "vol") {
+        const p = pick([2,4,5,10,20,25,40,50]); const V = rint(2, 30) * 10; const m = p * V / 100;
+        return {
+          text:`Ho una soluzione al <span class="num">${p}% m/V</span> di ${sol} in acqua. Mi servono <span class="num">${fmt(m)} g</span> di ${sol}: quanti mL di soluzione devo versare?`,
+          ...single("mL", { w:8 }),
+          check(x){ return { ok: close(x.x, V, 0.001, 0.01) }; },
+          answerText:`${V} mL`,
+          solution:`<p>${p}% m/V significa ${p} g di soluto ogni 100 mL di soluzione.</p><p>V = ${fmt(m)} g · 100 ÷ ${p} = <b>${V} mL</b></p>`,
+          exp:{ x:V }
+        };
+      }
+      const p = pick([1,2,3,4,5,8,10,15,20]), V = pick([50,100,200,250,400,500]), m = p * V / 100;
+      if (kind === "dir") return {
+        text:`In <span class="num">${V} mL</span> di soluzione sono disciolti <span class="num">${fmt(m)} g</span> di ${sol}. Qual è la % m/V?`,
+        ...single("% m/V", { w:6 }),
+        check(x){ return { ok: close(x.x, p, 0.001, 0.01) }; },
+        answerText:`${p}% m/V`,
+        solution:`<p>% m/V = ${fmt(m)} g ÷ ${V} mL · 100 = <b>${p}%</b></p>`,
+        exp:{ x:p }
+      };
+      return {
+        text:`Quanti grammi di ${sol} ci sono in <span class="num">${V} mL</span> di soluzione al <span class="num">${p}% m/V</span>?`,
+        ...single("g", { w:8 }),
+        check(x){ return { ok: close(x.x, m, 0.001, 0.01) }; },
+        answerText:`${fmt(m)} g`,
+        solution:`<p>m = ${p} · ${V} ÷ 100 = <b>${fmt(m)} g</b></p>`,
+        exp:{ x:m }
+      };
+    }},
+  { id:"conv", ch:2, s:7, name:"Da % m/m a % m/V con la densità",
+    hint:"% m/V = % m/m · d (densità della soluzione in g/mL). Al contrario: % m/m = % m/V ÷ d.",
+    gen(){
+      const pmm = pick([5,8,10,12,15,20,25]), d = pick([1.02,1.04,1.05,1.07,1.08,1.10,1.12,1.15,1.20]);
+      const pmv = Number((pmm * d).toFixed(2));
+      if (Math.random() < 0.6) return {
+        text:`Una soluzione al <span class="num">${pmm}% m/m</span> ha densità <span class="num">${fmt(d)} g/mL</span>. Qual è la sua % m/V?`,
+        ...single("% m/V", { w:7 }),
+        check(x){ return { ok: close(x.x, pmv, 0.005, 0.01) }; },
+        answerText:`${fmt(pmv)}% m/V`,
+        solution:`<p>% m/V = % m/m · d = ${pmm} · ${fmt(d)} = <b>${fmt(pmv)}%</b></p>`,
+        exp:{ x:pmv }
+      };
+      return {
+        text:`Una soluzione al <span class="num">${fmt(pmv)}% m/V</span> ha densità <span class="num">${fmt(d)} g/mL</span>. Qual è la sua % m/m?`,
+        ...single("% m/m", { w:7 }),
+        check(x){ return { ok: close(x.x, pmm, 0.005, 0.01) }; },
+        answerText:`${pmm}% m/m`,
+        solution:`<p>% m/m = % m/V ÷ d = ${fmt(pmv)} ÷ ${fmt(d)} = <b>${pmm}%</b></p>`,
+        exp:{ x:pmm }
+      };
+    }}
+];
+
+/* ================= Storage (per browser, optional) ================= */
+const store = (() => {
+  let d = { total:0, best:{} };
+  try { const raw = localStorage.getItem("mm.v1"); if (raw) d = Object.assign(d, JSON.parse(raw)); } catch (e) {}
+  return { d, save(){ try { localStorage.setItem("mm.v1", JSON.stringify(d)); } catch (e) {} } };
+})();
+
+/* ================= Graduated cylinder ================= */
+function drawCyl(svg, value, cap, animate){
+  const x0 = 30, x1 = 62, top = 16, bot = 262, mid = (x0 + x1) / 2;
+  const yFor = v => (bot - 6) - (Math.max(0, Math.min(v, cap)) / cap) * (bot - 6 - (top + 14));
+  const tickStep = cap <= 200 ? 10 : cap <= 600 ? 50 : 100;
+  const labStep = [20, 50, 100, 200, 250, 500].find(s => cap / s <= 6) || Math.ceil(cap / 5);
+  if (!svg.dataset.built || svg.dataset.cap !== String(cap)) {
+    let ticks = "";
+    for (let v = tickStep; v <= cap; v += tickStep) {
+      const y = yFor(v).toFixed(1); const major = v % labStep === 0 || v === cap;
+      ticks += `<line class="cyl-tick" x1="${x0}" x2="${x0 + (major ? 11 : 6)}" y1="${y}" y2="${y}"/>`;
+      if (major) ticks += `<text class="cyl-lab" x="${x0 - 4}" y="${(+y + 3).toFixed(1)}" text-anchor="end">${v}</text>`;
+    }
+    const id = svg.id + "Clip";
+    svg.innerHTML =
+      `<defs><clipPath id="${id}"><path d="M${x0 + 1} ${top} V${bot - 9} Q${x0 + 1} ${bot - 1} ${x0 + 9} ${bot - 1} H${x1 - 9} Q${x1 - 1} ${bot - 1} ${x1 - 1} ${bot - 9} V${top} Z"/></clipPath></defs>` +
+      `<rect class="cyl-foot" x="12" y="${bot + 4}" width="56" height="9" rx="3"/>` +
+      `<rect class="cyl-foot" x="${mid - 6}" y="${bot - 2}" width="12" height="8"/>` +
+      `<path class="cyl-glass" d="M${x0 - 3} ${top - 4} H${x0} V${bot - 8} Q${x0} ${bot} ${x0 + 8} ${bot} H${x1 - 8} Q${x1} ${bot} ${x1} ${bot - 8} V${top} L${x1 + 4} ${top - 6}"/>` +
+      `<g clip-path="url(#${id})"><path class="cyl-liq" d=""/><path class="cyl-men" d=""/></g>` + ticks;
+    svg.dataset.built = "1"; svg.dataset.cap = String(cap); svg.dataset.v = "0";
+  }
+  const liq = svg.querySelector(".cyl-liq"), men = svg.querySelector(".cyl-men");
+  const set = v => {
+    if (v <= 0.01) { liq.setAttribute("d", ""); men.setAttribute("d", ""); return; }
+    const y = yFor(v);
+    liq.setAttribute("d", `M${x0} ${y - 3} Q${mid} ${y + 5} ${x1} ${y - 3} V${bot + 2} H${x0} Z`);
+    men.setAttribute("d", `M${x0} ${y - 3} Q${mid} ${y + 5} ${x1} ${y - 3}`);
+  };
+  const from = parseFloat(svg.dataset.v) || 0;
+  svg.dataset.v = String(value);
+  if (!animate || reduced() || from === value) { set(value); return; }
+  const t0 = performance.now(), dur = 550;
+  const step = t => { const k = Math.min(1, (t - t0) / dur); const e = 1 - Math.pow(1 - k, 3); set(from + (value - from) * e); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+
+/* ================= State ================= */
+let chapter = "all";
+const chOk = ch => chapter === "all" || String(chapter) === String(ch);
+let R = null;
+const MODE_NAME = { quiz:"Quiz", sort:"Smista", match:"Abbina", calc:"Calcola", retry:"Ripasso errori" };
+
+function show(id){
+  ["home","play","results"].forEach(x => { $("#" + x).hidden = x !== id; });
+  window.scrollTo(0, 0);
+}
+
+function bestKey(mode, topic){ return `${mode}|${chapter}|${topic || ""}`; }
+
+function refreshHome(){
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-checked", String(c.dataset.ch === String(chapter))));
+  const nq = QUIZ.filter(q => chOk(q.ch)).length;
+  const ns = SORTS.filter(s => chOk(s.ch)).reduce((a, s) => a + s.items.length, 0);
+  const nm = MATCHES.filter(m => chOk(m.ch)).length;
+  $("#metaQuiz").textContent = `10 domande · ${nq} in archivio`;
+  $("#metaSort").textContent = `10 campioni · ${ns} in archivio`;
+  $("#metaMatch").textContent = `3 tabelle · ${nm} in archivio`;
+  const sel = $("#calcTopic"), prev = sel.value;
+  const gens = CALC.filter(g => chOk(g.ch));
+  sel.innerHTML = `<option value="mix">Tutti i tipi, misti</option>` + gens.map(g => `<option value="${g.id}">${g.name}</option>`).join("");
+  if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
+  const b = (mode, topic) => { const v = store.d.best[bestKey(mode, topic)]; return v != null ? `Record: ${v}%` : ""; };
+  $("#bestQuiz").textContent = b("quiz"); $("#bestSort").textContent = b("sort"); $("#bestMatch").textContent = b("match"); $("#bestCalc").textContent = b("calc", sel.value);
+  const tot = store.d.total || 0;
+  const inCyl = tot === 0 ? 0 : (tot % 1000 === 0 ? 1000 : tot % 1000);
+  drawCyl($("#homeCyl"), inCyl, 1000, true);
+  $("#homeCyl").setAttribute("aria-label", `Cilindro da 1 L: ${tot} mL raccolti in totale`);
+  $("#homeCap").innerHTML = `<b>${fmt(tot)} mL</b><br>raccolti${tot >= 1000 ? `<br>= ${fmt(tot / 1000)} L` : ""}<br>1 L = 1 dm³`;
+}
+
+/* ================= Building rounds ================= */
+function buildQuiz(){ return shuffle(QUIZ.filter(q => chOk(q.ch))).slice(0, 10).map(q => ({ type:"mc", ...q })); }
+function buildSort(){
+  const items = [];
+  SORTS.filter(s => chOk(s.ch)).forEach(set => set.items.forEach(([text, ans, why]) => items.push({ type:"sort", ch:set.ch, s:set.s, q:set.q, bins:set.bins, text, ans, why })));
+  return shuffle(items).slice(0, 10);
+}
+function buildMatch(){
+  return shuffle(MATCHES.filter(m => chOk(m.ch))).slice(0, 3).map(m => ({ type:"match", ch:m.ch, s:m.s, title:m.title, pairs:shuffle(m.pairs).slice(0, 6), set:m }));
+}
+function buildCalc(topic){
+  const gens = topic && topic !== "mix" ? CALC.filter(g => g.id === topic) : CALC.filter(g => chOk(g.ch));
+  const out = []; let pool = [];
+  for (let i = 0; i < 8; i++) {
+    if (!pool.length) pool = shuffle(gens);
+    const g = pool.pop();
+    out.push({ type:"calc", ch:g.ch, s:g.s, name:g.name, hint:g.hint, ...g.gen() });
+  }
+  return out;
+}
+const unitsOf = it => it.type === "match" ? it.pairs.length : 1;
+
+function startRound(mode, items, topic){
+  R = { mode, topic, items, i:0, score:0, cap: items.reduce((s, it) => s + unitsOf(it), 0) * 10, misses:[], answered:false };
+  delete $("#playCyl").dataset.built;
+  drawCyl($("#playCyl"), 0, R.cap, false);
+  updateCyl(false);
+  show("play");
+  renderItem();
+}
+function newRound(mode, topic){
+  const items = mode === "quiz" ? buildQuiz() : mode === "sort" ? buildSort() : mode === "match" ? buildMatch() : buildCalc(topic);
+  if (!items.length) return;
+  startRound(mode, items, topic);
+}
+
+/* ================= Rendering ================= */
+const card = () => $("#qcard");
+const cur = () => R.items[R.i];
+
+function updateCyl(animate){
+  drawCyl($("#playCyl"), R.score, R.cap, animate);
+  $("#playCyl").setAttribute("aria-label", `Cilindro: ${R.score} mL su ${R.cap} mL`);
+  $("#playCap").innerHTML = `<b>${R.score} mL</b><br>su ${R.cap}`;
+}
+function header(){
+  const it = cur();
+  $("#pMode").textContent = MODE_NAME[R.mode];
+  const isMatch = it.type === "match";
+  const n = R.items.length;
+  $("#pCount").innerHTML = `${isMatch ? "Tabella" : "Domanda"} <b>${R.i + 1}</b> / ${n}`;
+}
+function renderItem(){
+  R.answered = false;
+  header();
+  const it = cur();
+  if (it.type === "mc" || it.type === "sort") renderChoice(it);
+  else if (it.type === "match") renderMatch(it);
+  else renderCalc(it);
+}
+
+function renderChoice(it){
+  let opts, ans;
+  if (it.type === "mc") { opts = shuffle([it.a, ...it.w]); ans = opts.indexOf(it.a); }
+  else { opts = it.bins; ans = it.ans; }
+  it._ans = ans;
+  const tag = `<p class="tag">${tagOf(it.ch, it.s)}</p>`;
+  if (it.type === "mc") {
+    card().innerHTML = tag + `<h2 class="prompt" tabindex="-1">${it.q}</h2>` +
+      `<div class="opts">${opts.map((o, k) => `<button class="opt" data-k="${k}"><span class="key">${k + 1}</span><span>${o}</span></button>`).join("")}</div><div id="fb" role="status"></div>`;
+  } else {
+    card().innerHTML = tag + `<h2 class="prompt" tabindex="-1">${it.q}</h2>` +
+      `<div class="sample${it.text.length > 26 ? " long" : ""}">${it.text}</div>` +
+      `<div class="bins" style="--n:${opts.length}">${opts.map((o, k) => `<button class="bin opt-like" data-k="${k}"><span class="key">${k + 1}</span><span>${o}</span></button>`).join("")}</div><div id="fb" role="status"></div>`;
+  }
+  card().querySelectorAll("[data-k]").forEach(b => b.addEventListener("click", () => choose(+b.dataset.k)));
+  card().querySelector(".prompt").focus({ preventScroll:true });
+}
+function choose(k){
+  if (R.answered) return;
+  const it = cur(); if (it.type !== "mc" && it.type !== "sort") return;
+  const btns = card().querySelectorAll("[data-k]");
+  if (k < 0 || k >= btns.length) return;
+  R.answered = true;
+  const ok = k === it._ans;
+  btns.forEach(b => { b.disabled = true; const bk = +b.dataset.k; if (bk === it._ans) b.classList.add("ok"); else if (bk === k) b.classList.add("bad"); });
+  const correctTxt = it.type === "mc" ? it.a : it.bins[it.ans];
+  if (ok) addScore(); else R.misses.push({ q: it.type === "mc" ? it.q : `${it.q} «${it.text}»`, a: correctTxt, why: it.why, retry: it });
+  feedback(ok, `<p>${it.why}</p>`, correctTxt);
+}
+function feedback(ok, body, correctTxt){
+  const fb = $("#fb");
+  fb.className = "feedback " + (ok ? "ok" : "bad");
+  const verdict = ok ? pick(["Giusto!","Esatto!","Corretto!","Perfetto!"]) : `Non proprio. La risposta giusta è: ${correctTxt}`;
+  const last = R.i === R.items.length - 1;
+  fb.innerHTML = `<span class="verdict">${verdict}</span>${body}<div class="next-row"><button class="primary" id="nextBtn">${last ? "Vedi il risultato" : "Avanti →"}</button></div>`;
+  $("#nextBtn").addEventListener("click", next);
+  $("#nextBtn").focus({ preventScroll:true });
+  fb.scrollIntoView({ block:"nearest", behavior: reduced() ? "auto" : "smooth" });
+}
+function addScore(){ R.score += 10; updateCyl(true); }
+function next(){ R.i++; if (R.i >= R.items.length) finish(); else { renderItem(); window.scrollTo({ top:0, behavior: reduced() ? "auto" : "smooth" }); } }
+
+/* --- Match --- */
+function renderMatch(it){
+  it._L = shuffle(it.pairs.map((p, i) => i));
+  it._R = shuffle(it.pairs.map((p, i) => i));
+  it._done = new Set(); it._missed = new Set(); it._sl = null; it._sr = null;
+  card().innerHTML = `<p class="tag">${tagOf(it.ch, it.s)}</p><h2 class="prompt" tabindex="-1">Abbina: ${it.title}</h2>` +
+    `<p class="howto">Tocca un termine a sinistra e poi la sua descrizione a destra.</p>` +
+    `<div class="board"><div class="col">${it._L.map(i => `<button class="mt left" data-side="L" data-i="${i}">${it.pairs[i][0]}</button>`).join("")}</div>` +
+    `<div class="col">${it._R.map(i => `<button class="mt" data-side="R" data-i="${i}">${it.pairs[i][1]}</button>`).join("")}</div></div><div id="fb" role="status"></div>`;
+  card().querySelectorAll(".mt").forEach(b => b.addEventListener("click", () => matchTap(b.dataset.side, +b.dataset.i, b)));
+  card().querySelector(".prompt").focus({ preventScroll:true });
+}
+function matchTap(side, i, btn){
+  const it = cur(); if (it._done.has(i) && btn.classList.contains("done")) return;
+  if (side === "L") it._sl = i; else it._sr = i;
+  card().querySelectorAll(".mt").forEach(b => b.classList.toggle("sel", !b.classList.contains("done") && ((b.dataset.side === "L" && +b.dataset.i === it._sl) || (b.dataset.side === "R" && +b.dataset.i === it._sr))));
+  if (it._sl == null || it._sr == null) return;
+  const L = it._sl, Rr = it._sr;
+  const lb = card().querySelector(`.mt[data-side="L"][data-i="${L}"]`), rb = card().querySelector(`.mt[data-side="R"][data-i="${Rr}"]`);
+  it._sl = null; it._sr = null;
+  if (L === Rr) {
+    it._done.add(L);
+    [lb, rb].forEach(b => { b.classList.remove("sel"); b.classList.add("done"); b.disabled = true; if (it._missed.has(L)) b.classList.add("slip"); });
+    if (!it._missed.has(L)) addScore();
+    if (it._done.size === it.pairs.length) {
+      R.answered = true;
+      const first = it.pairs.length - it._missed.size;
+      feedback(it._missed.size === 0, `<p>${first} su ${it.pairs.length} abbinati al primo tentativo.</p>`, "vedi la tabella");
+      if (it._missed.size) { const fb = $("#fb"); fb.className = "feedback"; fb.querySelector(".verdict").textContent = "Tabella completata"; }
+    }
+  } else {
+    if (!it._missed.has(L)) {
+      it._missed.add(L);
+      const others = it.set.pairs.filter(p => p[0] !== it.pairs[L][0]).map(p => p[1]);
+      R.misses.push({ q:`${it.title}: «${it.pairs[L][0]}»`, a: it.pairs[L][1], why:"", retry:{ type:"mc", ch:it.ch, s:it.s, q:`${it.title}: «${it.pairs[L][0]}» corrisponde a…`, a:it.pairs[L][1], w:shuffle(others).slice(0, 3), why:`${it.pairs[L][0]} → ${it.pairs[L][1]}` } });
+    }
+    [lb, rb].forEach(b => { b.classList.remove("sel"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); });
+    setTimeout(() => [lb, rb].forEach(b => b.classList.remove("shake")), 400);
+  }
+}
+
+/* --- Calc --- */
+function renderCalc(it){
+  card().innerHTML = `<p class="tag">${tagOf(it.ch, it.s)} · ${it.name}</p>` +
+    `<p class="problem">${it.text}</p>` +
+    `<form id="cform" class="inputs" novalidate>${it.inputs}<button class="primary" type="submit">Controlla</button></form>` +
+    `<p class="formhint" id="formhint" hidden></p>` +
+    `<div class="hintrow"><button class="link" type="button" id="hintBtn" aria-expanded="false">Mostra la formula</button></div>` +
+    `<div class="hint" id="hintBox" hidden>${it.hint}</div><div id="fb" role="status"></div>`;
+  $("#cform").addEventListener("submit", e => { e.preventDefault(); checkCalc(); });
+  $("#hintBtn").addEventListener("click", () => { const h = $("#hintBox"); h.hidden = !h.hidden; $("#hintBtn").setAttribute("aria-expanded", String(!h.hidden)); $("#hintBtn").textContent = h.hidden ? "Mostra la formula" : "Nascondi la formula"; });
+  const first = card().querySelector("input"); if (first) first.focus({ preventScroll:true });
+}
+function checkCalc(){
+  if (R.answered) return;
+  const it = cur(), vals = {}, raw = {};
+  for (const f of it.fields) {
+    const el = $("#f_" + f); raw[f] = el.value; vals[f] = parseNum(el.value);
+    if (!isFinite(vals[f])) { const h = $("#formhint"); h.hidden = false; h.textContent = "Scrivi un numero in ogni casella (puoi usare la virgola, per esempio 3,5)."; el.focus(); return; }
+  }
+  $("#formhint").hidden = true;
+  R.answered = true;
+  card().querySelectorAll("#cform input, #cform button").forEach(el => el.disabled = true);
+  const res = it.check(vals, raw);
+  if (res.ok) addScore(); else R.misses.push({ q: it.text, a: it.answerText, why: it.solution, retry: it, calc:true });
+  feedback(res.ok, (res.note ? `<p><b>${res.note}</b></p>` : "") + it.solution, it.answerText);
+}
+
+/* ================= Results ================= */
+function finish(){
+  const pct = R.cap ? Math.round(R.score / R.cap * 100) : 0;
+  store.d.total = (store.d.total || 0) + R.score;
+  if (R.mode !== "retry") { const k = bestKey(R.mode, R.mode === "calc" ? (R.topic || "mix") : ""); store.d.best[k] = Math.max(store.d.best[k] || 0, pct); }
+  store.save();
+  delete $("#resCyl").dataset.built;
+  drawCyl($("#resCyl"), 0, R.cap, false);
+  show("results");
+  drawCyl($("#resCyl"), R.score, R.cap, true);
+  $("#resCyl").setAttribute("aria-label", `Cilindro finale: ${R.score} mL su ${R.cap} mL`);
+  $("#rMode").textContent = `${MODE_NAME[R.mode]} · ${chapter === "all" ? "Capitoli 1 e 2" : "Capitolo " + chapter}`;
+  const [title, msg] = pct >= 90 ? ["Accurato e preciso!", "Hai riempito quasi tutto il cilindro. Prova un'altra modalità o un nuovo round."]
+    : pct >= 70 ? ["Quasi a punto", "Ottima base. Ripassa gli errori qui sotto e poi riprova."]
+    : pct >= 50 ? ["Sei sulla buona strada", "Rileggi le spiegazioni degli errori: molte risposte si trovano nelle tabelle delle slide."]
+    : ["Serve un altro giro", "Ripassa le slide della sezione indicata in ogni errore e poi gioca di nuovo."];
+  $("#rTitle").textContent = title;
+  $("#rScore").innerHTML = `<b>${R.score} mL</b> su ${R.cap} mL · ${pct}%`;
+  $("#rMsg").textContent = msg;
+  const retry = $("#retry");
+  retry.hidden = !R.misses.length;
+  retry.textContent = `Ripassa gli errori (${R.misses.length})`;
+  $("#again").hidden = R.mode === "retry";
+  $("#review").innerHTML = R.misses.length
+    ? `<h3>Da ripassare</h3><ol>${R.misses.map(m => `<li><p class="q">${m.q}</p><p class="a">Risposta giusta: <b>${m.a}</b></p>${m.why ? `<div class="why">${m.why}</div>` : ""}</li>`).join("")}</ol>`
+    : "";
+  $("#rTitle").setAttribute("tabindex", "-1"); $("#rTitle").focus({ preventScroll:true });
+}
+
+/* ================= Events ================= */
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => { chapter = c.dataset.ch === "all" ? "all" : Number(c.dataset.ch); refreshHome(); }));
+document.querySelectorAll("[data-start]").forEach(b => b.addEventListener("click", () => {
+  const mode = b.dataset.start;
+  newRound(mode, mode === "calc" ? $("#calcTopic").value : undefined);
+}));
+$("#calcTopic").addEventListener("change", refreshHome);
+$("#quit").addEventListener("click", () => { refreshHome(); show("home"); });
+$("#toMenu").addEventListener("click", () => { refreshHome(); show("home"); });
+$("#again").addEventListener("click", () => newRound(R.mode, R.topic));
+$("#retry").addEventListener("click", () => {
+  const items = R.misses.map(m => m.retry);
+  const prevMode = R.mode;
+  startRound("retry", items, R.topic);
+  R.from = prevMode;
+});
+document.addEventListener("keydown", e => {
+  if ($("#play").hidden || !R) return;
+  const tg = e.target.tagName;
+  if (tg === "INPUT" || tg === "BUTTON" || tg === "SELECT" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const it = cur();
+  if (!R.answered && (it.type === "mc" || it.type === "sort") && /^[1-4]$/.test(e.key)) { choose(Number(e.key) - 1); e.preventDefault(); }
+  else if (R.answered && e.key === "Enter") { next(); e.preventDefault(); }
+});
+
+refreshHome();
+})();
+</script>
+</body>
+</html>
