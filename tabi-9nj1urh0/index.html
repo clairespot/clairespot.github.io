@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Tabi · Japan Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap&text=%E6%97%85%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%A5%88%E8%89%AF%E5%A4%A7%E9%98%AA%E5%9F%8E%E5%B4%8E%E5%87%BA%E7%99%BA%E5%89%8D%E5%B8%B0%E5%9B%BD%E8%A1%8C%E4%B8%AD%E6%9B%B8%E9%A1%9E%E4%BA%88%E7%B4%84%E9%9B%BB%E8%BB%8A%E3%81%8A%E9%87%91%E8%96%AC%E3%82%B9%E3%83%9E%E3%83%9B%E8%8D%B7%E7%89%A9%E8%B2%B7%E3%81%84%E5%88%87%E7%AC%A6%E6%90%AD%E4%B9%97%E5%8F%A3">
+<style>
+/* Layout: the Tabi notebook as a page — a quiet doc column with numbered city chapters, tabs in a left rail on wide screens. */
+:root {
+  --paper: #fcfcfa;
+  --ink: #1c1b19;
+  --muted: #625e57;
+  --faint: #9d988f;
+  --rule: #e4e1da;
+  --wash: #f2f0eb;
+  --ai: #2c4c85;
+  --ai-ink: #ffffff;
+  --ai-soft: #e6ebf4;
+  --shu: #bd3f28;
+  --now-fg: #874a00;
+  --now-bg: #fbeed6;
+  --have-fg: #2b6242;
+  --have-bg: #e3efe7;
+  --sans: "Instrument Sans", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --jp: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #161615; --ink: #ecebe6; --muted: #aaa69d; --faint: #75716a; --rule: #2c2b28; --wash: #212120;
+    --ai: #93b2e8; --ai-ink: #10182a; --ai-soft: #1d273a; --shu: #ec7c63;
+    --now-fg: #f2c072; --now-bg: #382a12; --have-fg: #8fd1a7; --have-bg: #17301f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #161615; --ink: #ecebe6; --muted: #aaa69d; --faint: #75716a; --rule: #2c2b28; --wash: #212120;
+  --ai: #93b2e8; --ai-ink: #10182a; --ai-soft: #1d273a; --shu: #ec7c63;
+  --now-fg: #f2c072; --now-bg: #382a12; --have-fg: #8fd1a7; --have-bg: #17301f;
+  color-scheme: dark;
+}
+
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.jp { font-family: var(--jp); font-weight: 500; color: var(--shu); }
+
+.shell {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "head" "rail" "doc";
+  gap: 24px;
+}
+.head { grid-area: head; max-width: 700px; }
+.rail { grid-area: rail; }
+.doc  { grid-area: doc; max-width: 700px; min-width: 0; }
+
+/* Header */
+h1 {
+  font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.25rem);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 10px;
+  text-wrap: balance;
+}
+.byline {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  color: var(--muted); font-size: .875rem; margin: 0 0 16px;
+}
+.mention {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--ai-soft); color: var(--ai);
+  border-radius: 999px; padding: 1px 9px 1px 3px; font-weight: 500;
+}
+.mention i {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--ai); color: var(--ai-ink);
+  font-style: normal; font-size: .625rem; font-weight: 700;
+  display: grid; place-items: center;
+}
+.intro { margin: 0; max-width: 62ch; }
+
+/* Rail: view tabs, progress, hide-done */
+.rail-inner { display: grid; gap: 16px; }
+.tabs {
+  display: inline-grid; grid-auto-flow: column; gap: 2px;
+  background: var(--wash); border-radius: 10px; padding: 3px;
+  justify-self: start;
+}
+.tabs button {
+  font: inherit; font-size: .9375rem; font-weight: 500;
+  color: var(--muted); background: transparent;
+  border: 0; border-radius: 8px; padding: 7px 14px; cursor: pointer;
+}
+.tabs button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.tabs button:focus-visible, .toc button:focus-visible, .toggle input:focus-visible + span { outline: 2px solid var(--ai); outline-offset: 2px; }
+
+.progress { display: grid; gap: 6px; }
+.bar { height: 6px; border-radius: 999px; background: var(--wash); overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--ai); border-radius: inherit; transition: width .3s ease; }
+.progress p { margin: 0; font-size: .875rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.progress b { color: var(--ink); font-weight: 600; }
+
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: .875rem; color: var(--muted); cursor: pointer; }
+.toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.toggle span {
+  width: 30px; height: 18px; border-radius: 999px; background: var(--rule);
+  position: relative; transition: background .2s;
+}
+.toggle span::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px;
+  border-radius: 50%; background: var(--paper); box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: transform .2s;
+}
+.toggle input:checked + span { background: var(--ai); }
+.toggle input:checked + span::after { transform: translateX(12px); }
+
+.toc { display: none; }
+
+/* Groups */
+.group { margin-top: 36px; }
+.group:first-child { margin-top: 8px; }
+.group h3 {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  font-size: 1.0625rem; font-weight: 600; margin: 0 0 6px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  text-wrap: balance;
+}
+.group h3 .dates { color: var(--muted); font-weight: 500; }
+.group h3 .count { color: var(--faint); font-weight: 500; font-size: .8125rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.group h3 .count.full { color: var(--have-fg); }
+.alldone { margin: 10px 0 0; color: var(--faint); font-size: .875rem; }
+
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.item { position: relative; }
+.item input { position: absolute; opacity: 0; width: 1px; height: 1px; top: 14px; left: 4px; }
+.item label {
+  display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px;
+  padding: 10px 8px; margin: 0 -8px; border-radius: 8px; cursor: pointer;
+}
+.item label:hover { background: var(--wash); }
+.box {
+  width: 18px; height: 18px; margin-top: 3px;
+  border: 1.5px solid var(--faint); border-radius: 5px;
+  display: grid; place-items: center; transition: background .15s, border-color .15s;
+}
+.box::after {
+  content: ""; width: 5px; height: 9px; margin-top: -2px;
+  border: solid var(--ai-ink); border-width: 0 2px 2px 0;
+  transform: rotate(45deg); opacity: 0; transition: opacity .15s;
+}
+.item input:checked + label .box { background: var(--ai); border-color: var(--ai); }
+.item input:checked + label .box::after { opacity: 1; }
+.item input:focus-visible + label { outline: 2px solid var(--ai); outline-offset: -2px; }
+.body { min-width: 0; }
+.top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.t { font-weight: 500; }
+.item input:checked + label .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--faint); text-decoration-thickness: 1px; }
+.note { display: block; color: var(--muted); font-size: .9375rem; margin-top: 2px; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px; font-size: .75rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.meta .when { color: var(--muted); font-weight: 500; }
+.pill {
+  font-size: .6875rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  border-radius: 999px; padding: 1px 8px; white-space: nowrap; position: relative; top: -1px;
+}
+.pill.gate { color: var(--now-fg); background: var(--now-bg); }
+.status { margin: 0; font-size: .8125rem; color: var(--faint); display: flex; align-items: center; gap: 7px; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: none; }
+.status[data-state="shared"]::before { background: var(--have-fg); }
+.status[data-state="warn"]::before { background: var(--now-fg); }
+.item input:disabled + label { cursor: default; }
+.pill.have { color: var(--have-fg); background: var(--have-bg); }
+.pill.opt { color: var(--muted); box-shadow: inset 0 0 0 1px var(--rule); }
+
+/* Cards & passes */
+h2 {
+  font-size: 1.375rem; font-weight: 600; letter-spacing: -0.01em;
+  margin: 64px 0 8px; text-wrap: balance;
+}
+.lede { margin: 0 0 16px; max-width: 62ch; }
+.doc h4 { font-size: 1rem; font-weight: 600; margin: 32px 0 8px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+th {
+  text-align: left; font-weight: 600; font-size: .75rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em;
+  border-bottom: 1px solid var(--rule); padding: 8px 10px 8px 0;
+}
+td { border-bottom: 1px solid var(--rule); padding: 10px 10px 10px 0; vertical-align: top; }
+td:first-child { font-weight: 500; }
+td small { display: block; color: var(--muted); font-weight: 400; font-size: .8125rem; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.total { color: var(--muted); font-size: .9375rem; margin: 12px 0 0; }
+.taps { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 64ch; }
+.taps b { font-weight: 600; }
+.compare th:not(:first-child), .compare td:not(:first-child) { width: 38%; }
+.compare tr > *:nth-child(2) { color: var(--ink); }
+.compare td:nth-child(3) { color: var(--muted); }
+.aside { color: var(--muted); font-size: .9375rem; margin: 12px 0 0; }
+
+footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--faint); font-size: .8125rem; }
+footer p { margin: 0; }
+
+@media (max-width: 640px) {
+  .passes thead { display: none; }
+  .passes, .passes tbody, .passes tr, .passes td { display: block; width: 100%; }
+  .passes tr { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .passes td { border: 0; padding: 2px 0; }
+  .passes td:first-child { font-size: 1rem; padding-bottom: 4px; }
+  .passes td[data-label]:not(:first-child)::before {
+    content: attr(data-label); display: inline-block; min-width: 5.5em;
+    color: var(--faint); font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 600;
+  }
+  .passes td.num { white-space: normal; }
+}
+
+@media (min-width: 960px) {
+  .shell {
+    grid-template-columns: 196px minmax(0, 1fr);
+    grid-template-areas: "rail head" "rail doc";
+    column-gap: 64px; row-gap: 8px;
+    padding-block: 56px 96px;
+  }
+  .rail { grid-row: 1 / span 2; align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 40px); }
+  .rail-inner { gap: 22px; }
+  .tabs { display: grid; grid-auto-flow: row; background: transparent; padding: 0; justify-self: stretch; }
+  .tabs button { text-align: left; padding: 7px 10px; }
+  .tabs button[aria-pressed="true"] { background: var(--wash); box-shadow: none; }
+  .row { flex-direction: column; align-items: stretch; gap: 18px; }
+  .toc { display: grid; gap: 1px; border-top: 1px solid var(--rule); padding-top: 14px; }
+  .toc button {
+    font: inherit; font-size: .8125rem; color: var(--muted); background: none; border: 0;
+    text-align: left; padding: 4px 10px; border-radius: 6px; cursor: pointer;
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .toc button:hover { background: var(--wash); color: var(--ink); }
+  .toc button span:last-child { color: var(--faint); font-variant-numeric: tabular-nums; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header class="head">
+    <h1>Tabi · <span class="jp">旅</span> — Checklist</h1>
+    <p class="byline"><time datetime="2026-11-02">Mon 2 Nov 2026</time> · <span class="mention"><i>c</i>claire</span></p>
+    <p class="intro">Chiara &amp; Bruno, 9 → 28 November 2026. Everything to book, buy and pack, from now until the flight home. Things you already have start ticked.</p>
+  </header>
+
+  <aside class="rail" aria-label="List options">
+    <div class="rail-inner">
+      <div class="tabs" role="group" aria-label="Group the list">
+        <button type="button" id="view-date" aria-pressed="true">By date</button>
+        <button type="button" id="view-type" aria-pressed="false">By type</button>
+      </div>
+      <div class="row">
+        <div class="progress">
+          <div class="bar"><span id="bar"></span></div>
+          <p id="progress-text"><b>0</b> of 0 ready</p>
+        </div>
+        <label class="toggle" for="hide-done"><input type="checkbox" id="hide-done"><span></span>Hide done</label>
+      </div>
+      <p class="status" id="sync-status" data-state="local" role="status">Ticks save on this device.</p>
+      <nav class="toc" id="toc" aria-label="Sections"></nav>
+    </div>
+  </aside>
+
+  <main class="doc">
+    <div id="list"></div>
+
+    <section id="tickets" aria-labelledby="tickets-h">
+      <h2 id="tickets-h">Cards &amp; passes <span class="jp">切符</span></h2>
+      <p class="lede">One regular Suica each does most of the work. Two Shinkansen tickets and the Kansai pass cover the long legs; the city passes are only for busy days.</p>
+      <div class="table-wrap">
+        <table class="passes">
+          <thead><tr><th>Card or pass</th><th>When</th><th>Where to get it</th><th>Cost each</th></tr></thead>
+          <tbody>
+            <tr><td>Suica, one each</td><td data-label="When">Whole trip</td><td data-label="Where">Narita's JR station, JR East Travel Service Centers, or JR East ticket machines at Tokyo Station</td><td class="num" data-label="Cost">¥500 deposit (refunded) + top-ups</td></tr>
+            <tr><td>Shinkansen, Tokyo → Kyoto</td><td data-label="When">Fri 13 Nov</td><td data-label="Where">SmartEX, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
+            <tr><td>Shinkansen, Kyoto → Tokyo</td><td data-label="When">Tue 24 Nov</td><td data-label="Where">SmartEX, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
+            <tr><td>Kansai Wide Area Pass<small>Osaka → Kinosaki → Kyoto, plus JR around Osaka</small></td><td data-label="When">20–24 Nov</td><td data-label="Where">JR-WEST Online Train Reservation; collect at Kyoto Station</td><td class="num" data-label="Cost">¥12,000</td></tr>
+            <tr><td>Tokyo Subway Ticket, 72 h<small>Optional · QR on your phone</small></td><td data-label="When">10–13 and/or 24–28 Nov</td><td data-label="Where">Online, on your phone</td><td class="num" data-label="Cost">¥2,000</td></tr>
+            <tr><td>Kyoto Subway &amp; Bus 1-Day Pass<small>Optional · busy days only</small></td><td data-label="When">13–19 Nov</td><td data-label="Where">Information centres, subway counters, on the buses</td><td class="num" data-label="Cost">¥1,100</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="total">Roughly ¥44,000 each for the two Shinkansen, the Kansai pass and two Tokyo Subway Tickets, plus Suica top-ups for everything else.</p>
+
+      <h4>Where to tap</h4>
+      <ul class="taps">
+        <li><b>Suica</b> works on every train, subway and bus on your route, Kintetsu included, and at konbini and vending machines.</li>
+        <li><b>Topping up</b> is cash only: station ticket machines, fare adjustment machines or the till at 7-Eleven.</li>
+        <li><b>Backup:</b> a contactless bank card or Google Pay opens the gates on Tokyo Metro, Toei, Osaka Metro and Kintetsu. It doesn't work on JR, or on Kyoto's buses and subway.</li>
+      </ul>
+
+      <h4>Why a regular Suica, not Welcome Suica</h4>
+      <div class="table-wrap">
+        <table class="compare">
+          <thead><tr><th></th><th>Suica</th><th>Welcome Suica</th></tr></thead>
+          <tbody>
+            <tr><td>Deposit</td><td>¥500, refunded</td><td>None</td></tr>
+            <tr><td>Leftover balance</td><td>Refunded, minus a small fee</td><td>Lost</td></tr>
+            <tr><td>Valid for</td><td>10 years after you last use it</td><td>28 days</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="aside">Phone Suica only works on iPhone here, so on Android it's the plastic card.</p>
+    </section>
+
+    <footer>
+      <p>Rules checked 2 Nov 2026. Fares are approximate.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var PHASES = [
+    { id: "pre",      num: "",   name: "Before you go",  kanji: "出発前", dates: "now → Sun 8 Nov" },
+    { id: "gate",     num: "",   name: "At the gate",    kanji: "搭乗口", dates: "Mon 9 Nov, once seats are confirmed" },
+    { id: "trip",    num: "",   name: "Whole trip",     kanji: "旅行中", dates: "9 → 28 Nov" },
+    { id: "tokyo1",   num: "01", name: "Tokyo",          kanji: "東京",   dates: "9–13 Nov" },
+    { id: "kyoto",    num: "02", name: "Kyoto",          kanji: "京都",   dates: "13–19 Nov" },
+    { id: "nara",     num: "03", name: "Nara",           kanji: "奈良",   dates: "19–20 Nov" },
+    { id: "osaka",    num: "04", name: "Osaka",          kanji: "大阪",   dates: "20–23 Nov" },
+    { id: "kinosaki", num: "05", name: "Kinosaki Onsen", kanji: "城崎",   dates: "23–24 Nov" },
+    { id: "tokyo2",   num: "06", name: "Tokyo, again",   kanji: "東京",   dates: "24–28 Nov" },
+    { id: "home",     num: "",   name: "Flying home",    kanji: "帰国",   dates: "Sat 28 Nov" }
+  ];
+  var TYPES = [
+    { id: "docs",   name: "Documents",           kanji: "書類" },
+    { id: "book",   name: "Stays & bookings",    kanji: "予約" },
+    { id: "train",  name: "Trains & cards",      kanji: "電車" },
+    { id: "money",  name: "Money",               kanji: "お金" },
+    { id: "health", name: "Medicines",           kanji: "薬" },
+    { id: "tech",   name: "Phone & tech",        kanji: "スマホ" },
+    { id: "pack",   name: "Packing",             kanji: "荷物" },
+    { id: "shop",   name: "Shopping & tax-free", kanji: "買い物" }
+  ];
+
+  // o = sort order (roughly the date); flag: now | have | opt
+  var ITEMS = [
+    // Before you go
+    { id: "hotel-shortlist", p: "pre", t: "book", day: "Before 9 Nov", o: 1,
+      title: "Shortlist two or three Tokyo hotels for 10–13 Nov",
+      note: "Ones you can book on the day, so booking at the gate takes minutes." },
+    { id: "smartex", p: "pre", t: "train", day: "Before 9 Nov", o: 1,
+      title: "Set up a SmartEX account",
+      note: "Register and add a card now, so the Shinkansen tickets take a few minutes at the gate." },
+    { id: "insurance", p: "pre", t: "docs", day: "Before 9 Nov", o: 1,
+      title: "Travel insurance with medical cover",
+      note: "Declare every medical condition and medicine, then add the policy number to the notebook." },
+    { id: "stays", p: "pre", t: "book", day: "Booked", o: 2, flag: "have",
+      title: "Stays 2 to 7",
+      note: "Kyoto (Nishihonganji, then Gion), Nara, Osaka, Kinosaki and Akasaka." },
+    { id: "passports", p: "pre", t: "docs", day: "Now", o: 2,
+      title: "Passports",
+      note: "Valid for the whole stay. UK and EU passports get up to 90 days without a visa." },
+    { id: "esim", p: "pre", t: "tech", day: "Got", o: 3, flag: "have",
+      title: "eSIMs", note: "Switch them on when you land." },
+    { id: "powerbank", p: "pre", t: "tech", day: "Got", o: 3, flag: "have",
+      title: "Power bank", note: "Hand luggage only, never in the hold." },
+    { id: "adapter", p: "pre", t: "tech", day: "Got", o: 3, flag: "have",
+      title: "Plug adapter", note: "Japan uses two flat pins at 100 V. Check that anything that heats up, like a hair dryer, works at 100 V." },
+    { id: "card", p: "pre", t: "money", day: "Before 9 Nov", o: 3,
+      title: "A card with no foreign-transaction fees", note: "One each, plus a backup card kept separately." },
+    { id: "coins", p: "pre", t: "money", day: "Before 9 Nov", o: 3,
+      title: "Coin purse", note: "Japan still runs on coins, so you'll collect plenty of ¥100 and ¥10." },
+    { id: "meds", p: "pre", t: "health", day: "Before 9 Nov", o: 4,
+      title: "Medicines in original packaging, in hand luggage",
+      note: "Up to a month's supply needs no paperwork. Carry a copy of the prescription or a GP letter listing generic names. For timed doses, ask a pharmacist how to shift them across the 9-hour difference." },
+    { id: "banned", p: "pre", t: "health", day: "Before 9 Nov", o: 4,
+      title: "Leave pseudoephedrine and codeine at home",
+      note: "Sudafed, Vicks inhalers, Nurofen Plus, Solpadeine and co-codamol are illegal in Japan." },
+    { id: "pharmacy", p: "pre", t: "health", day: "Before 9 Nov", o: 4,
+      title: "Small travel pharmacy", note: "Paracetamol, rehydration sachets and plasters. Drugstores are everywhere if you run out." },
+    { id: "apps", p: "pre", t: "tech", day: "Before 9 Nov", o: 4,
+      title: "Apps on both phones",
+      note: "Google Maps for trains and buses, Google Translate with the offline Japanese pack, and SmartEX for the Shinkansen." },
+    { id: "layers", p: "pre", t: "pack", day: "Before 9 Nov", o: 4,
+      title: "Layers", note: "Mild days and chilly evenings. Kinosaki is the coldest stop." },
+    { id: "shoes", p: "pre", t: "pack", day: "Before 9 Nov", o: 4,
+      title: "Slip-on shoes and good socks", note: "Shoes come off at temples, the tea ceremony and the ryokan." },
+    { id: "towel", p: "pre", t: "pack", day: "Before 9 Nov", o: 4,
+      title: "Small hand towel and a rubbish bag", note: "Many toilets have no paper towels, and public bins are rare." },
+    { id: "laundry", p: "pre", t: "pack", day: "Before 9 Nov", o: 4,
+      title: "Pack for about ten days", note: "The Osaka flat has a washing machine." },
+    { id: "vjw", p: "pre", t: "docs", day: "Before 9 Nov", o: 5,
+      title: "Start Visit Japan Web, one each",
+      note: "Set up your accounts and passport details now, so only the hotel and flight are left for the gate." },
+    { id: "copies", p: "pre", t: "docs", day: "Before 9 Nov", o: 5,
+      title: "Copies on both phones", note: "Passports, insurance and bookings, saved so they open offline." },
+    { id: "notebook", p: "pre", t: "docs", day: "Before 9 Nov", o: 5,
+      title: "Fill in the notebook's blanks", note: "Booking numbers, PINs and the insurance line." },
+
+    // At the gate
+    { id: "tokyo-hotel", p: "gate", t: "book", day: "Mon 9 Nov", o: 90, flag: "gate",
+      title: "Book the first Tokyo hotel, 10–13 Nov",
+      note: "From your shortlist, as soon as your seats are confirmed. Visit Japan Web needs its address." },
+    { id: "shinkansen", p: "gate", t: "train", day: "Mon 9 Nov", o: 91, flag: "gate",
+      title: "Book both Shinkansen tickets on SmartEX",
+      note: "Tokyo → Kyoto on Fri 13 Nov, and Kyoto → Tokyo on Tue 24 Nov after your Kinosaki train gets in. Add oversized-luggage seats if you're taking big suitcases." },
+    { id: "vjw-finish", p: "gate", t: "docs", day: "Mon 9 Nov", o: 92, flag: "gate",
+      title: "Finish Visit Japan Web",
+      note: "Add the hotel address and your flight, then screenshot your QR codes." },
+
+    // Whole trip
+    { id: "taxfree", p: "trip", t: "shop", day: "Whole trip", o: 9,
+      title: "Tax-free: pay full price, claim it back when you leave",
+      note: "New since 1 Nov. Spend at least ¥5,000 before tax in one shop on the same day, and show your passport." },
+    { id: "receipts", p: "trip", t: "shop", day: "Whole trip", o: 9,
+      title: "Keep tax-free goods and their receipts together",
+      note: "Every item on a receipt must be with you when you leave, or that receipt loses its refund. Don't open food or cosmetics before then." },
+    { id: "kintsugi", p: "trip", t: "shop", day: "Whole trip", o: 9,
+      title: "Kintsugi repair kit for the coasters", note: "Buy it here, for all five." },
+
+    // 01 Tokyo
+    { id: "stamp", p: "tokyo1", t: "shop", day: "Tue 10 Nov", o: 100,
+      title: "Passport stamp at immigration",
+      note: "If you use the automated gates, ask for one straight after. Some tax-free shops look for it." },
+    { id: "yen", p: "tokyo1", t: "money", day: "Tue 10 Nov", o: 101,
+      title: "Get yen from a 7-Eleven ATM", note: "¥10,000–20,000 each to start. Suica top-ups are cash only." },
+    { id: "suica", p: "tokyo1", t: "train", day: "Tue 10 Nov", o: 102,
+      title: "Buy a regular Suica each",
+      note: "At Narita's JR station, a JR East Travel Service Center, or the JR East ticket machines at Tokyo Station. ¥500 deposit plus what you load; start with about ¥5,000." },
+    { id: "subway1", p: "tokyo1", t: "train", day: "Tue 10 Nov", o: 103, flag: "opt",
+      title: "Tokyo Subway Ticket, 72 hours",
+      note: "Worth it at about four rides a day. Buy the QR version on your phone (¥2,000). Screenshots and printouts don't work, so keep your phone charged." },
+    { id: "forward1", p: "tokyo1", t: "pack", day: "Thu 12 Nov", o: 120, flag: "opt",
+      title: "Send big suitcases ahead to Kyoto",
+      note: "Ask the hotel desk the day before; bags usually arrive the next day. Check the Kyoto hotel will hold them." },
+
+    // 02 Kyoto
+    { id: "linksuica", p: "kyoto", t: "train", day: "Fri 13 Nov", o: 130,
+      title: "Link Suica in SmartEX, or print the tickets",
+      note: "Linked, you tap through the Shinkansen gate. Otherwise collect paper tickets at a station machine with your pickup code." },
+    { id: "kyotobus", p: "kyoto", t: "train", day: "In Kyoto", o: 135,
+      title: "Buses and subway on Suica",
+      note: "A city bus ride is a flat ¥230. On busy days buy the Subway & Bus 1-Day Pass (¥1,100), which pays off at about five rides." },
+    { id: "gion", p: "kyoto", t: "book", day: "Mon 16 Nov", o: 160,
+      title: "Move to Gion: check-in 15:00–16:00 only", note: "A one-hour window, so plan the day around it." },
+    { id: "kansaibuy", p: "kyoto", t: "train", day: "By Tue 17 Nov", o: 170,
+      title: "Buy the Kansai Wide Area Pass for 20–24 Nov",
+      note: "¥12,000 each for five days, on JR-WEST Online Train Reservation. Reserve seats for Osaka → Kinosaki (Mon 23) and Kinosaki → Kyoto (Tue 24) at the same time." },
+    { id: "tea", p: "kyoto", t: "book", day: "Wed 18 Nov", o: 180, flag: "have",
+      title: "Tea ceremony, 10:00", note: "Maikoya Gion Kiyomizu, 2 adults." },
+    { id: "kansaicollect", p: "kyoto", t: "train", day: "Wed 18 Nov", o: 181,
+      title: "Collect the Kansai pass at Kyoto Station",
+      note: "At a ticket machine (needs an IC-chip passport) or the ticket office. Bring the reservation number, PIN, the card you paid with and your passport." },
+
+    // 03 Nara
+    { id: "kintetsu1", p: "nara", t: "train", day: "Thu 19 Nov", o: 190,
+      title: "Kyoto → Nara on Kintetsu: tap Suica", note: "About 35 minutes. Kintetsu isn't on the Kansai pass." },
+    { id: "naracheckin", p: "nara", t: "book", day: "Thu 19 Nov", o: 191,
+      title: "Arrive at Hotel New Wakasa 15:00–18:00", note: "Breakfast is included." },
+
+    // 04 Osaka
+    { id: "kintetsu2", p: "osaka", t: "train", day: "Fri 20 Nov", o: 200,
+      title: "Nara → Nipponbashi on Kintetsu: tap Suica",
+      note: "About 40 minutes. The Kansai pass starts today; use it on JR lines around Osaka." },
+    { id: "osakametro", p: "osaka", t: "train", day: "In Osaka", o: 205,
+      title: "Osaka Metro on Suica", note: "Your contactless bank card also opens the gates if Suica runs low." },
+    { id: "forward2", p: "osaka", t: "pack", day: "Sun 22 Nov", o: 220, flag: "opt",
+      title: "Send big bags ahead to Akasaka",
+      note: "Travel light to Kinosaki. Check first that the Akasaka hotel will hold them until Tue 24." },
+
+    // 05 Kinosaki
+    { id: "kounotori", p: "kinosaki", t: "train", day: "Mon 23 Nov", o: 230,
+      title: "Osaka → Kinosaki on the Kounotori", note: "About 2h45, on the Kansai pass, in your reserved seats." },
+    { id: "ryokan", p: "kinosaki", t: "book", day: "Mon 23 Nov", o: 231,
+      title: "Tell the ryokan when you'll arrive", note: "Dinner and the pass for the seven baths are included." },
+
+    // 06 Tokyo again
+    { id: "backtokyo", p: "tokyo2", t: "train", day: "Tue 24 Nov", o: 240,
+      title: "Kinosaki → Kyoto, then the Shinkansen to Tokyo",
+      note: "Limited express on the Kansai pass, then your SmartEX ticket. About five hours in all." },
+    { id: "subway2", p: "tokyo2", t: "train", day: "Tue 24 Nov", o: 241, flag: "opt",
+      title: "Second Tokyo Subway Ticket", note: "Only if you'll be out a lot. Otherwise just use Suica." },
+
+    // Flying home
+    { id: "refund", p: "home", t: "shop", day: "Sat 28 Nov", o: 280,
+      title: "Tax-free refund before check-in",
+      note: "Use a customs terminal or Visit Japan Web in the departure lobby. Green: go to check-in. Red: customs inspection first. Leave extra time." },
+    { id: "suicareturn", p: "home", t: "train", day: "Sat 28 Nov", o: 281,
+      title: "Return your Suica, or keep it",
+      note: "At a JR East station you get back the ¥500 deposit and the balance, minus a small fee. Or keep it: it stays valid for 10 years after you last use it." },
+    { id: "solvents", p: "home", t: "pack", day: "Sat 28 Nov", o: 282,
+      title: "Kintsugi kit: check for solvents", note: "Flammable liquids such as turpentine can't go in the cabin or the hold." }
+  ];
+
+  var PHASE_BY_ID = {}, TYPE_BY_ID = {};
+  PHASES.forEach(function (p) { PHASE_BY_ID[p.id] = p; });
+  TYPES.forEach(function (t) { TYPE_BY_ID[t.id] = t; });
+
+  var ITEM_BY_ID = {};
+  ITEMS.forEach(function (i) { ITEM_BY_ID[i.id] = i; });
+
+  // Ticks live in the "Tabi checklist" Google Sheet, through its Apps Script web app.
+  // Until ENDPOINT is set, or if it can't be reached, ticks stay on this device.
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbyhJuMvvJpp957ojjJd7E-4i1pZQoEfnylc4Irfz8Wc639QWC6N_b9QGOT6JbfTC3a4/exec";
+  var SYNC_KEY = "IDp5tGIQpmHQGLUD2sRXq4hJ";
+  var KEY = "tabi-checklist-v1";
+  var local = {};
+  try { local = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { local = {}; }
+  var syncOn = /^https:\/\/script\.google\.com\/macros\/s\/[^/?#]+\/exec$/.test(ENDPOINT);
+  var shared = null;   // last ticks seen from the sheet
+  if (syncOn) { try { shared = JSON.parse(localStorage.getItem(KEY + ":shared") || "null"); } catch (e) { shared = null; } }
+  var readOnly = false;
+  var writes = {};     // one save at a time per item
+  var writeSeq = 0;    // bumps when a save lands, so an older read is ignored
+
+  function state() { return shared || local; }
+  function isDone(item) { var s = state(); return Object.prototype.hasOwnProperty.call(s, item.id) ? !!s[item.id] : item.flag === "have"; }
+  function saveLocal() { try { localStorage.setItem(KEY, JSON.stringify(local)); } catch (e) {} }
+
+  var statusEl = document.getElementById("sync-status");
+  function setStatus(kind, text) { statusEl.setAttribute("data-state", kind); statusEl.textContent = text; }
+
+  var listEl = document.getElementById("list");
+  var tocEl = document.getElementById("toc");
+  var hideEl = document.getElementById("hide-done");
+  var btnDate = document.getElementById("view-date");
+  var btnType = document.getElementById("view-type");
+  var view = location.hash === "#by-type" ? "type" : "date";
+  try { hideEl.checked = localStorage.getItem(KEY + ":hide") === "1"; } catch (e) {}
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function phaseLabel(p) {
+    return (p.num ? '<span>' + p.num + '</span> · ' : '') + esc(p.name) + ' <span class="jp">' + p.kanji + '</span> <span class="dates">· ' + esc(p.dates) + '</span>';
+  }
+  function typeLabel(t) { return esc(t.name) + ' <span class="jp">' + t.kanji + '</span>'; }
+
+  function pillFor(item) {
+    if (item.flag === "have") return '<span class="pill have">Already have</span>';
+    if (item.flag === "opt") return '<span class="pill opt">Optional</span>';
+    return "";
+  }
+
+  function itemHTML(item) {
+    var metaBits;
+    if (view === "date") {
+      metaBits = '<span class="when">' + esc(item.day) + '</span><span>' + esc(TYPE_BY_ID[item.t].name) + '</span>';
+    } else {
+      var ph = PHASE_BY_ID[item.p];
+      metaBits = '<span class="when">' + esc(item.day) + '</span><span>' + esc(ph.name) + '</span>';
+    }
+    var done = isDone(item);
+    return '<li class="item" data-id="' + item.id + '"' + (done && hideEl.checked ? " hidden" : "") + '>' +
+      '<input type="checkbox" id="c-' + item.id + '"' + (done ? " checked" : "") + (readOnly ? " disabled" : "") + '>' +
+      '<label for="c-' + item.id + '"><span class="box" aria-hidden="true"></span><span class="body">' +
+      '<span class="top"><span class="t">' + esc(item.title) + '</span>' + pillFor(item) + '</span>' +
+      '<span class="note">' + esc(item.note) + '</span>' +
+      '<span class="meta">' + metaBits + '</span></span></label></li>';
+  }
+
+  function groups() {
+    var defs = view === "date" ? PHASES : TYPES;
+    var key = view === "date" ? "p" : "t";
+    return defs.map(function (g) {
+      var its = ITEMS.filter(function (i) { return i[key] === g.id; })
+        .sort(function (a, b) { return a.o - b.o; });
+      return { def: g, items: its };
+    }).filter(function (g) { return g.items.length; });
+  }
+
+  function render() {
+    btnDate.setAttribute("aria-pressed", view === "date");
+    btnType.setAttribute("aria-pressed", view === "type");
+    var gs = groups();
+    listEl.innerHTML = gs.map(function (g) {
+      var label = view === "date" ? phaseLabel(g.def) : typeLabel(g.def);
+      return '<section class="group" id="g-' + g.def.id + '" data-group="' + g.def.id + '">' +
+        '<h3><span>' + label + '</span><span class="count"></span></h3>' +
+        '<ul class="list">' + g.items.map(itemHTML).join("") + '</ul>' +
+        '<p class="alldone" hidden>All done here.</p></section>';
+    }).join("");
+    tocEl.innerHTML = gs.map(function (g) {
+      var name = view === "date" ? (g.def.num ? g.def.num + " · " : "") + g.def.name : g.def.name;
+      return '<button type="button" data-target="g-' + g.def.id + '"><span>' + esc(name) + '</span><span class="tc" data-for="' + g.def.id + '"></span></button>';
+    }).join("");
+    updateCounts();
+  }
+
+  function updateCounts() {
+    var total = ITEMS.length, done = 0;
+    ITEMS.forEach(function (i) { if (isDone(i)) done++; });
+    document.getElementById("bar").style.width = (total ? (done / total) * 100 : 0) + "%";
+    document.getElementById("progress-text").innerHTML = "<b>" + done + "</b> of " + total + " ready";
+    var key = view === "date" ? "p" : "t";
+    Array.prototype.forEach.call(listEl.querySelectorAll(".group"), function (sec) {
+      var gid = sec.getAttribute("data-group");
+      var its = ITEMS.filter(function (i) { return i[key] === gid; });
+      var d = its.filter(isDone).length;
+      var c = sec.querySelector(".count");
+      c.textContent = d + "/" + its.length;
+      c.classList.toggle("full", d === its.length);
+      sec.querySelector(".alldone").hidden = !(hideEl.checked && d === its.length);
+      var tc = tocEl.querySelector('[data-for="' + gid + '"]');
+      if (tc) tc.textContent = d + "/" + its.length;
+    });
+  }
+
+  listEl.addEventListener("change", function (e) {
+    var input = e.target;
+    if (!input || input.type !== "checkbox") return;
+    var li = input.closest(".item");
+    var id = li.getAttribute("data-id");
+    if (syncOn) {
+      shared = shared || {};
+      shared[id] = input.checked;
+      writeShared(id, input.checked, input);
+    } else {
+      local[id] = input.checked;
+      saveLocal();
+    }
+    if (hideEl.checked && input.checked) {
+      setTimeout(function () { li.hidden = true; updateCounts(); }, 350);
+    }
+    updateCounts();
+  });
+
+  hideEl.addEventListener("change", function () {
+    try { localStorage.setItem(KEY + ":hide", hideEl.checked ? "1" : "0"); } catch (e) {}
+    Array.prototype.forEach.call(listEl.querySelectorAll(".item"), function (li) {
+      var cb = li.querySelector("input");
+      li.hidden = hideEl.checked && cb.checked;
+    });
+    updateCounts();
+  });
+
+  function setView(v) {
+    if (v === view) return;
+    view = v;
+    try { history.replaceState(null, "", "#by-" + v); } catch (e) {}
+    render();
+  }
+  btnDate.addEventListener("click", function () { setView("date"); });
+  btnType.addEventListener("click", function () { setView("type"); });
+  window.addEventListener("hashchange", function () {
+    var v = location.hash === "#by-type" ? "type" : (location.hash === "#by-date" ? "date" : view);
+    if (v !== view) { view = v; render(); }
+  });
+
+  tocEl.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-target]");
+    if (!b) return;
+    var el = document.getElementById(b.getAttribute("data-target"));
+    if (!el) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  });
+
+  function applyState() {
+    Array.prototype.forEach.call(listEl.querySelectorAll(".item"), function (li) {
+      var item = ITEM_BY_ID[li.getAttribute("data-id")];
+      var cb = li.querySelector("input");
+      var done = isDone(item);
+      if (cb.checked !== done) cb.checked = done;
+      cb.disabled = readOnly;
+      li.hidden = hideEl.checked && done;
+    });
+    updateCounts();
+  }
+
+  var SHARED_TEXT = "Shared list: ticks show up for both of you.";
+
+  function pending(id) { var w = writes[id]; return !!w && (w.busy || w.next !== undefined); }
+
+  function takeRemote(remote) {
+    var next = {};
+    Object.keys(remote || {}).forEach(function (k) { if (ITEM_BY_ID[k]) next[k] = !!remote[k]; });
+    Object.keys(writes).forEach(function (id) {
+      if (pending(id) && shared && Object.prototype.hasOwnProperty.call(shared, id)) next[id] = shared[id];
+    });
+    shared = next;
+    try { localStorage.setItem(KEY + ":shared", JSON.stringify(shared)); } catch (e) {}
+    applyState();
+  }
+
+  function writeShared(id, value, input) {
+    var w = writes[id] || (writes[id] = { busy: false, next: undefined });
+    w.next = value;
+    if (w.busy) return;
+    (function pump() {
+      if (w.next === undefined) { w.busy = false; return; }
+      var v = w.next;
+      w.next = undefined;
+      w.busy = true;
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ key: SYNC_KEY, id: id, done: v })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data || !data.ok) throw new Error("refused");
+          writeSeq++;
+          if (w.next !== undefined) { pump(); return; }
+          w.busy = false;
+          takeRemote(data.ticks);
+          setStatus("shared", SHARED_TEXT);
+        })
+        .catch(function () {
+          w.busy = false;
+          w.next = undefined;
+          if (shared) shared[id] = !v;
+          if (input) input.checked = !v;
+          applyState();
+          setStatus("warn", "That tick didn't save. Check your connection and try again.");
+        });
+    })();
+  }
+
+  var pollTimer = null;
+  var polling = false;
+  function poll() {
+    if (polling) return;
+    polling = true;
+    var seq = writeSeq;
+    fetch(ENDPOINT + "?key=" + encodeURIComponent(SYNC_KEY), { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok) throw new Error("refused");
+        if (seq === writeSeq) takeRemote(data.ticks);
+        setStatus("shared", SHARED_TEXT);
+      })
+      .catch(function () {
+        setStatus("warn", "Can't reach the shared list right now. Showing the last ticks seen.");
+      })
+      .then(function () { polling = false; schedule(); });
+  }
+  function schedule() {
+    clearTimeout(pollTimer);
+    if (document.visibilityState === "visible") pollTimer = setTimeout(poll, 8000);
+  }
+
+  render();
+
+  if (syncOn) {
+    setStatus("local", "Connecting to the shared list…");
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") poll(); else clearTimeout(pollTimer);
+    });
+    poll();
+  }
+})();
+</script>
+</body>
+</html>
