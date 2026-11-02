@@ -189,6 +189,15 @@ h1 {
 .item input:disabled + label { cursor: default; }
 .pill.have { color: var(--have-fg); background: var(--have-bg); }
 .pill.opt { color: var(--muted); box-shadow: inset 0 0 0 1px var(--rule); }
+.links { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 10px 32px; margin-top: -4px; }
+.links a {
+  font-size: .8125rem; font-weight: 500; color: var(--ai); background: var(--ai-soft);
+  border-radius: 999px; padding: 3px 10px; text-decoration: none; display: inline-flex; gap: 4px; align-items: baseline;
+}
+.links a::after { content: "\2197"; font-size: .75em; }
+.links a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.links a:focus-visible, td a:focus-visible { outline: 2px solid var(--ai); outline-offset: 2px; }
+td a { color: var(--ai); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 
 /* Cards & passes */
 h2 {
@@ -297,12 +306,12 @@ footer p { margin: 0; }
         <table class="passes">
           <thead><tr><th>Card or pass</th><th>When</th><th>Where to get it</th><th>Cost each</th></tr></thead>
           <tbody>
-            <tr><td>Suica, one each</td><td data-label="When">Whole trip</td><td data-label="Where">Narita's JR station, JR East Travel Service Centers, or JR East ticket machines at Tokyo Station</td><td class="num" data-label="Cost">¥500 deposit (refunded) + top-ups</td></tr>
-            <tr><td>Shinkansen, Tokyo → Kyoto</td><td data-label="When">Fri 13 Nov</td><td data-label="Where">SmartEX, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
-            <tr><td>Shinkansen, Kyoto → Tokyo</td><td data-label="When">Tue 24 Nov</td><td data-label="Where">SmartEX, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
-            <tr><td>Kansai Wide Area Pass<small>Osaka → Kinosaki → Kyoto, plus JR around Osaka</small></td><td data-label="When">20–24 Nov</td><td data-label="Where">JR-WEST Online Train Reservation; collect at Kyoto Station</td><td class="num" data-label="Cost">¥12,000</td></tr>
-            <tr><td>Tokyo Subway Ticket, 72 h<small>Optional · QR on your phone</small></td><td data-label="When">10–13 and/or 24–28 Nov</td><td data-label="Where">Online, on your phone</td><td class="num" data-label="Cost">¥2,000</td></tr>
-            <tr><td>Kyoto Subway &amp; Bus 1-Day Pass<small>Optional · busy days only</small></td><td data-label="When">13–19 Nov</td><td data-label="Where">Information centres, subway counters, on the buses</td><td class="num" data-label="Cost">¥1,100</td></tr>
+            <tr><td><a href="https://www.jreast.co.jp/en/multi/suica/" target="_blank" rel="noopener noreferrer">Suica</a>, one each</td><td data-label="When">Whole trip</td><td data-label="Where">Narita's JR station, JR East Travel Service Centers, or JR East ticket machines at Tokyo Station</td><td class="num" data-label="Cost">¥500 deposit (refunded) + top-ups</td></tr>
+            <tr><td>Shinkansen, Tokyo → Kyoto</td><td data-label="When">Fri 13 Nov</td><td data-label="Where"><a href="https://smart-ex.jp/en/beginner/" target="_blank" rel="noopener noreferrer">SmartEX</a>, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
+            <tr><td>Shinkansen, Kyoto → Tokyo</td><td data-label="When">Tue 24 Nov</td><td data-label="Where"><a href="https://smart-ex.jp/en/beginner/" target="_blank" rel="noopener noreferrer">SmartEX</a>, at the gate on 9 Nov</td><td class="num" data-label="Cost">about ¥13,800</td></tr>
+            <tr><td><a href="https://www.westjr.co.jp/travel-information/en/tickets-passes/jrwest-rail-pass/kansai_wide/" target="_blank" rel="noopener noreferrer">Kansai Wide Area Pass</a><small>Osaka → Kinosaki → Kyoto, plus JR around Osaka</small></td><td data-label="When">20–24 Nov</td><td data-label="Where">JR-WEST Online Train Reservation; collect at Kyoto Station</td><td class="num" data-label="Cost">¥12,000</td></tr>
+            <tr><td><a href="https://www.tokyometro.jp/en/ticket/travel/index.html" target="_blank" rel="noopener noreferrer">Tokyo Subway Ticket, 72 h</a><small>Optional · QR on your phone</small></td><td data-label="When">10–13 and/or 24–28 Nov</td><td data-label="Where">Online, on your phone</td><td class="num" data-label="Cost">¥2,000</td></tr>
+            <tr><td><a href="https://www2.city.kyoto.lg.jp/kotsu/webguide/en/ticket/regular_1day_card_comm.html" target="_blank" rel="noopener noreferrer">Kyoto Subway &amp; Bus 1-Day Pass</a><small>Optional · busy days only</small></td><td data-label="When">13–19 Nov</td><td data-label="Where">Information centres, subway counters, on the buses</td><td class="num" data-label="Cost">¥1,100</td></tr>
           </tbody>
         </table>
       </div>
@@ -510,6 +519,46 @@ footer p { margin: 0; }
       title: "Kintsugi kit: check for solvents", note: "Flammable liquids such as turpentine can't go in the cabin or the hold." }
   ];
 
+  var LINKS = {
+      "vjw": {
+          "label": "Visit Japan Web",
+          "href": "https://www.vjw.digital.go.jp/"
+      },
+      "smartex": {
+          "label": "SmartEX",
+          "href": "https://smart-ex.jp/en/beginner/"
+      },
+      "suica": {
+          "label": "Suica guide, JR East",
+          "href": "https://www.jreast.co.jp/en/multi/suica/"
+      },
+      "subway": {
+          "label": "Tokyo Subway Ticket",
+          "href": "https://www.tokyometro.jp/en/ticket/travel/index.html"
+      },
+      "kyoto": {
+          "label": "Kyoto 1-Day Pass",
+          "href": "https://www2.city.kyoto.lg.jp/kotsu/webguide/en/ticket/regular_1day_card_comm.html"
+      },
+      "kansai": {
+          "label": "Kansai Wide Area Pass",
+          "href": "https://www.westjr.co.jp/travel-information/en/tickets-passes/jrwest-rail-pass/kansai_wide/"
+      },
+      "taxfree": {
+          "label": "Tax-free refunds",
+          "href": "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html"
+      },
+      "meds": {
+          "label": "Medicines into Japan",
+          "href": "https://www.mhlw.go.jp/english/policy/health-medical/pharmaceuticals/01.html"
+      },
+      "yamato": {
+          "label": "Luggage delivery, Yamato",
+          "href": "https://www.global-yamato.com/en/hands-free-travel/"
+      }
+  };
+  var ITEM_LINKS = {"smartex": ["smartex"], "shinkansen": ["smartex"], "linksuica": ["smartex"], "vjw": ["vjw"], "vjw-finish": ["vjw"], "refund": ["vjw", "taxfree"], "taxfree": ["taxfree"], "meds": ["meds"], "banned": ["meds"], "suica": ["suica"], "suicareturn": ["suica"], "subway1": ["subway"], "subway2": ["subway"], "kyotobus": ["kyoto"], "kansaibuy": ["kansai"], "kansaicollect": ["kansai"], "forward1": ["yamato"], "forward2": ["yamato"]};
+
   var PHASE_BY_ID = {}, TYPE_BY_ID = {};
   PHASES.forEach(function (p) { PHASE_BY_ID[p.id] = p; });
   TYPES.forEach(function (t) { TYPE_BY_ID[t.id] = t; });
@@ -559,6 +608,15 @@ footer p { margin: 0; }
     return "";
   }
 
+  function linksHTML(item) {
+    var keys = ITEM_LINKS[item.id];
+    if (!keys) return "";
+    return '<div class="links">' + keys.map(function (k) {
+      var l = LINKS[k];
+      return '<a href="' + esc(l.href) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label) + '</a>';
+    }).join("") + '</div>';
+  }
+
   function itemHTML(item) {
     var metaBits;
     if (view === "date") {
@@ -573,7 +631,7 @@ footer p { margin: 0; }
       '<label for="c-' + item.id + '"><span class="box" aria-hidden="true"></span><span class="body">' +
       '<span class="top"><span class="t">' + esc(item.title) + '</span>' + pillFor(item) + '</span>' +
       '<span class="note">' + esc(item.note) + '</span>' +
-      '<span class="meta">' + metaBits + '</span></span></label></li>';
+      '<span class="meta">' + metaBits + '</span></span></label>' + linksHTML(item) + '</li>';
   }
 
   function groups() {
